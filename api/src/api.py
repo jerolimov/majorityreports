@@ -6,6 +6,8 @@ from .items import router as items
 from .events import router as events
 from .feedbacks import router as feedbacks
 
+from .experiments import router as experiments
+
 router = APIRouter()
 
 router.include_router(projects, prefix="/projects", tags=["projects"])
@@ -13,3 +15,5 @@ router.include_router(users, prefix="/users", tags=["users"])
 router.include_router(items, prefix="/items", tags=["items"])
 router.include_router(events, prefix="/events", tags=["events"])
 router.include_router(feedbacks, prefix="/feedbacks", tags=["feedbacks"])
+
+router.include_router(experiments, prefix="/experiments", tags=["experiments"])
