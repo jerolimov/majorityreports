@@ -7,8 +7,8 @@ from .db import get_session
 
 class Project(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+    ref: str
     name: str
-    done: Optional[bool] = Field(default=False)
 
 
 router = APIRouter()
@@ -19,9 +19,8 @@ def create_project(
     newProject: Project, session: Session = Depends(get_session)
 ) -> Project:
     project = Project()
+    project.ref = newProject.ref
     project.name = newProject.name
-    if isinstance(newProject.done, bool):
-        project.done = newProject.done
     session.add(project)
     session.commit()
     session.refresh(project)
@@ -47,10 +46,10 @@ def update_project_by_project_id(
     project_id: int, updateProject: Project, session: Session = Depends(get_session)
 ) -> Project:
     project = session.get_one(Project, project_id)
+    if ref := updateProject.ref:
+        project.ref = ref
     if name := updateProject.name:
         project.name = name
-    if done := updateProject.done:
-        project.done = done
     session.commit()
     session.refresh(project)
     return project

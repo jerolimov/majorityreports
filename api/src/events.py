@@ -8,7 +8,6 @@ from .db import get_session
 class Event(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
-    done: Optional[bool] = Field(default=False)
 
 
 router = APIRouter()
@@ -18,8 +17,6 @@ router = APIRouter()
 def create_event(newEvent: Event, session: Session = Depends(get_session)) -> Event:
     event = Event()
     event.name = newEvent.name
-    if isinstance(newEvent.done, bool):
-        event.done = newEvent.done
     session.add(event)
     session.commit()
     session.refresh(event)
@@ -47,8 +44,6 @@ def update_event_by_event_id(
     event = session.get_one(Event, event_id)
     if name := updateEvent.name:
         event.name = name
-    if done := updateEvent.done:
-        event.done = done
     session.commit()
     session.refresh(event)
     return event

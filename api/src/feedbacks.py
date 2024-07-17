@@ -8,7 +8,6 @@ from .db import get_session
 class Feedback(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
-    done: Optional[bool] = Field(default=False)
 
 
 router = APIRouter()
@@ -20,8 +19,6 @@ def create_feedback(
 ) -> Feedback:
     feedback = Feedback()
     feedback.name = newFeedback.name
-    if isinstance(newFeedback.done, bool):
-        feedback.done = newFeedback.done
     session.add(feedback)
     session.commit()
     session.refresh(feedback)
@@ -49,8 +46,6 @@ def update_feedback_by_feedback_id(
     feedback = session.get_one(Feedback, feedback_id)
     if name := updateFeedback.name:
         feedback.name = name
-    if done := updateFeedback.done:
-        feedback.done = done
     session.commit()
     session.refresh(feedback)
     return feedback

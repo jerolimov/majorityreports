@@ -3,25 +3,17 @@ from fastapi.responses import JSONResponse
 from fastapi_cli.cli import main
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
-from sqlmodel import Session, select, func
 from sqlalchemy.exc import NoResultFound
-from src.db import init_db, engine
+
+from src.db import init_db
+from src.testdata import init_testdata
 from src.api import router as apiRouter
-from src.todos import Todo
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     init_db()
-    with Session(engine) as session:
-        countStatement = select(func.count()).select_from(Todo)
-        count = session.scalar(countStatement)
-        if count == 0:
-            session.add(Todo(name="todo a", done=False))
-            session.add(Todo(name="todo b", done=False))
-            session.add(Todo(name="todo c", done=False))
-            session.add(Todo(name="done", done=True))
-            session.commit()
+    init_testdata()
     yield
 
 

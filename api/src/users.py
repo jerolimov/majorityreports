@@ -7,8 +7,8 @@ from .db import get_session
 
 class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+    ref: str
     name: str
-    done: Optional[bool] = Field(default=False)
 
 
 router = APIRouter()
@@ -17,9 +17,8 @@ router = APIRouter()
 @router.post("")
 def create_user(newUser: User, session: Session = Depends(get_session)) -> User:
     user = User()
+    user.ref = newUser.ref
     user.name = newUser.name
-    if isinstance(newUser.done, bool):
-        user.done = newUser.done
     session.add(user)
     session.commit()
     session.refresh(user)
@@ -43,10 +42,10 @@ def update_user_by_user_id(
     user_id: int, updateUser: User, session: Session = Depends(get_session)
 ) -> User:
     user = session.get_one(User, user_id)
+    if ref := updateUser.ref:
+        user.name = ref
     if name := updateUser.name:
         user.name = name
-    if done := updateUser.done:
-        user.done = done
     session.commit()
     session.refresh(user)
     return user
