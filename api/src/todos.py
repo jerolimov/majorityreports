@@ -32,13 +32,13 @@ def get_todos(session: Session = Depends(get_session)) -> Iterable[Todo]:
     return session.exec(statement).all()
 
 
-@router.get("{todo_id}")
+@router.get("/{todo_id}")
 def get_todo_by_todo_id(todo_id: int, session: Session = Depends(get_session)) -> Todo:
     todo = session.get_one(Todo, todo_id)
     return todo
 
 
-@router.put("{todo_id}")
+@router.put("/{todo_id}")
 def update_todo_by_todo_id(
     todo_id: int, updateTodo: Todo, session: Session = Depends(get_session)
 ) -> Todo:
@@ -52,7 +52,7 @@ def update_todo_by_todo_id(
     return todo
 
 
-@router.delete("{todo_id}")
+@router.delete("/{todo_id}")
 def delete_todo_by_todo_id(
     todo_id: int, session: Session = Depends(get_session)
 ) -> JSONResponse:

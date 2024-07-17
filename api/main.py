@@ -6,8 +6,8 @@ from typing import AsyncIterator
 from sqlmodel import Session, select, func
 from sqlalchemy.exc import NoResultFound
 from src.db import init_db, engine
+from src.api import router as apiRouter
 from src.todos import Todo
-from src.todos import router
 
 
 @asynccontextmanager
@@ -30,7 +30,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.include_router(router, prefix="/todos")
+app.include_router(apiRouter, prefix="/api")
 
 
 @app.exception_handler(NoResultFound)
