@@ -1,8 +1,9 @@
+import json
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi_cli.cli import main
 from contextlib import asynccontextmanager
-from typing import AsyncIterator
+from typing import AsyncIterator, Any
 from sqlalchemy.exc import NoResultFound
 
 from src.db import init_db
@@ -17,9 +18,22 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     yield
 
 
+class CustomJSONResponse(JSONResponse):
+    media_type = "application/json"
+
+    def render(self, content: Any) -> bytes:
+        return json.dumps(
+            content,
+            ensure_ascii=False,
+            allow_nan=False,
+            indent=2,
+        ).encode("utf-8")
+
+
 app = FastAPI(
     docs_url="/",
     lifespan=lifespan,
+    default_response_class=CustomJSONResponse,
 )
 
 app.include_router(apiRouter, prefix="/api")
