@@ -1,7 +1,7 @@
 from sqlmodel import Session
 from src.db import engine, init_db
 from src.namespaces import Namespace
-from src.actor import Actor
+from src.actors import Actor
 from src.items import Item
 from src.events import Event
 from src.feedbacks import Feedback
@@ -73,6 +73,7 @@ with Session(engine) as session:
         namespace=namespace1,
         name="same-feedback-name",
         actor=actor1,
+        item=item1,
         labels={
             "test": "import-test-data",
         },
@@ -82,6 +83,7 @@ with Session(engine) as session:
         namespace=namespace1,
         name="same-feedback-name",
         actor=actor1,
+        item=item2,
         labels={
             "test": "import-test-data",
         },

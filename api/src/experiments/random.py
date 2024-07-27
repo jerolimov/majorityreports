@@ -16,7 +16,8 @@ def get_random_item(session: Session = Depends(get_session)) -> Item:
 
 
 @router.get("/items")
-def get_random_items(limit: int = 10, session: Session = Depends(get_session)) -> Iterable[Item]:
+def get_random_items(
+    limit: int = 10, session: Session = Depends(get_session)
+) -> Iterable[Item]:
     statement = select(Item).order_by(func.random()).limit(limit)
     return session.exec(statement).all()
-

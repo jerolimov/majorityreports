@@ -1,15 +1,25 @@
 import uuid
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship, UniqueConstraint
+from sqlmodel import (
+    Field,
+    SQLModel,
+    Session,
+    select,
+    JSON,
+    Relationship,
+    UniqueConstraint,
+)
 from typing import Iterable, Dict
 from .db import get_session
-from .namespaces import Namespace
+from .namespaces import Namespace, read_namespace
 
 
 class Item(SQLModel, table=True):
     __table_args__ = (
-        UniqueConstraint("namespace_name", "name", name="item_name_is_unique_in_namespace"),
+        UniqueConstraint(
+            "namespace_name", "name", name="item_name_is_unique_in_namespace"
+        ),
     )
 
     uid: uuid.UUID = Field(primary_key=True, default_factory=uuid.uuid4)
@@ -24,9 +34,14 @@ router = APIRouter()
 
 
 @router.post("")
-def create_item(newItem: Item, session: Session = Depends(get_session)) -> Item:
+def create_item(
+    namespace_name: str, newItem: Item, session: Session = Depends(get_session)
+) -> Item:
     item = Item()
+    item.namespace = read_namespace(namespace_name)
     item.name = newItem.name
+    item.labels = newItem.labels
+    item.annotations = newItem.annotations
     session.add(item)
     session.commit()
     session.refresh(item)
@@ -34,35 +49,50 @@ def create_item(newItem: Item, session: Session = Depends(get_session)) -> Item:
 
 
 @router.get("")
-def get_items(session: Session = Depends(get_session)) -> Iterable[Item]:
+def read_items(
+    namespace_name: str | None = None, session: Session = Depends(get_session)
+) -> Iterable[Item]:
     statement = select(Item)
+    if namespace_name is not None:
+        statement = statement.where(Item.namespace_name == namespace_name)
     return session.exec(statement).all()
 
 
-@router.get("/{item_id}")
-def get_item_by_item_id(item_id: int, session: Session = Depends(get_session)) -> Item:
-    item = session.get_one(Item, item_id)
-    return item
-
-
-@router.put("/{item_id}")
-def update_item_by_item_id(
-    item_id: int, updateItem: Item, session: Session = Depends(get_session)
+@router.get("/{item_name}")
+def read_item(
+    namespace_name: str, item_name: str, session: Session = Depends(get_session)
 ) -> Item:
-    item = session.get_one(Item, item_id)
+    statement = select(Item)
+    statement = statement.where(Item.namespace_name == namespace_name)
+    statement = statement.where(Item.name == item_name)
+    return session.exec(statement).one()
+
+
+@router.put("/{item_name}")
+def update_item(
+    namespace_name: str,
+    item_name: str,
+    updateItem: Item,
+    session: Session = Depends(get_session),
+) -> Item:
+    item = read_item(namespace_name, item_name)
     if name := updateItem.name:
         item.name = name
+    if labels := updateItem.labels:
+        item.labels = labels
+    if annotations := updateItem.annotations:
+        item.annotations = annotations
     session.commit()
     session.refresh(item)
     return item
 
 
-@router.delete("/{item_id}")
-def delete_item_by_item_id(
-    item_id: int, session: Session = Depends(get_session)
+@router.delete("/{item_name}")
+def delete_item(
+    namespace_name: str, item_name: str, session: Session = Depends(get_session)
 ) -> JSONResponse:
     # or how can we run a delete query directly?
-    item = session.get_one(Item, item_id)
+    item = read_item(namespace_name, item_name)
     session.delete(item)
     session.commit()
     return JSONResponse(

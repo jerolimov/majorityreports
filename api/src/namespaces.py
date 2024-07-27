@@ -7,8 +7,8 @@ from .db import get_session
 
 
 class Namespace(SQLModel, table=True):
-    uid: uuid.UUID = Field(primary_key=True, default_factory=uuid.uuid4)
-    name: str = Field(unique=True)
+    uid: uuid.UUID = Field(unique=True, default_factory=uuid.uuid4)
+    name: str = Field(primary_key=True)
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
 
@@ -22,6 +22,8 @@ def create_namespace(
 ) -> Namespace:
     namespace = Namespace()
     namespace.name = newNamespace.name
+    namespace.labels = newNamespace.labels
+    namespace.annotations = newNamespace.annotations
     session.add(namespace)
     session.commit()
     session.refresh(namespace)
@@ -29,37 +31,47 @@ def create_namespace(
 
 
 @router.get("")
-def get_namespaces(session: Session = Depends(get_session)) -> Iterable[Namespace]:
+def read_namespaces(session: Session = Depends(get_session)) -> Iterable[Namespace]:
     statement = select(Namespace)
     return session.exec(statement).all()
 
 
-@router.get("/{namespace_id}")
-def get_namespace_by_namespace_id(
-    namespace_id: int, session: Session = Depends(get_session)
+@router.get("/{namespace_name}")
+def read_namespace(
+    namespace_name: str, session: Session = Depends(get_session)
 ) -> Namespace:
-    namespace = session.get_one(Namespace, namespace_id)
-    return namespace
+    statement = select(Namespace)
+    statement = statement.where(Namespace.name == namespace_name)
+    return session.exec(statement).one()
 
 
-@router.put("/{namespace_id}")
-def update_namespace_by_namespace_id(
-    namespace_id: int, updateNamespace: Namespace, session: Session = Depends(get_session)
+all
+
+
+@router.put("/{namespace_name}")
+def update_namespace(
+    namespace_name: str,
+    updateNamespace: Namespace,
+    session: Session = Depends(get_session),
 ) -> Namespace:
-    namespace = session.get_one(Namespace, namespace_id)
+    namespace = read_namespace(namespace_name)
     if name := updateNamespace.name:
         namespace.name = name
+    if labels := updateNamespace.labels:
+        namespace.labels = labels
+    if annotations := updateNamespace.annotations:
+        namespace.annotations = annotations
     session.commit()
     session.refresh(namespace)
     return namespace
 
 
-@router.delete("/{namespace_id}")
-def delete_namespace_by_namespace_id(
-    namespace_id: int, session: Session = Depends(get_session)
+@router.delete("/{namespace_name}")
+def delete_namespace(
+    namespace_name: str, session: Session = Depends(get_session)
 ) -> JSONResponse:
     # or how can we run a delete query directly?
-    namespace = session.get_one(Namespace, namespace_id)
+    namespace = read_namespace(namespace_name)
     session.delete(namespace)
     session.commit()
     return JSONResponse(

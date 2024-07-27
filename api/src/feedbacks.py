@@ -4,21 +4,24 @@ from fastapi.responses import JSONResponse
 from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship
 from typing import Iterable, Dict, Optional
 from .db import get_session
-from .namespaces import Namespace
-from .actor import Actor
+from .namespaces import Namespace, read_namespace
+from .actors import Actor
+from .items import Item
 
 
 class Feedback(SQLModel, table=True):
     uid: uuid.UUID = Field(primary_key=True, default_factory=uuid.uuid4)
     namespace_name: str = Field(foreign_key="namespace.name")
     namespace: Namespace = Relationship()
+    name: str = Field()
     actor_name: str = Field(foreign_key="actor.name")
     actor: Actor = Relationship()
-    name: Optional[str] = Field(nullable=True)
-    type: Optional[str] = Field(nullable=True)
+    item_name: str = Field(foreign_key="item.name")
+    item: Item = Relationship()
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
-    value: int
+    type: Optional[str] = Field(nullable=True)
+    value: str = Field()
 
 
 router = APIRouter()
@@ -26,9 +29,10 @@ router = APIRouter()
 
 @router.post("")
 def create_feedback(
-    newFeedback: Feedback, session: Session = Depends(get_session)
+    namespace_name: str, newFeedback: Feedback, session: Session = Depends(get_session)
 ) -> Feedback:
     feedback = Feedback()
+    feedback.namespace = read_namespace(namespace_name)
     feedback.name = newFeedback.name
     feedback.type = newFeedback.type
     feedback.labels = newFeedback.labels
@@ -41,24 +45,33 @@ def create_feedback(
 
 
 @router.get("")
-def get_feedbacks(session: Session = Depends(get_session)) -> Iterable[Feedback]:
+def read_feedbacks(
+    namespace_name: str | None = None, session: Session = Depends(get_session)
+) -> Iterable[Feedback]:
     statement = select(Feedback)
+    if namespace_name is not None:
+        statement = statement.where(Actor.namespace_name == namespace_name)
     return session.exec(statement).all()
 
 
 @router.get("/{feedback_id}")
-def get_feedback_by_feedback_id(
-    feedback_id: int, session: Session = Depends(get_session)
+def read_feedback(
+    namespace_name: str, feedback_name: str, session: Session = Depends(get_session)
 ) -> Feedback:
-    feedback = session.get_one(Feedback, feedback_id)
-    return feedback
+    statement = select(Feedback)
+    statement = statement.where(Feedback.namespace_name == namespace_name)
+    statement = statement.where(Feedback.name == feedback_name)
+    return session.exec(statement).one()
 
 
 @router.put("/{feedback_id}")
-def update_feedback_by_feedback_id(
-    feedback_id: int, updateFeedback: Feedback, session: Session = Depends(get_session)
+def update_feedback(
+    namespace_name: str,
+    feedback_name: str,
+    updateFeedback: Feedback,
+    session: Session = Depends(get_session),
 ) -> Feedback:
-    feedback = session.get_one(Feedback, feedback_id)
+    feedback = read_feedback(namespace_name, feedback_name)
     if name := updateFeedback.name:
         feedback.name = name
     if type := updateFeedback.type:
@@ -75,11 +88,11 @@ def update_feedback_by_feedback_id(
 
 
 @router.delete("/{feedback_id}")
-def delete_feedback_by_feedback_id(
-    feedback_id: int, session: Session = Depends(get_session)
+def delete_feedback(
+    namespace_name: str, feedback_name: str, session: Session = Depends(get_session)
 ) -> JSONResponse:
     # or how can we run a delete query directly?
-    feedback = session.get_one(Feedback, feedback_id)
+    feedback = read_feedback(namespace_name, feedback_name)
     session.delete(feedback)
     session.commit()
     return JSONResponse(
