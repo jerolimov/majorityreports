@@ -15,6 +15,7 @@ class Feedback(SQLModel, table=True):
     actor_name: str = Field(foreign_key="actor.name")
     actor: Actor = Relationship()
     name: Optional[str] = Field(nullable=True)
+    type: Optional[str] = Field(nullable=True)
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
     value: int
@@ -29,6 +30,10 @@ def create_feedback(
 ) -> Feedback:
     feedback = Feedback()
     feedback.name = newFeedback.name
+    feedback.type = newFeedback.type
+    feedback.labels = newFeedback.labels
+    feedback.annotations = newFeedback.annotations
+    feedback.value = newFeedback.value
     session.add(feedback)
     session.commit()
     session.refresh(feedback)
@@ -56,6 +61,14 @@ def update_feedback_by_feedback_id(
     feedback = session.get_one(Feedback, feedback_id)
     if name := updateFeedback.name:
         feedback.name = name
+    if type := updateFeedback.type:
+        feedback.type = type
+    if labels := updateFeedback.labels:
+        feedback.labels = labels
+    if annotations := updateFeedback.annotations:
+        feedback.annotations = annotations
+    if value := updateFeedback.value:
+        feedback.value = value
     session.commit()
     session.refresh(feedback)
     return feedback
