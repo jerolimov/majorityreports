@@ -1,9 +1,10 @@
-name: publish-website
+name: website-publish-main
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:
+    paths:
+      - website/**
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -12,7 +13,7 @@ permissions:
   id-token: write
 
 jobs:
-  publish-website:
+  website-publish-main:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
