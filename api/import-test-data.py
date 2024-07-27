@@ -1,7 +1,7 @@
 from sqlmodel import Session
 from src.db import engine, init_db
-from src.projects import Project
-from src.users import User
+from src.namespaces import Namespace
+from src.actor import Actor
 from src.items import Item
 from src.events import Event
 from src.feedbacks import Feedback
@@ -9,69 +9,91 @@ from src.feedbacks import Feedback
 with Session(engine) as session:
     init_db()
 
-    project1 = Project(
-        name="project 1",
-        features={
+    namespace1 = Namespace(
+        name="namespace 1",
+        labels={
+            "test": "import-test-data",
+        },
+    )
+    namespace2 = Namespace(
+        name="namespace 2",
+        labels={
             "test": "import-test-data",
         },
     )
 
-    user1 = User(
-        project=project1,
-        name="user 1",
-        features={
+    actor1 = Actor(
+        namespace=namespace1,
+        name="actor 1",
+        labels={
+            "test": "import-test-data",
+        },
+    )
+
+    actor2 = Actor(
+        namespace=namespace1,
+        name="actor 1",
+        labels={
             "test": "import-test-data",
         },
     )
 
     item1 = Item(
-        project=project1,
-        name="user 1",
-        features={
+        namespace=namespace1,
+        name="item 1",
+        labels={
             "test": "import-test-data",
         },
     )
 
     event1 = Event(
-        project_name=project1.name,
-        user=user1,
+        namespace_name=namespace1.name,
+        actor=actor1,
         name="event 1",
-        features={
+        labels={
             "test": "import-test-data",
         },
     )
 
     feedback1 = Feedback(
-        project_name=project1.name,
-        user=user1,
+        namespace_name=namespace1.name,
+        actor=actor1,
         name="feedback 1",
-        features={
+        labels={
             "test": "import-test-data",
         },
         value=3,
     )
 
-    print("project 1", project1)
-    print("user 1", user1)
+    print("namespace 1", namespace1)
+    print("namespace 2", namespace2)
+    print("actor 1", actor1)
+    print("actor 2", actor2)
     print("item 1", item1)
     print("event 1", event1)
     print("feedback 1", feedback1)
 
-    session.add(project1)
-    session.add(user1)
+    session.add(namespace1)
+    session.add(namespace2)
+    session.add(actor1)
+    session.add(actor2)
     session.add(item1)
     session.add(event1)
     session.add(feedback1)
     session.commit()
 
-    session.refresh(project1)
-    session.refresh(user1)
+    session.refresh(namespace1)
+    session.refresh(namespace2)
+    session.refresh(actor1)
+    session.refresh(actor2)
     session.refresh(item1)
     session.refresh(event1)
     session.refresh(feedback1)
 
-    print("project 1", project1)
-    print("user 1", user1)
+    print("namespace 1", namespace1)
+    print("namespace 2", namespace2)
+    print("actor 1", actor1)
+    print("actor 2", actor2)
     print("item 1", item1)
     print("event 1", event1)
     print("feedback 1", feedback1)

@@ -4,18 +4,19 @@ from fastapi.responses import JSONResponse
 from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship
 from typing import Iterable, Dict
 from .db import get_session
-from .projects import Project
-from .users import User
+from .namespaces import Namespace
+from .actor import Actor
 
 
 class Event(SQLModel, table=True):
     uid: uuid.UUID = Field(primary_key=True, default_factory=uuid.uuid4)
-    project_name: str = Field(foreign_key="project.name")
-    project: Project = Relationship()
-    user_name: str = Field(foreign_key="user.name")
-    user: User = Relationship()
+    namespace_name: str = Field(foreign_key="namespace.name")
+    namespace: Namespace = Relationship()
+    actor_name: str = Field(foreign_key="actor.name")
+    actor: Actor = Relationship()
     name: str = Field()
-    features: Dict[str, str] = Field(default={}, sa_type=JSON)
+    labels: Dict[str, str] = Field(default={}, sa_type=JSON)
+    annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
 
 
 router = APIRouter()

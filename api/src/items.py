@@ -4,15 +4,16 @@ from fastapi.responses import JSONResponse
 from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship
 from typing import Iterable, Dict
 from .db import get_session
-from .projects import Project
+from .namespaces import Namespace
 
 
 class Item(SQLModel, table=True):
     uid: uuid.UUID = Field(primary_key=True, default_factory=uuid.uuid4)
-    project_name: str = Field(foreign_key="project.name")
-    project: Project = Relationship()
+    namespace_name: str = Field(foreign_key="namespace.name")
+    namespace: Namespace = Relationship()
     name: str = Field()
-    features: Dict[str, str] = Field(default={}, sa_type=JSON)
+    labels: Dict[str, str] = Field(default={}, sa_type=JSON)
+    annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
 
 
 router = APIRouter()

@@ -1,8 +1,8 @@
 from sqlmodel import Session, select, func
 
 from .db import engine
-from .projects import Project
-from .users import User
+from .namespaces import Namespace
+from .actor import Actor
 from .items import Item
 from .events import Event
 from .feedbacks import Feedback
@@ -10,15 +10,15 @@ from .feedbacks import Feedback
 
 def init_testdata() -> None:
     with Session(engine) as session:
-        projectCount = session.scalar(select(func.count()).select_from(Item))
-        if projectCount == 0:
-            session.add(Project(ref="my-project", name="My project"))
+        namespaceCount = session.scalar(select(func.count()).select_from(Item))
+        if namespaceCount == 0:
+            session.add(Namespace(ref="my-namespace", name="My namespace"))
 
-        userCount = session.scalar(select(func.count()).select_from(User))
+        userCount = session.scalar(select(func.count()).select_from(Actor))
         if userCount == 0:
-            session.add(User(ref="user-a", name="user a"))
-            session.add(User(ref="user-b", name="user b"))
-            session.add(User(ref="user-c", name="user c"))
+            session.add(Actor(ref="actor-a", name="actor a"))
+            session.add(Actor(ref="actor-b", name="actor b"))
+            session.add(Actor(ref="actor-c", name="actor c"))
 
         itemCount = session.scalar(select(func.count()).select_from(Item))
         if itemCount == 0:
