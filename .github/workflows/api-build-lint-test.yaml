@@ -3,6 +3,7 @@ name: api-build-lint-test
 on:
   push:
     paths:
+      - .github/**
       - api/**
   pull_request:
 
