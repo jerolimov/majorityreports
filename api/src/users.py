@@ -1,14 +1,18 @@
+import uuid
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select
-from typing import Optional, Iterable
+from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship
+from typing import Iterable, Dict
 from .db import get_session
+from .projects import Project
 
 
 class User(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    ref: str
-    name: str
+    uid: uuid.UUID = Field(primary_key=True, default_factory=uuid.uuid4)
+    project_name: str = Field(foreign_key="project.name")
+    project: Project = Relationship()
+    name: str = Field()
+    features: Dict[str, str] = Field(default={}, sa_type=JSON)
 
 
 router = APIRouter()
@@ -17,7 +21,6 @@ router = APIRouter()
 @router.post("")
 def create_user(newUser: User, session: Session = Depends(get_session)) -> User:
     user = User()
-    user.ref = newUser.ref
     user.name = newUser.name
     session.add(user)
     session.commit()
@@ -42,8 +45,6 @@ def update_user_by_user_id(
     user_id: int, updateUser: User, session: Session = Depends(get_session)
 ) -> User:
     user = session.get_one(User, user_id)
-    if ref := updateUser.ref:
-        user.name = ref
     if name := updateUser.name:
         user.name = name
     session.commit()

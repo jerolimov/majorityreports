@@ -1,13 +1,21 @@
+import uuid
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select
-from typing import Optional, Iterable
+from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship
+from typing import Iterable, Dict
 from .db import get_session
+from .projects import Project
+from .users import User
 
 
 class Event(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    name: str
+    uid: uuid.UUID = Field(primary_key=True, default_factory=uuid.uuid4)
+    project_name: str = Field(foreign_key="project.name")
+    project: Project = Relationship()
+    user_name: str = Field(foreign_key="user.name")
+    user: User = Relationship()
+    name: str = Field()
+    features: Dict[str, str] = Field(default={}, sa_type=JSON)
 
 
 router = APIRouter()
