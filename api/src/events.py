@@ -15,8 +15,10 @@ class Event(SQLModel, table=True):
     actor_name: str = Field(foreign_key="actor.name")
     actor: Actor = Relationship()
     name: Optional[str] = Field(nullable=True)
+    type: Optional[str] = Field(nullable=True)
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
+    value: Optional[str] = Field(nullable=True)
 
 
 router = APIRouter()
@@ -26,6 +28,10 @@ router = APIRouter()
 def create_event(newEvent: Event, session: Session = Depends(get_session)) -> Event:
     event = Event()
     event.name = newEvent.name
+    event.type = newEvent.type
+    event.labels = newEvent.labels
+    event.annotations = newEvent.annotations
+    event.value = newEvent.value
     session.add(event)
     session.commit()
     session.refresh(event)
@@ -53,6 +59,14 @@ def update_event_by_event_id(
     event = session.get_one(Event, event_id)
     if name := updateEvent.name:
         event.name = name
+    if type := updateEvent.type:
+        event.type = type
+    if labels := updateEvent.labels:
+        event.labels = labels
+    if annotations := updateEvent.annotations:
+        event.annotations = annotations
+    if value := updateEvent.value:
+        event.value = value
     session.commit()
     session.refresh(event)
     return event
