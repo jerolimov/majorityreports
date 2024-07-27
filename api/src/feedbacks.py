@@ -1,7 +1,7 @@
 import uuid
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship, UniqueConstraint
+from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship
 from typing import Iterable, Dict, Optional
 from .db import get_session
 from .namespaces import Namespace
