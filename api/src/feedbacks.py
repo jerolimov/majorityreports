@@ -1,8 +1,8 @@
 import uuid
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship
-from typing import Iterable, Dict
+from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship, UniqueConstraint
+from typing import Iterable, Dict, Optional
 from .db import get_session
 from .namespaces import Namespace
 from .actor import Actor
@@ -14,7 +14,7 @@ class Feedback(SQLModel, table=True):
     namespace: Namespace = Relationship()
     actor_name: str = Field(foreign_key="actor.name")
     actor: Actor = Relationship()
-    name: str = Field()
+    name: Optional[str] = Field(nullable=True)
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
     value: int

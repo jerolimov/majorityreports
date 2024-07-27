@@ -1,13 +1,17 @@
 import uuid
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship
+from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship, UniqueConstraint
 from typing import Iterable, Dict
 from .db import get_session
 from .namespaces import Namespace
 
 
 class Actor(SQLModel, table=True):
+    __table_args__ = (
+        UniqueConstraint("namespace_name", "name", name="actor_name_is_unique_in_namespace"),
+    )
+
     uid: uuid.UUID = Field(primary_key=True, default_factory=uuid.uuid4)
     namespace_name: str = Field(foreign_key="namespace.name")
     namespace: Namespace = Relationship()

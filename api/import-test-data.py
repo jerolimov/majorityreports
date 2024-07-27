@@ -29,10 +29,9 @@ with Session(engine) as session:
             "test": "import-test-data",
         },
     )
-
     actor2 = Actor(
         namespace=namespace1,
-        name="actor 1",
+        name="actor 2",
         labels={
             "test": "import-test-data",
         },
@@ -45,11 +44,26 @@ with Session(engine) as session:
             "test": "import-test-data",
         },
     )
+    item2 = Item(
+        namespace=namespace1,
+        name="item 2",
+        labels={
+            "test": "import-test-data",
+        },
+    )
 
     event1 = Event(
         namespace_name=namespace1.name,
         actor=actor1,
-        name="event 1",
+        name="same-event-name",
+        labels={
+            "test": "import-test-data",
+        },
+    )
+    event2 = Event(
+        namespace_name=namespace1.name,
+        actor=actor1,
+        name="same-event-name",
         labels={
             "test": "import-test-data",
         },
@@ -58,11 +72,20 @@ with Session(engine) as session:
     feedback1 = Feedback(
         namespace_name=namespace1.name,
         actor=actor1,
-        name="feedback 1",
+        name="same-feedback-name",
         labels={
             "test": "import-test-data",
         },
         value=3,
+    )
+    feedback2 = Feedback(
+        namespace_name=namespace1.name,
+        actor=actor1,
+        name="same-feedback-name",
+        labels={
+            "test": "import-test-data",
+        },
+        value=4,
     )
 
     print("namespace 1", namespace1)
@@ -70,16 +93,22 @@ with Session(engine) as session:
     print("actor 1", actor1)
     print("actor 2", actor2)
     print("item 1", item1)
+    print("item 2", item2)
     print("event 1", event1)
+    print("event 2", event2)
     print("feedback 1", feedback1)
+    print("feedback 2", feedback2)
 
     session.add(namespace1)
     session.add(namespace2)
     session.add(actor1)
     session.add(actor2)
     session.add(item1)
+    session.add(item2)
     session.add(event1)
+    session.add(event2)
     session.add(feedback1)
+    session.add(feedback2)
     session.commit()
 
     session.refresh(namespace1)
@@ -87,13 +116,19 @@ with Session(engine) as session:
     session.refresh(actor1)
     session.refresh(actor2)
     session.refresh(item1)
+    session.refresh(item2)
     session.refresh(event1)
+    session.refresh(event2)
     session.refresh(feedback1)
+    session.refresh(feedback2)
 
     print("namespace 1", namespace1)
     print("namespace 2", namespace2)
     print("actor 1", actor1)
     print("actor 2", actor2)
     print("item 1", item1)
+    print("item 2", item2)
     print("event 1", event1)
+    print("event 2", event2)
     print("feedback 1", feedback1)
+    print("feedback 2", feedback2)
