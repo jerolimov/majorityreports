@@ -53,35 +53,35 @@ with Session(engine) as session:
     )
 
     event1 = Event(
-        namespace_name=namespace1.name,
-        actor=actor1,
+        namespace=namespace1,
         name="same-event-name",
+        actor=actor1,
         labels={
             "test": "import-test-data",
         },
     )
     event2 = Event(
-        namespace_name=namespace1.name,
-        actor=actor1,
+        namespace=namespace1,
         name="same-event-name",
+        # event without actor
         labels={
             "test": "import-test-data",
         },
     )
 
     feedback1 = Feedback(
-        namespace_name=namespace1.name,
-        actor=actor1,
+        namespace=namespace1,
         name="same-feedback-name",
+        actor=actor1,
         labels={
             "test": "import-test-data",
         },
         value=3,
     )
     feedback2 = Feedback(
-        namespace_name=namespace1.name,
-        actor=actor1,
+        namespace=namespace1,
         name="same-feedback-name",
+        actor=actor1,
         labels={
             "test": "import-test-data",
         },
