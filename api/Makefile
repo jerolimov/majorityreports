@@ -5,7 +5,7 @@ dev:
 	python -m fastapi_cli dev
 
 prod:
-	python -m fastapi_cli prod
+	python -m fastapi_cli run
 
 check: lint typecheck
 
