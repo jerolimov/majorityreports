@@ -3,7 +3,7 @@ name: api-build-lint-test
 on:
   push:
     paths:
-      - .github/**
+      - .github/workflows/api-build-lint-test.yaml
       - api/**
   pull_request:
 

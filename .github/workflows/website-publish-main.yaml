@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - .github/**
+      - .github/workflows/website-publish-main.yaml
       - website/**
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages

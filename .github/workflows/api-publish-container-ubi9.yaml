@@ -1,11 +1,11 @@
-name: api-publish-container
+name: api-publish-container-ubi9
 
 on:
   push:
     branches:
       - main
     paths:
-      - .github/workflows/api-publish-container.yaml
+      - .github/workflows/api-publish-container-ubi9.yaml
       - api/**
   schedule:
     - cron: '0 0 * * *'  # every day at midnight
@@ -19,7 +19,7 @@ permissions:
   id-token: write
 
 jobs:
-  api-publish-container:
+  api-publish-container-ubi9:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,8 +30,8 @@ jobs:
         uses: redhat-actions/buildah-build@v2
         with:
           context: api
-          containerfiles: api/Containerfile
-          image: majorityreports/api
+          containerfiles: api/Containerfile.ubi9
+          image: majorityreports/api-ubi9
           tags: next
           oci: true
 
