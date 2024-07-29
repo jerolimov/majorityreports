@@ -6,7 +6,7 @@ from .items import router as items
 from .events import router as events
 from .feedbacks import router as feedbacks
 
-from .experiments import router as experiments
+from .reports import router as reports
 
 router = APIRouter()
 
@@ -29,5 +29,7 @@ router.include_router(
     feedbacks, prefix="/namespace/{namespace_name}/feedbacks", tags=["feedbacks"]
 )
 
-# TODO
-router.include_router(experiments, prefix="/experiments", tags=["experiments"])
+# reports
+router.include_router(
+    reports, prefix="/namespace/{namespace_name}/reports", tags=["reports"]
+)
