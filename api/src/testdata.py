@@ -16,8 +16,8 @@ def init_testdata() -> None:
 
         namespace = read_namespace("default", session)
 
-        userCount = session.scalar(select(func.count()).select_from(Actor))
-        if userCount == 0:
+        actorCount = session.scalar(select(func.count()).select_from(Actor))
+        if actorCount == 0:
             session.add(Actor(namespace=namespace, name="actor-a"))
             session.add(Actor(namespace=namespace, name="actor-b"))
             session.add(Actor(namespace=namespace, name="actor-c"))
@@ -29,20 +29,86 @@ def init_testdata() -> None:
             session.add(Item(namespace=namespace, name="item-c"))
 
         actorA = read_actor("default", "actor-a", session)
+        actorB = read_actor("default", "actor-b", session)
         itemA = read_item("default", "item-a", session)
         itemB = read_item("default", "item-b", session)
-        itemC = read_item("default", "item-c", session)
 
         eventCount = session.scalar(select(func.count()).select_from(Event))
         if eventCount == 0:
-            session.add(Event(namespace=namespace, name="event-1"))
-            session.add(Event(namespace=namespace, name="event-2"))
-            session.add(Event(namespace=namespace, name="event-3"))
+            session.add(
+                Event(
+                    namespace=namespace,
+                    name="event-from-actor-a-for-item-a",
+                    actor=actorA,
+                    item=itemA,
+                    type="watched",
+                )
+            )
+            session.add(
+                Event(
+                    namespace=namespace,
+                    name="event-from-actor-a-for-item-b",
+                    actor=actorA,
+                    item=itemB,
+                    type="watched",
+                )
+            )
+            session.add(
+                Event(
+                    namespace=namespace,
+                    name="event-from-actor-b-for-item-a",
+                    actor=actorB,
+                    item=itemA,
+                    type="watched",
+                )
+            )
+            session.add(
+                Event(
+                    namespace=namespace,
+                    name="event-from-actor-b-for-item-b",
+                    actor=actorB,
+                    item=itemB,
+                    type="canceled",
+                )
+            )
 
         feedbackCount = session.scalar(select(func.count()).select_from(Feedback))
         if feedbackCount == 0:
-            session.add(Feedback(namespace=namespace, name="feedback-1", actor=actorA, item=itemA, value=3))
-            session.add(Feedback(namespace=namespace, name="feedback-2", actor=actorA, item=itemB, value=4))
-            session.add(Feedback(namespace=namespace, name="feedback-3", actor=actorA, item=itemC, value=5))
+            session.add(
+                Feedback(
+                    namespace=namespace,
+                    name="feedback-from-actor-a-for-item-a",
+                    actor=actorA,
+                    item=itemA,
+                    value=3,
+                )
+            )
+            session.add(
+                Feedback(
+                    namespace=namespace,
+                    name="feedback-from-actor-a-for-item-b",
+                    actor=actorA,
+                    item=itemB,
+                    value=4,
+                )
+            )
+            session.add(
+                Feedback(
+                    namespace=namespace,
+                    name="feedback-from-actor-b-for-item-a",
+                    actor=actorB,
+                    item=itemA,
+                    value=5,
+                )
+            )
+            session.add(
+                Feedback(
+                    namespace=namespace,
+                    name="feedback-from-actor-b-for-item-b",
+                    actor=actorB,
+                    item=itemB,
+                    value=5,
+                )
+            )
 
         session.commit()

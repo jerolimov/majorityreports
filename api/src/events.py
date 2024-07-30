@@ -6,6 +6,7 @@ from typing import Iterable, Dict, Optional
 from .db import get_session
 from .namespaces import Namespace, read_namespace
 from .actors import Actor
+from .items import Item
 
 
 class Event(SQLModel, table=True):
@@ -15,6 +16,8 @@ class Event(SQLModel, table=True):
     name: str = Field()
     actor_name: Optional[str] = Field(foreign_key="actor.name")
     actor: Optional[Actor] = Relationship()
+    item_name: Optional[str] = Field(foreign_key="item.name")
+    item: Optional[Item] = Relationship()
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
     type: Optional[str] = Field(nullable=True)
