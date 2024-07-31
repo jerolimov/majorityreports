@@ -1,7 +1,8 @@
 import uuid
 from fastapi import APIRouter, Depends
 from sqlmodel import SQLModel, Session, select, func, and_, desc
-from typing import Iterable, Dict
+from sqlmodel.sql.expression import Select
+from typing import Iterable, Dict, cast
 
 from ..db import get_session
 from ..items import Item
@@ -27,15 +28,19 @@ def get_items_with_most_events(
     limit: int = 10,
     session: Session = Depends(get_session),
 ) -> Iterable[ItemWithEventCount]:
-    statement = select(
-        Item.uid,
-        Item.namespace_name,
-        Item.name,
-        Item.labels,
-        Item.annotations,
-    ).select_from(Item)
+    statement = cast(
+        Select[ItemWithEventCount],
+        select( # type: ignore
+            Item.uid,
+            Item.namespace_name,
+            Item.name,
+            Item.labels,
+            Item.annotations,
+        )
+        .select_from(Item)
+        .add_columns(func.count(Event.name).label("count")), # type: ignore
+    )
 
-    statement = statement.add_columns(func.count(Event.name).label("count"))
     statement = statement.join(
         Event,
         and_(
@@ -44,7 +49,7 @@ def get_items_with_most_events(
         ),
         isouter=True,
     )
-    statement = statement.group_by(Item.uid)
+    statement = statement.group_by(Item.uid) # type: ignore
     statement = statement.order_by(desc("count"))
 
     if namespace_name is not None:
