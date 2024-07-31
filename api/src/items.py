@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 from sqlmodel import (
@@ -9,8 +10,10 @@ from sqlmodel import (
     JSON,
     Relationship,
     UniqueConstraint,
+    desc,
 )
-from typing import Iterable, Dict
+from sqlalchemy import Column, DateTime, func
+from typing import Iterable, Dict, Optional
 from .db import get_session
 from .namespaces import Namespace, read_namespace
 
@@ -26,6 +29,14 @@ class Item(SQLModel, table=True):
     namespace_name: str = Field(foreign_key="namespace.name")
     namespace: Namespace = Relationship()
     name: str = Field()
+    creationTimestamp: Optional[datetime] = Field(
+        sa_column=Column(
+            DateTime(timezone=True), server_default=func.now(), nullable=True
+        ),
+    )
+    updateTimestamp: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
+    )
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
 
@@ -55,6 +66,20 @@ def read_items(
     statement = select(Item)
     if namespace_name is not None:
         statement = statement.where(Item.namespace_name == namespace_name)
+    return session.exec(statement).all()
+
+
+@router.get("/latest")
+def read_latest_items(
+    namespace_name: str | None = None,
+    limit: int = 10,
+    session: Session = Depends(get_session),
+) -> Iterable[Item]:
+    statement = select(Item)
+    if namespace_name is not None:
+        statement = statement.where(Item.namespace_name == namespace_name)
+    statement = statement.order_by(desc(Item.creationTimestamp))
+    statement = statement.limit(limit)
     return session.exec(statement).all()
 
 

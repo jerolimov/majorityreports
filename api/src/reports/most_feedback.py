@@ -1,8 +1,9 @@
+from datetime import datetime
 import uuid
 from fastapi import APIRouter, Depends
 from sqlmodel import SQLModel, Session, select, func, and_, desc
 from sqlmodel.sql.expression import Select
-from typing import Iterable, Dict, cast
+from typing import Iterable, Dict, Optional, cast
 
 from ..db import get_session
 from ..items import Item
@@ -16,6 +17,8 @@ class ItemWithFeedbackCount(SQLModel):
     uid: uuid.UUID
     namespace_name: str
     name: str
+    creationTimestamp: datetime
+    updateTimestamp: Optional[datetime]
     labels: Dict[str, str]
     annotations: Dict[str, str]
     count: int
@@ -30,15 +33,17 @@ def get_items_with_most_feedback(
 ) -> Iterable[ItemWithFeedbackCount]:
     statement = cast(
         Select[ItemWithFeedbackCount],
-        select( # type: ignore
+        select(  # type: ignore
             Item.uid,
             Item.namespace_name,
             Item.name,
+            Item.creationTimestamp,
+            Item.updateTimestamp,
             Item.labels,
             Item.annotations,
         )
         .select_from(Item)
-        .add_columns(func.count(Feedback.name).label("count")), # type: ignore
+        .add_columns(func.count(Feedback.name).label("count")),  # type: ignore
     )
 
     statement = statement.join(
@@ -49,7 +54,7 @@ def get_items_with_most_feedback(
         ),
         isouter=True,
     )
-    statement = statement.group_by(Item.uid) # type: ignore
+    statement = statement.group_by(Item.uid)  # type: ignore
     statement = statement.order_by(desc("count"))
 
     if namespace_name is not None:

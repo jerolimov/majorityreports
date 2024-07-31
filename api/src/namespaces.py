@@ -1,14 +1,24 @@
 import uuid
+from datetime import datetime
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select, JSON
-from typing import Iterable, Dict
+from sqlmodel import Field, SQLModel, Session, select, JSON, desc
+from sqlalchemy import Column, DateTime, func
+from typing import Iterable, Dict, Optional
 from .db import get_session
 
 
 class Namespace(SQLModel, table=True):
     uid: uuid.UUID = Field(unique=True, default_factory=uuid.uuid4)
     name: str = Field(primary_key=True)
+    creationTimestamp: Optional[datetime] = Field(
+        sa_column=Column(
+            DateTime(timezone=True), server_default=func.now(), nullable=True
+        ),
+    )
+    updateTimestamp: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
+    )
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
 
@@ -36,6 +46,16 @@ def read_namespaces(session: Session = Depends(get_session)) -> Iterable[Namespa
     return session.exec(statement).all()
 
 
+@router.get("/latest")
+def read_latest_namespaces(
+    limit: int = 10, session: Session = Depends(get_session)
+) -> Iterable[Namespace]:
+    statement = select(Namespace)
+    statement = statement.order_by(desc(Namespace.creationTimestamp))
+    statement = statement.limit(limit)
+    return session.exec(statement).all()
+
+
 @router.get("/{namespace_name}")
 def read_namespace(
     namespace_name: str, session: Session = Depends(get_session)
@@ -43,9 +63,6 @@ def read_namespace(
     statement = select(Namespace)
     statement = statement.where(Namespace.name == namespace_name)
     return session.exec(statement).one()
-
-
-all
 
 
 @router.put("/{namespace_name}")

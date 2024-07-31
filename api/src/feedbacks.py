@@ -1,7 +1,9 @@
+from datetime import datetime
 import uuid
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship
+from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship, desc
+from sqlalchemy import Column, DateTime, func
 from typing import Iterable, Dict, Optional
 from .db import get_session
 from .namespaces import Namespace, read_namespace
@@ -18,6 +20,14 @@ class Feedback(SQLModel, table=True):
     actor: Actor = Relationship()
     item_name: str = Field(foreign_key="item.name")
     item: Item = Relationship()
+    creationTimestamp: Optional[datetime] = Field(
+        sa_column=Column(
+            DateTime(timezone=True), server_default=func.now(), nullable=True
+        ),
+    )
+    updateTimestamp: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
+    )
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
     type: Optional[str] = Field(nullable=True)
@@ -51,6 +61,23 @@ def read_feedbacks(
     statement = select(Feedback)
     if namespace_name is not None:
         statement = statement.where(Actor.namespace_name == namespace_name)
+    return session.exec(statement).all()
+
+
+@router.get("/latest")
+def read_latest_feedbacks(
+    namespace_name: str | None = None,
+    type_filter: str | None = None,
+    limit: int = 10,
+    session: Session = Depends(get_session),
+) -> Iterable[Feedback]:
+    statement = select(Feedback)
+    if namespace_name is not None:
+        statement = statement.where(Actor.namespace_name == namespace_name)
+    if type_filter is not None:
+        statement = statement.where(Feedback.type == type_filter)
+    statement = statement.order_by(desc(Feedback.creationTimestamp))
+    statement = statement.limit(limit)
     return session.exec(statement).all()
 
 

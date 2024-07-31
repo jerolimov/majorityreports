@@ -1,7 +1,9 @@
+from datetime import datetime
 import uuid
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship
+from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship, desc
+from sqlalchemy import Column, DateTime, func
 from typing import Iterable, Dict, Optional
 from .db import get_session
 from .namespaces import Namespace, read_namespace
@@ -18,6 +20,14 @@ class Event(SQLModel, table=True):
     actor: Optional[Actor] = Relationship()
     item_name: Optional[str] = Field(foreign_key="item.name")
     item: Optional[Item] = Relationship()
+    creationTimestamp: Optional[datetime] = Field(
+        sa_column=Column(
+            DateTime(timezone=True), server_default=func.now(), nullable=True
+        ),
+    )
+    updateTimestamp: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
+    )
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
     type: Optional[str] = Field(nullable=True)
@@ -53,6 +63,23 @@ def read_events(
     statement = select(Event)
     if namespace_name is not None:
         statement = statement.where(Actor.namespace_name == namespace_name)
+    return session.exec(statement).all()
+
+
+@router.get("/latest")
+def read_latest_events(
+    namespace_name: str | None = None,
+    type_filter: str | None = None,
+    limit: int = 10,
+    session: Session = Depends(get_session),
+) -> Iterable[Event]:
+    statement = select(Event)
+    if namespace_name is not None:
+        statement = statement.where(Actor.namespace_name == namespace_name)
+    if type_filter is not None:
+        statement = statement.where(Event.type == type_filter)
+    statement = statement.order_by(desc(Event.creationTimestamp))
+    statement = statement.limit(limit)
     return session.exec(statement).all()
 
 
