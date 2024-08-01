@@ -4,7 +4,8 @@ from fastapi.responses import JSONResponse
 from fastapi_cli.cli import main
 from contextlib import asynccontextmanager
 from typing import AsyncIterator, Any
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.exc import NoResultFound, ArgumentError
+from pydantic import ValidationError
 
 from src.db import init_db
 from src.testdata import init_testdata
@@ -48,6 +49,35 @@ async def no_result_found_exception_handler(
         content={
             "message": f"Resource not found: {exception}",
             "path": request.url.path,
+        },
+    )
+
+
+@app.exception_handler(ArgumentError)
+async def argument_error_exception_handler(
+    request: Request, exception: ArgumentError
+) -> JSONResponse:
+    return JSONResponse(
+        status_code=400,
+        content={
+            "message": f"Argument error: {exception}",
+            "path": request.url.path,
+        },
+    )
+
+
+@app.exception_handler(ValidationError)
+async def validation_error_exception_handler(
+    request: Request, exception: ValidationError
+) -> JSONResponse:
+    errors = json.loads(exception.json())
+    return JSONResponse(
+        status_code=400,
+        content={
+            "message": f"Validation error: {exception}",
+            "path": request.url.path,
+            "validationErrorTitle": exception.title,
+            "errors": errors,
         },
     )
 
