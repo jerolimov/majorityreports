@@ -1,4 +1,7 @@
-mypy
-ruff
 fastapi
+mypy
+numpy
+pandas
+pandas-stubs
+ruff
 sqlmodel
