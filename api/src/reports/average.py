@@ -38,8 +38,8 @@ def get_minmax(
     namespace_name: str,
     session: Session = Depends(get_session),
 ) -> MinMax:
-    statement = select(
-        func.count(Feedback.uid).label("count"),
+    statement = select(  # type: ignore
+        func.count(Feedback.uid).label("count"),  # type: ignore
         func.min(Feedback.value).label("min"),
         func.max(Feedback.value).label("max"),
         # func.avg(Feedback.value).label('avg'),
@@ -47,7 +47,7 @@ def get_minmax(
 
     statement = statement.where(Feedback.namespace_name == namespace_name)
 
-    return session.exec(statement).one()
+    return session.exec(statement).one()  # type: ignore
 
 
 @router.get("/item/{item_name}")
@@ -56,8 +56,8 @@ def get_item_minmax(
     item_name: str,
     session: Session = Depends(get_session),
 ) -> MinMax:
-    statement = select(
-        func.count(Feedback.uid).label("count"),
+    statement = select(  # type: ignore
+        func.count(Feedback.uid).label("count"),  # type: ignore
         func.min(Feedback.value).label("min"),
         func.max(Feedback.value).label("max"),
         # func.avg(Feedback.value).label('avg'),
@@ -67,7 +67,7 @@ def get_item_minmax(
 
     statement = statement.where(Feedback.name == item_name)
 
-    return session.exec(statement).one()
+    return session.exec(statement).one()  # type: ignore
 
 
 @router.get("/items")
@@ -76,7 +76,7 @@ def get_all_items_minmax(
     session: Session = Depends(get_session),
 ) -> Iterable[ItemMinMax]:
     statement = (
-        select(
+        select(  # type: ignore
             Item.uid,
             Item.namespace_name,
             Item.name,
@@ -84,7 +84,7 @@ def get_all_items_minmax(
             Item.updateTimestamp,
             Item.labels,
             Item.annotations,
-            func.count(Feedback.uid).label("count"),
+            func.count(Feedback.uid).label("count"),  # type: ignore
             func.min(Feedback.value).label("min"),
             func.max(Feedback.value).label("max"),
             # func.avg(Feedback.value).label('avg'),
@@ -95,4 +95,4 @@ def get_all_items_minmax(
 
     statement = statement.where(Feedback.namespace_name == namespace_name)
 
-    return session.exec(statement).all()
+    return session.exec(statement).all()  # type: ignore
