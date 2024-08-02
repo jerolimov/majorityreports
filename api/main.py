@@ -2,6 +2,7 @@ import json
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi_cli.cli import main
+from fastapi.exceptions import ValidationException
 from contextlib import asynccontextmanager
 from typing import AsyncIterator, Any
 from sqlalchemy.exc import NoResultFound, ArgumentError
@@ -78,6 +79,20 @@ async def validation_error_exception_handler(
             "path": request.url.path,
             "validationErrorTitle": exception.title,
             "errors": errors,
+        },
+    )
+
+
+@app.exception_handler(ValidationException)
+async def fastapi_validation_exception_handler(
+    request: Request, exception: ValidationException
+) -> JSONResponse:
+    return JSONResponse(
+        status_code=400,
+        content={
+            "message": f"Validation error: {exception}",
+            "path": request.url.path,
+            # "errors": exception.errors,
         },
     )
 
