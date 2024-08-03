@@ -58,11 +58,15 @@ def create_event(
 
 @router.get("")
 def read_events(
-    namespace_name: str | None = None, session: Session = Depends(get_session)
+    namespace_name: str | None = None,
+    offset: int = 0,
+    limit: int = 10,
+    session: Session = Depends(get_session),
 ) -> Iterable[Event]:
     statement = select(Event)
     if namespace_name is not None:
         statement = statement.where(Actor.namespace_name == namespace_name)
+    statement = statement.offset(offset).limit(limit)
     return session.exec(statement).all()
 
 

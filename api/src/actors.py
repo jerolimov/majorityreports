@@ -61,16 +61,6 @@ def create_actor(
 
 @router.get("")
 def read_actors(
-    namespace_name: str | None = None, session: Session = Depends(get_session)
-) -> Iterable[Actor]:
-    statement = select(Actor)
-    if namespace_name is not None:
-        statement = statement.where(Actor.namespace_name == namespace_name)
-    return session.exec(statement).all()
-
-
-@router.get("/latest")
-def read_latest_actors(
     namespace_name: str | None = None,
     limit: int = 10,
     session: Session = Depends(get_session),
@@ -78,8 +68,22 @@ def read_latest_actors(
     statement = select(Actor)
     if namespace_name is not None:
         statement = statement.where(Actor.namespace_name == namespace_name)
-    statement = statement.order_by(desc(Actor.creationTimestamp))
     statement = statement.limit(limit)
+    return session.exec(statement).all()
+
+
+@router.get("/latest")
+def read_latest_actors(
+    namespace_name: str | None = None,
+    offset: int = 0,
+    limit: int = 10,
+    session: Session = Depends(get_session),
+) -> Iterable[Actor]:
+    statement = select(Actor)
+    if namespace_name is not None:
+        statement = statement.where(Actor.namespace_name == namespace_name)
+    statement = statement.order_by(desc(Actor.creationTimestamp))
+    statement = statement.offset(offset).limit(limit)
     return session.exec(statement).all()
 
 
