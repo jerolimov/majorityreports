@@ -1,1 +1,8 @@
-export { majorityreportsCorePlugin, MajorityreportsCorePage } from './plugin';
+export {
+    plugin,
+    NamespacesPage,
+    ActorsPage,
+    ItemsPage,
+    EventsPage,
+    FeedbacksPage,
+} from './plugin';

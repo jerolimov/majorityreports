@@ -46,10 +46,11 @@ integrations:
 proxy:
   ### Example for how to add a proxy endpoint for the frontend.
   ### A typical reason to do this is to handle HTTPS and CORS for internal services.
-  # endpoints:
-  #   '/test':
-  #     target: 'https://example.com'
-  #     changeOrigin: true
+  endpoints:
+    '/api':
+      target: 'http://localhost:8000'
+      changeOrigin: true
+      credentials: dangerously-allow-unauthenticated
 
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers

@@ -1,6 +1,13 @@
 import React, { PropsWithChildren } from 'react';
 import { makeStyles } from '@material-ui/core';
+
 import HomeIcon from '@material-ui/icons/Home';
+import NamespaceIcon from '@material-ui/icons/AccountTree';
+import ActorIcon from '@material-ui/icons/Group';
+import ItemIcon from '@material-ui/icons/Description';
+import EventIcon from '@material-ui/icons/EventNote';
+import FeedbackIcon from '@material-ui/icons/RateReview';
+
 import LogoFull from './LogoFull';
 import LogoIcon from './LogoIcon';
 import {
@@ -55,12 +62,14 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
       <SidebarLogo />
       <SidebarDivider />
       <SidebarGroup label="Menu" icon={<MenuIcon />}>
-        {/* Global nav, not org-specific */}
         <SidebarItem icon={HomeIcon} to="/" text="Home" />
-        {/* End global nav */}
         <SidebarDivider />
         <SidebarScrollWrapper>
-          {/* Items in this group will be scrollable if they run out of space */}
+          <SidebarItem icon={NamespaceIcon} to="/namespaces" text="Namespaces" />
+          <SidebarItem icon={ActorIcon} to="/actors" text="Actors" />
+          <SidebarItem icon={ItemIcon} to="/items" text="Items" />
+          <SidebarItem icon={EventIcon} to="/events" text="Events" />
+          <SidebarItem icon={FeedbackIcon} to="/feedbacks" text="Feedback" />
         </SidebarScrollWrapper>
       </SidebarGroup>
       <SidebarSpace />
