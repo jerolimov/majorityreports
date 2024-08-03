@@ -11,6 +11,7 @@ import {
 } from '@backstage/core-components';
 import { createApp } from '@backstage/app-defaults';
 import { AppRouter, FlatRoutes } from '@backstage/core-app-api';
+import { MajorityreportsCorePage } from '@internal/backstage-plugin-majorityreports-core';
 
 const app = createApp({
   apis,
@@ -25,6 +26,7 @@ const routes = (
   <FlatRoutes>
     {/* <Route path="/" element={<Navigate to="catalog" />} /> */}
     <Route path="/settings" element={<UserSettingsPage />} />
+    <Route path="/majorityreports-core" element={<MajorityreportsCorePage />} />
   </FlatRoutes>
 );
 
