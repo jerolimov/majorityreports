@@ -8,6 +8,7 @@ import {
   ResponseErrorPanel,
   Table,
   TableColumn,
+  useQueryParamState,
 } from '@backstage/core-components';
 
 type Actor = {
@@ -27,6 +28,8 @@ const columns: TableColumn[] = [
 ];
 
 export const TableContent = () => {
+  const [page, setPage] = useQueryParamState<number>('page');
+
   const { value: data, loading, error } = useAsync(async (): Promise<Actor[]> => {
     return fetch('http://localhost:7007/api/proxy/api/api/actors').then((response) => response.json());
   }, []);
@@ -40,7 +43,11 @@ export const TableContent = () => {
   return (
     <Table
       columns={columns}
+      isLoading={loading}
       data={data}
+      page={page ?? 0}
+      onPageChange={(changedPage, _changedPageSize) => setPage(changedPage)}
+      totalCount={1000}
     />
   );
 };
