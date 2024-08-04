@@ -34,6 +34,11 @@ class Feedback(SQLModel, table=True):
     value: str = Field()
 
 
+class FeedbacksResult(SQLModel):
+    count: int | None = None # fix types
+    items: Iterable[Feedback] | None = None
+
+
 router = APIRouter()
 
 
@@ -60,12 +65,18 @@ def read_feedbacks(
     offset: int = 0,
     limit: int = 10,
     session: Session = Depends(get_session),
-) -> Iterable[Feedback]:
-    statement = select(Feedback)
+) -> FeedbacksResult:
+    countSelect = select(func.count("*")).select_from(Feedback)
+    itemsSelect = select(Feedback).offset(offset).limit(limit)
+
     if namespace_name is not None:
-        statement = statement.where(Actor.namespace_name == namespace_name)
-    statement = statement.offset(offset).limit(limit)
-    return session.exec(statement).all()
+        countSelect = countSelect.where(Feedback.namespace_name == namespace_name)
+        itemsSelect = itemsSelect.where(Feedback.namespace_name == namespace_name)
+
+    result = FeedbacksResult()
+    result.count = session.exec(countSelect).one()
+    result.items = session.exec(itemsSelect).all()
+    return result
 
 
 @router.get("/latest")

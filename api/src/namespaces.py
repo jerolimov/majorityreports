@@ -23,6 +23,11 @@ class Namespace(SQLModel, table=True):
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
 
 
+class NamespacesResult(SQLModel):
+    count: int | None = None # fix types
+    items: Iterable[Namespace] | None = None
+
+
 router = APIRouter()
 
 
@@ -43,10 +48,14 @@ def create_namespace(
 @router.get("")
 def read_namespaces(
     offset: int = 0, limit: int = 10, session: Session = Depends(get_session)
-) -> Iterable[Namespace]:
-    statement = select(Namespace)
-    statement = statement.offset(offset).limit(limit)
-    return session.exec(statement).all()
+) -> NamespacesResult:
+    countSelect = select(func.count("*")).select_from(Namespace)
+    itemsSelect = select(Namespace).offset(offset).limit(limit)
+
+    result = NamespacesResult()
+    result.count = session.exec(countSelect).one()
+    result.items = session.exec(itemsSelect).all()
+    return result
 
 
 @router.get("/latest")

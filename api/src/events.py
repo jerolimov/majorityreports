@@ -35,6 +35,11 @@ class Event(SQLModel, table=True):
     # count: int = Field(default=0) ???
 
 
+class EventsResult(SQLModel):
+    count: int | None = None # fix types
+    items: Iterable[Event] | None = None
+
+
 router = APIRouter()
 
 
@@ -62,12 +67,18 @@ def read_events(
     offset: int = 0,
     limit: int = 10,
     session: Session = Depends(get_session),
-) -> Iterable[Event]:
-    statement = select(Event)
+) -> EventsResult:
+    countSelect = select(func.count("*")).select_from(Event)
+    itemsSelect = select(Event).offset(offset).limit(limit)
+
     if namespace_name is not None:
-        statement = statement.where(Actor.namespace_name == namespace_name)
-    statement = statement.offset(offset).limit(limit)
-    return session.exec(statement).all()
+        countSelect = countSelect.where(Event.namespace_name == namespace_name)
+        itemsSelect = itemsSelect.where(Event.namespace_name == namespace_name)
+
+    result = EventsResult()
+    result.count = session.exec(countSelect).one()
+    result.items = session.exec(itemsSelect).all()
+    return result
 
 
 @router.get("/latest")

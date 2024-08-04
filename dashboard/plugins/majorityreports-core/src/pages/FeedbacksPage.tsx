@@ -8,18 +8,11 @@ import {
   ResponseErrorPanel,
   Table,
   TableColumn,
-  useQueryParamState,
 } from '@backstage/core-components';
 
-type Feedback = {
-  namespace_name: string;
-  name: string;
-  uid: string;
-  creationTimestamp: string;
-  updateTimestamp: string;
-  labels: Record<string, string>;
-  annotations: Record<string, string>;
-};
+import { usePage } from '../hooks/usePage';
+import { usePageSize } from '../hooks/usePageSize';
+import { FeedbacksResult } from '@internal/backstage-plugin-majorityreports-common';
 
 const columns: TableColumn[] = [
   { title: 'Name', field: 'name' },
@@ -28,13 +21,18 @@ const columns: TableColumn[] = [
 ];
 
 export const TableContent = () => {
-  const [page, setPage] = useQueryParamState<number>('page');
+  const [page, setPage] = usePage();
+  const [pageSize, setPageSize] = usePageSize();
 
-  const { value: data, loading, error } = useAsync(async (): Promise<Feedback[]> => {
-    return fetch('http://localhost:7007/api/proxy/api/api/feedbacks').then((response) => response.json());
-  }, []);
+  const { value, loading, error } = useAsync(async (): Promise<FeedbacksResult> => {
+    const proxyUrl = 'http://localhost:7007/api/proxy/api/';
+    const url = new URL('api/feedbacks', proxyUrl);
+    url.searchParams.set('offset', (page * pageSize).toString());
+    url.searchParams.set('limit', pageSize.toString());    
+    return fetch(url.toString()).then((response) => response.json());
+  }, [page, pageSize]);
 
-  if (loading || !data) {
+  if (loading) {
     return <Progress />;
   } else if (error) {
     return <ResponseErrorPanel error={error} />;
@@ -44,10 +42,12 @@ export const TableContent = () => {
     <Table
       columns={columns}
       isLoading={loading}
-      data={data}
-      page={page ?? 0}
-      onPageChange={(changedPage, _changedPageSize) => setPage(changedPage)}
-      totalCount={1000}
+      data={value?.items || []}
+      page={page}
+      options={{ pageSize }}
+      onPageChange={setPage}
+      onRowsPerPageChange={setPageSize}
+      totalCount={value?.count || 0}
     />
   );
 };
