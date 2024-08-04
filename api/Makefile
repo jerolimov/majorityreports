@@ -17,3 +17,6 @@ format:
 
 typecheck:
 	python -m mypy .
+
+update-openapi:
+	python gen-openapi.py > ../openapi.json
