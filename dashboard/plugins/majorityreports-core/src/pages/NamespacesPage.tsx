@@ -6,19 +6,51 @@ import {
   Content,
   Progress,
   ResponseErrorPanel,
+  Select,
+  SelectItem,
+  SelectedItems,
   Table,
   TableColumn,
+  Link,
 } from '@backstage/core-components';
 
-import { NamespacesResult } from '@internal/backstage-plugin-majorityreports-common';
+import Box from '@material-ui/core/Box';
 
+import { Namespace, NamespacesResult } from '@internal/backstage-plugin-majorityreports-common';
+
+import { FilterLayout } from '../components/FilterLayout';
 import { usePage } from '../hooks/usePage';
 import { usePageSize } from '../hooks/usePageSize';
 
-const columns: TableColumn[] = [
-  { title: 'Name', field: 'name' },
-  { title: 'Created', field: 'creationTimestamp', type: 'datetime' },
+const columns: TableColumn<Namespace>[] = [
+  {
+    title: 'Name',
+    field: 'name',
+    highlight: true,
+    render: (data) => <Link to={data.name}>{data.name}</Link>
+  },
+  {
+    title: 'Created',
+    field: 'creationTimestamp',
+    type: 'datetime',
+  },
 ];
+
+export const Filter = () => {
+  const items: SelectItem[] = [];
+  const [selected, setSelected] = React.useState<SelectedItems>();
+
+  return (
+    <Box pb={1} pt={1}>
+      <Select
+        label="Type"
+        items={items}
+        selected={selected}
+        onChange={setSelected}
+      />
+    </Box>
+  );
+}
 
 export const TableContent = () => {
   const [page, setPage] = usePage();
@@ -54,9 +86,19 @@ export const TableContent = () => {
 
 export const NamespacesPage = () => (
   <Page themeId="namespaces">
-    <Header title="Namespaces" />
+    <Header title="Namespaces" type="Namespace" />
     <Content>
-      <TableContent />
+      {/* <ContentHeader title="">
+        <CreateButton title="Create" to="create" />
+      </ContentHeader> */}
+      <FilterLayout>
+        <FilterLayout.Filter>
+          <Filter />
+        </FilterLayout.Filter>
+        <FilterLayout.Content>
+          <TableContent />
+        </FilterLayout.Content>
+      </FilterLayout>
     </Content>
   </Page>
 );
