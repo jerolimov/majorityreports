@@ -27,12 +27,12 @@ const columns: TableColumn<Actor>[] = [
     title: 'Name',
     field: 'name',
     highlight: true,
-    render: (data) => <Link to={data.name}>{data.name}</Link>
+    render: (data) => <Link to={`/namespaces/${data.namespace_name}/actors/${data.name}`}>{data.name}</Link>
   },
   {
     title: 'Namespace',
     field: 'namespace_name',
-    render: (data) => <Link to={"../namespaces/" + data.namespace_name}>{data.namespace_name}</Link>
+    render: (data) => <Link to={`/namespaces/${data.namespace_name}`}>{data.namespace_name}</Link>
   },
   {
     title: 'Created',

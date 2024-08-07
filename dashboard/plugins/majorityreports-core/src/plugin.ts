@@ -20,10 +20,26 @@ export const NamespacesPage = plugin.provide(
   }),
 );
 
+export const NamespaceDetailsPage = plugin.provide(
+  createRoutableExtension({
+    name: 'MajorityReportsNamespaceDetailsPage',
+    component: () => import('./pages/NamespaceDetailsPage').then(m => m.NamespaceDetailsPage),
+    mountPoint: rootRouteRef,
+  }),
+);
+
 export const ActorsPage = plugin.provide(
   createRoutableExtension({
     name: 'MajorityReportsActorsPage',
     component: () => import('./pages/ActorsPage').then(m => m.ActorsPage),
+    mountPoint: rootRouteRef,
+  }),
+);
+
+export const ActorDetailsPage = plugin.provide(
+  createRoutableExtension({
+    name: 'MajorityReportsActorDetailsPage',
+    component: () => import('./pages/ActorDetailsPage').then(m => m.ActorDetailsPage),
     mountPoint: rootRouteRef,
   }),
 );
@@ -36,6 +52,14 @@ export const ItemsPage = plugin.provide(
   }),
 );
 
+export const ItemDetailsPage = plugin.provide(
+  createRoutableExtension({
+    name: 'MajorityReportsItemsDetailsPage',
+    component: () => import('./pages/ItemDetailsPage').then(m => m.ItemDetailsPage),
+    mountPoint: rootRouteRef,
+  }),
+);
+
 export const EventsPage = plugin.provide(
   createRoutableExtension({
     name: 'MajorityReportsEventsPage',
@@ -44,10 +68,26 @@ export const EventsPage = plugin.provide(
   }),
 );
 
+export const EventDetailsPage = plugin.provide(
+  createRoutableExtension({
+    name: 'MajorityReportsEventDetailsPage',
+    component: () => import('./pages/EventDetailsPage').then(m => m.EventDetailsPage),
+    mountPoint: rootRouteRef,
+  }),
+);
+
 export const FeedbacksPage = plugin.provide(
   createRoutableExtension({
     name: 'MajorityReportsFeedbacksPage',
     component: () => import('./pages/FeedbacksPage').then(m => m.FeedbacksPage),
+    mountPoint: rootRouteRef,
+  }),
+);
+
+export const FeedbackDetailsPage = plugin.provide(
+  createRoutableExtension({
+    name: 'MajorityReportsFeedbackDetailsPage',
+    component: () => import('./pages/FeedbackDetailsPage').then(m => m.FeedbackDetailsPage),
     mountPoint: rootRouteRef,
   }),
 );

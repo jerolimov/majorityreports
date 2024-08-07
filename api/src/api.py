@@ -21,18 +21,18 @@ router.include_router(feedbacks, prefix="/feedbacks", tags=["feedbacks"])
 router.include_router(stats, prefix="/stats", tags=["stats"])
 
 router.include_router(
-    actors, prefix="/namespace/{namespace_name}/actors", tags=["actors"]
+    actors, prefix="/namespaces/{namespace_name}/actors", tags=["actors"]
 )
-router.include_router(items, prefix="/namespace/{namespace_name}/items", tags=["items"])
+router.include_router(items, prefix="/namespaces/{namespace_name}/items", tags=["items"])
 router.include_router(
-    events, prefix="/namespace/{namespace_name}/events", tags=["events"]
+    events, prefix="/namespaces/{namespace_name}/events", tags=["events"]
 )
 router.include_router(
-    feedbacks, prefix="/namespace/{namespace_name}/feedbacks", tags=["feedbacks"]
+    feedbacks, prefix="/namespaces/{namespace_name}/feedbacks", tags=["feedbacks"]
 )
-router.include_router(stats, prefix="/namespace/{namespace_name}/stats", tags=["stats"])
+router.include_router(stats, prefix="/namespaces/{namespace_name}/stats", tags=["stats"])
 
 # reports
 router.include_router(
-    reports, prefix="/namespace/{namespace_name}/reports", tags=["reports"]
+    reports, prefix="/namespaces/{namespace_name}/reports", tags=["reports"]
 )

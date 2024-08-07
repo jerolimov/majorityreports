@@ -13,10 +13,15 @@ import { createApp } from '@backstage/app-defaults';
 import { AppRouter, FlatRoutes } from '@backstage/core-app-api';
 import {
   NamespacesPage,
+  NamespaceDetailsPage,
   ActorsPage,
+  ActorDetailsPage,
   ItemsPage,
+  ItemDetailsPage,
   EventsPage,
-  FeedbacksPage
+  EventDetailsPage,
+  FeedbacksPage,
+  FeedbackDetailsPage,
 } from '@internal/backstage-plugin-majorityreports-core';
 
 const app = createApp({
@@ -33,10 +38,23 @@ const routes = (
     <Route path="/" element={<Navigate to="namespaces" />} />
 
     <Route path="/namespaces" element={<NamespacesPage />} />
+    <Route path="/namespaces/:namespace_name" element={<NamespaceDetailsPage />} />
+
     <Route path="/actors" element={<ActorsPage />} />
+    <Route path="/namespaces/:namespace_name/actors" element={<ActorsPage />} />
+    <Route path="/namespaces/:namespace_name/actors/:actor_name" element={<ActorDetailsPage />} />
+
     <Route path="/items" element={<ItemsPage />} />
+    <Route path="/namespaces/:namespace_name/items" element={<ItemsPage />} />
+    <Route path="/namespaces/:namespace_name/items/:item_name" element={<ItemDetailsPage />} />
+
     <Route path="/events" element={<EventsPage />} />
+    <Route path="/namespaces/:namespace_name/events" element={<EventsPage />} />
+    <Route path="/namespaces/:namespace_name/events/:event_name" element={<EventDetailsPage />} />
+
     <Route path="/feedbacks" element={<FeedbacksPage />} />
+    <Route path="/namespaces/:namespace_name/feedbacks" element={<FeedbacksPage />} />
+    <Route path="/namespaces/:namespace_name/feedbacks/:feedback_name" element={<FeedbackDetailsPage />} />
 
     <Route path="/settings" element={<UserSettingsPage />} />
   </FlatRoutes>
