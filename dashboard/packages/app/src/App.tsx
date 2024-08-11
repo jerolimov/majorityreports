@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
 import { UserSettingsPage } from '@backstage/plugin-user-settings';
 import { apis } from './apis';
 import { Root } from './components/Root';
@@ -60,12 +62,16 @@ const routes = (
   </FlatRoutes>
 );
 
+const queryClient = new QueryClient();
+
 export default app.createRoot(
   <>
     <AlertDisplay />
     <OAuthRequestDialog />
-    <AppRouter>
-      <Root>{routes}</Root>
-    </AppRouter>
+    <QueryClientProvider client={queryClient}>
+      <AppRouter>
+        <Root>{routes}</Root>
+      </AppRouter>
+    </QueryClientProvider>
   </>,
 );

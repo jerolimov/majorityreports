@@ -1,5 +1,4 @@
 import React from 'react';
-import useAsync from 'react-use/lib/useAsync';
 import {
   Page,
   Header,
@@ -17,6 +16,8 @@ import {
 import Box from '@material-ui/core/Box';
 
 import { Item, ItemsResult } from '@internal/backstage-plugin-majorityreports-common';
+
+import { useQuery } from '@tanstack/react-query';
 
 import { FilterLayout } from '../components/FilterLayout';
 import { usePage } from '../hooks/usePage';
@@ -61,30 +62,33 @@ export const TableContent = () => {
   const [page, setPage] = usePage();
   const [pageSize, setPageSize] = usePageSize();
 
-  const { value, loading, error } = useAsync(async (): Promise<ItemsResult> => {
-    const proxyUrl = 'http://localhost:7007/api/proxy/api/';
-    const url = new URL('api/items', proxyUrl);
-    url.searchParams.set('offset', (page * pageSize).toString());
-    url.searchParams.set('limit', pageSize.toString());    
-    return fetch(url.toString()).then((response) => response.json());
-  }, [page, pageSize]);
+  const result = useQuery<ItemsResult>({
+    queryKey: ['items', page, pageSize],
+    queryFn: function getNamespaces() {
+      const proxyUrl = 'http://localhost:7007/api/proxy/api/';
+      const url = new URL('api/items', proxyUrl);
+      url.searchParams.set('offset', (page * pageSize).toString());
+      url.searchParams.set('limit', pageSize.toString());    
+      return fetch(url.toString()).then((response) => response.json());
+    },
+  });
 
-  if (loading) {
+  if (result.isLoading) {
     return <Progress />;
-  } else if (error) {
-    return <ResponseErrorPanel error={error} />;
+  } else if (result.error) {
+    return <ResponseErrorPanel error={result.error} />;
   }
 
   return (
     <Table
       columns={columns}
-      isLoading={loading}
-      data={value?.items || []}
+      isLoading={result.isLoading}
+      data={result.data?.items || []}
       page={page}
       options={{ pageSize }}
       onPageChange={setPage}
       onRowsPerPageChange={setPageSize}
-      totalCount={value?.count || 0}
+      totalCount={result.data?.count || 0}
     />
   );
 };

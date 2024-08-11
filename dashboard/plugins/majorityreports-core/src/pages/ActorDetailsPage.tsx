@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useAsync from 'react-use/lib/useAsync';
 
 import {
   Page,
@@ -12,6 +11,8 @@ import {
 
 import Grid from '@material-ui/core/Grid';
 
+import { useQuery } from '@tanstack/react-query';
+
 import { Actor } from '@internal/backstage-plugin-majorityreports-common';
 
 import { AboutCard } from '../components/AboutCard';
@@ -22,18 +23,22 @@ import { AnnotationsCard } from '../components/AnnotationsCard';
 export const ActorDetailsPage = () => {
   const { namespace_name: namespaceName, actor_name: actorName } = useParams();
 
-  const { value: actor, loading, error } = useAsync(async (): Promise<Actor> => {
-    const proxyUrl = 'http://localhost:7007/api/proxy/api/';
-    const url = new URL('api/namespaces/' + namespaceName + '/actors/' + actorName, proxyUrl);
-    return fetch(url.toString()).then((response) => response.json());
-  }, []);
+  const result = useQuery<Actor>({
+    queryKey: ['actors', namespaceName, actorName],
+    queryFn: function getNamespaces() {
+      const proxyUrl = 'http://localhost:7007/api/proxy/api/';
+      const url = new URL('api/namespaces/' + namespaceName + '/actors/' + actorName, proxyUrl);
+      return fetch(url.toString()).then((response) => response.json());
+    },
+  });
 
-  if (loading) {
+  if (result.isLoading) {
     return <Progress />;
-  } else if (error) {
-    return <ResponseErrorPanel error={error} />;
+  } else if (result.error) {
+    return <ResponseErrorPanel error={result.error} />;
   }
 
+  const actor = result.data;
   const title = actor?.annotations?.['title'] || actorName;
 
   return (

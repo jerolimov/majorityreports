@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useAsync from 'react-use/lib/useAsync';
 
 import {
   Page,
@@ -12,6 +11,8 @@ import {
 
 import Grid from '@material-ui/core/Grid';
 
+import { useQuery } from '@tanstack/react-query';
+
 import { Feedback } from '@internal/backstage-plugin-majorityreports-common';
 
 import { AboutCard } from '../components/AboutCard';
@@ -22,18 +23,22 @@ import { AnnotationsCard } from '../components/AnnotationsCard';
 export const FeedbackDetailsPage = () => {
   const { namespace_name: namespaceName, feedback_name: feedbackName } = useParams();
 
-  const { value: feedback, loading, error } = useAsync(async (): Promise<Feedback> => {
-    const proxyUrl = 'http://localhost:7007/api/proxy/api/';
-    const url = new URL('api/namespaces/' + namespaceName + '/feedbacks/' + feedbackName, proxyUrl);
-    return fetch(url.toString()).then((response) => response.json());
-  }, []);
+  const result = useQuery<Feedback>({
+    queryKey: ['feedbacks', namespaceName, feedbackName],
+    queryFn: function getNamespaces() {
+      const proxyUrl = 'http://localhost:7007/api/proxy/api/';
+      const url = new URL('api/namespaces/' + namespaceName + '/feedbacks/' + feedbackName, proxyUrl);
+      return fetch(url.toString()).then((response) => response.json());
+    },
+  });
 
-  if (loading) {
+  if (result.isLoading) {
     return <Progress />;
-  } else if (error) {
-    return <ResponseErrorPanel error={error} />;
+  } else if (result.error) {
+    return <ResponseErrorPanel error={result.error} />;
   }
 
+  const feedback = result.data;
   const title = feedback?.annotations?.['title'] || feedbackName;
 
   return (

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useAsync from 'react-use/lib/useAsync';
 
 import {
   Page,
@@ -13,6 +12,8 @@ import {
 import Grid from '@material-ui/core/Grid';
 // import Box from '@material-ui/core/Box';
 // import Typography from '@material-ui/core/Typography';
+
+import { useQuery } from '@tanstack/react-query';
 
 import { Namespace } from '@internal/backstage-plugin-majorityreports-common';
 
@@ -35,18 +36,22 @@ import { AnnotationsCard } from '../components/AnnotationsCard';
 export const NamespaceDetailsPage = () => {
   const { namespace_name: namespaceName } = useParams();
 
-  const { value: namespace, loading, error } = useAsync(async (): Promise<Namespace> => {
-    const proxyUrl = 'http://localhost:7007/api/proxy/api/';
-    const url = new URL('api/namespaces/' + namespaceName, proxyUrl);
-    return fetch(url.toString()).then((response) => response.json());
-  }, []);
+  const result = useQuery<Namespace>({
+    queryKey: ['namespaces', namespaceName],
+    queryFn: function getNamespaces() {
+      const proxyUrl = 'http://localhost:7007/api/proxy/api/';
+      const url = new URL('api/namespaces/' + namespaceName, proxyUrl);
+      return fetch(url.toString()).then((response) => response.json());
+    },
+  });
 
-  if (loading) {
+  if (result.isLoading) {
     return <Progress />;
-  } else if (error) {
-    return <ResponseErrorPanel error={error} />;
+  } else if (result.error) {
+    return <ResponseErrorPanel error={result.error} />;
   }
 
+  const namespace = result.data;
   const title = namespace?.annotations?.['title'] || namespaceName;
 
   return (

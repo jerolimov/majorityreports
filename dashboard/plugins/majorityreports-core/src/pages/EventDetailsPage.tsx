@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useAsync from 'react-use/lib/useAsync';
 
 import {
   Page,
@@ -12,6 +11,8 @@ import {
 
 import Grid from '@material-ui/core/Grid';
 
+import { useQuery } from '@tanstack/react-query';
+
 import { Event } from '@internal/backstage-plugin-majorityreports-common';
 
 import { AboutCard } from '../components/AboutCard';
@@ -22,18 +23,22 @@ import { AnnotationsCard } from '../components/AnnotationsCard';
 export const EventDetailsPage = () => {
   const { namespace_name: namespaceName, event_name: eventName } = useParams();
 
-  const { value: event, loading, error } = useAsync(async (): Promise<Event> => {
-    const proxyUrl = 'http://localhost:7007/api/proxy/api/';
-    const url = new URL('api/namespaces/' + namespaceName + '/events/' + eventName, proxyUrl);
-    return fetch(url.toString()).then((response) => response.json());
-  }, []);
+  const result = useQuery<Event>({
+    queryKey: ['events', namespaceName, eventName],
+    queryFn: function getNamespaces() {
+      const proxyUrl = 'http://localhost:7007/api/proxy/api/';
+      const url = new URL('api/namespaces/' + namespaceName + '/events/' + eventName, proxyUrl);
+      return fetch(url.toString()).then((response) => response.json());
+    },
+  });
 
-  if (loading) {
+  if (result.isLoading) {
     return <Progress />;
-  } else if (error) {
-    return <ResponseErrorPanel error={error} />;
+  } else if (result.error) {
+    return <ResponseErrorPanel error={result.error} />;
   }
 
+  const event = result.data;
   const title = event?.annotations?.['title'] || eventName;
 
   return (

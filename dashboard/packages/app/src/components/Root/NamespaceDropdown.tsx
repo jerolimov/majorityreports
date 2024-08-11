@@ -1,5 +1,4 @@
 import React from 'react';
-import useAsync from 'react-use/lib/useAsync';
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -7,20 +6,26 @@ import MenuItem from '@mui/material/MenuItem';
 
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
+import { useQuery } from '@tanstack/react-query';
+
 import { useNamespace } from '../../hooks/useNamespace';
+
 import { NamespacesResult } from '@internal/backstage-plugin-majorityreports-common';
 
 export const NamespaceDropdown = () => {
   const [namespace, setNamespace] = useNamespace();
 
-  const { value /*, loading, error*/ } = useAsync(async (): Promise<NamespacesResult> => {
-    const proxyUrl = 'http://localhost:7007/api/proxy/api/';
-    const url = new URL('api/namespaces', proxyUrl);
-    url.searchParams.set('limit', '1000');    
-    return fetch(url.toString()).then((response) => response.json());
-  }, []);
+  const result = useQuery<NamespacesResult>({
+    queryKey: ['namespaces', 0, 1000],
+    queryFn: function getNamespaces() {
+      const proxyUrl = 'http://localhost:7007/api/proxy/api/';
+      const url = new URL('api/namespaces', proxyUrl);
+      url.searchParams.set('limit', '1000');    
+      return fetch(url.toString()).then((response) => response.json());
+    },
+  });
 
-  const namespaces = value?.items;
+  const namespaces = result.data?.items;
 
   // From MUI doc
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
