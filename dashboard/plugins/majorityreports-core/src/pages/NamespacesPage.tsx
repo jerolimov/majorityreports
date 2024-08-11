@@ -19,6 +19,7 @@ import Box from '@material-ui/core/Box';
 import { Namespace, NamespacesResult } from '@internal/backstage-plugin-majorityreports-common';
 
 import { FilterLayout } from '../components/FilterLayout';
+import { Tags } from '../components/Tags';
 import { usePage } from '../hooks/usePage';
 import { usePageSize } from '../hooks/usePageSize';
 
@@ -33,6 +34,10 @@ const columns: TableColumn<Namespace>[] = [
     title: 'Created',
     field: 'creationTimestamp',
     type: 'datetime',
+  },
+  {
+    title: 'Tags',
+    render: (data) => <Tags object={data} />,
   },
 ];
 

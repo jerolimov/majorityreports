@@ -24,6 +24,10 @@ export function useNamespace(): [string | null, (newNamespace: string | null) =>
       if (newNamespace) {
         newPath = '/namespaces/' + newNamespace + pathname;
       }
+    } else {
+      if (newNamespace) {
+        newPath = '/namespaces/' + newNamespace;
+      }
     }
 
     if (newPath) {

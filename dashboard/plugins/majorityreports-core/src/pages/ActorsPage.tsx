@@ -19,6 +19,7 @@ import Box from '@material-ui/core/Box';
 import { Actor, ActorsResult } from '@internal/backstage-plugin-majorityreports-common';
 
 import { FilterLayout } from '../components/FilterLayout';
+import { Tags } from '../components/Tags';
 import { usePage } from '../hooks/usePage';
 import { usePageSize } from '../hooks/usePageSize';
 
@@ -33,6 +34,10 @@ const columns: TableColumn<Actor>[] = [
     title: 'Namespace',
     field: 'namespace_name',
     render: (data) => <Link to={`/namespaces/${data.namespace_name}`}>{data.namespace_name}</Link>
+  },
+  {
+    title: 'Tags',
+    render: (data) => <Tags object={data} />,
   },
   {
     title: 'Created',
