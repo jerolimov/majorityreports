@@ -2,7 +2,17 @@ from datetime import datetime
 import uuid
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship, desc
+from sqlmodel import (
+    Field,
+    SQLModel,
+    UniqueConstraint,
+    Session,
+    select,
+    JSON,
+    Relationship,
+    desc,
+    null,
+)
 from sqlalchemy import Column, DateTime, func
 from typing import Iterable, Dict, Optional
 from .db import get_session
@@ -12,6 +22,12 @@ from .items import Item
 
 
 class Event(SQLModel, table=True):
+    __table_args__ = (
+        UniqueConstraint(
+            "namespace_name", "name", name="event_name_is_unique_in_namespace"
+        ),
+    )
+
     uid: uuid.UUID = Field(primary_key=True, default_factory=uuid.uuid4)
     namespace_name: str = Field(foreign_key="namespace.name")
     namespace: Namespace = Relationship()
@@ -28,6 +44,9 @@ class Event(SQLModel, table=True):
     updateTimestamp: Optional[datetime] = Field(
         sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
     )
+    deletedTimestamp: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), nullable=True),
+    )
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
     type: Optional[str] = Field(nullable=True)
@@ -36,7 +55,7 @@ class Event(SQLModel, table=True):
 
 
 class EventsResult(SQLModel):
-    count: int | None = None # fix types
+    count: int | None = None  # fix types
     items: Iterable[Event] | None = None
 
 
@@ -45,10 +64,12 @@ router = APIRouter()
 
 @router.post("")
 def create_event(
-    namespace_name: str, newEvent: Event, session: Session = Depends(get_session)
+    namespace_name: str,
+    newEvent: Event,
+    session: Session = Depends(get_session),
 ) -> Event:
     event = Event()
-    event.namespace = read_namespace(namespace_name)
+    event.namespace = read_namespace(namespace_name, session)
     event.name = newEvent.name
     event.actor = newEvent.actor
     event.labels = newEvent.labels
@@ -75,6 +96,9 @@ def read_events(
         countSelect = countSelect.where(Event.namespace_name == namespace_name)
         itemsSelect = itemsSelect.where(Event.namespace_name == namespace_name)
 
+    countSelect = countSelect.where(Event.deletedTimestamp == null())
+    itemsSelect = itemsSelect.where(Event.deletedTimestamp == null())
+
     result = EventsResult()
     result.count = session.exec(countSelect).one()
     result.items = session.exec(itemsSelect).all()
@@ -93,6 +117,7 @@ def read_latest_events(
         statement = statement.where(Actor.namespace_name == namespace_name)
     if type_filter is not None:
         statement = statement.where(Event.type == type_filter)
+    statement = statement.where(Event.deletedTimestamp == null())
     statement = statement.order_by(desc(Event.creationTimestamp))
     statement = statement.limit(limit)
     return session.exec(statement).all()
@@ -105,6 +130,7 @@ def read_event(
     statement = select(Event)
     statement = statement.where(Event.namespace_name == namespace_name)
     statement = statement.where(Event.name == event_name)
+    statement = statement.where(Event.deletedTimestamp == null())
     return session.exec(statement).one()
 
 
@@ -135,12 +161,23 @@ def update_event(
 
 @router.delete("/{event_name}")
 def delete_event(
-    namespace_name: str, event_name: str, session: Session = Depends(get_session)
+    namespace_name: str,
+    event_name: str,
+    session: Session = Depends(get_session),
 ) -> JSONResponse:
-    # or how can we run a delete query directly?
-    event = read_event(namespace_name, event_name)
-    session.delete(event)
-    session.commit()
+    namespace = read_namespace(namespace_name, session)
+    event = read_event(namespace_name, event_name, session)
+
+    softDelete = namespace.labels.get("soft-delete") == "true"
+
+    if softDelete:
+        event.deletedTimestamp = datetime.now()
+        event.annotations = {}
+        session.add(event)
+        session.commit()
+    else:
+        session.delete(event)
+        session.commit()
     return JSONResponse(
         status_code=status.HTTP_202_ACCEPTED, content={"message": "Event deleted"}
     )

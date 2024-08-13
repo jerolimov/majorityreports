@@ -2,13 +2,17 @@ import uuid
 from datetime import datetime
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select, JSON, desc
+from sqlmodel import Field, SQLModel, UniqueConstraint, Session, select, JSON, desc, null
 from sqlalchemy import Column, DateTime, func
 from typing import Iterable, Dict, Optional
 from .db import get_session
 
 
 class Namespace(SQLModel, table=True):
+    __table_args__ = (
+        UniqueConstraint("name", "deletedTimestamp", name="namespace_name_is_unique"),
+    )
+
     uid: uuid.UUID = Field(unique=True, default_factory=uuid.uuid4)
     name: str = Field(primary_key=True)
     creationTimestamp: Optional[datetime] = Field(
@@ -19,12 +23,15 @@ class Namespace(SQLModel, table=True):
     updateTimestamp: Optional[datetime] = Field(
         sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
     )
+    deletedTimestamp: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), nullable=True),
+    )
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
 
 
 class NamespacesResult(SQLModel):
-    count: int | None = None # fix types
+    count: int | None = None  # fix types
     items: Iterable[Namespace] | None = None
 
 
@@ -52,6 +59,9 @@ def read_namespaces(
     countSelect = select(func.count("*")).select_from(Namespace)
     itemsSelect = select(Namespace).offset(offset).limit(limit)
 
+    countSelect = countSelect.where(Namespace.deletedTimestamp == null())
+    itemsSelect = itemsSelect.where(Namespace.deletedTimestamp == null())
+
     result = NamespacesResult()
     result.count = session.exec(countSelect).one()
     result.items = session.exec(itemsSelect).all()
@@ -63,6 +73,7 @@ def read_latest_namespaces(
     limit: int = 10, session: Session = Depends(get_session)
 ) -> Iterable[Namespace]:
     statement = select(Namespace)
+    statement = statement.where(Namespace.deletedTimestamp == null())
     statement = statement.order_by(desc(Namespace.creationTimestamp))
     statement = statement.limit(limit)
     return session.exec(statement).all()
@@ -74,6 +85,7 @@ def read_namespace(
 ) -> Namespace:
     statement = select(Namespace)
     statement = statement.where(Namespace.name == namespace_name)
+    statement = statement.where(Namespace.deletedTimestamp == null())
     return session.exec(statement).one()
 
 
@@ -99,10 +111,18 @@ def update_namespace(
 def delete_namespace(
     namespace_name: str, session: Session = Depends(get_session)
 ) -> JSONResponse:
-    # or how can we run a delete query directly?
-    namespace = read_namespace(namespace_name)
-    session.delete(namespace)
-    session.commit()
+    namespace = read_namespace(namespace_name, session)
+
+    softDelete = namespace.labels.get("soft-delete") == "true"
+
+    if softDelete:
+        namespace.deletedTimestamp = datetime.now()
+        namespace.annotations = {}
+        session.add(namespace)
+        session.commit()
+    else:
+        session.delete(namespace)
+        session.commit()
     return JSONResponse(
         status_code=status.HTTP_202_ACCEPTED, content={"message": "Namespace deleted"}
     )

@@ -5,12 +5,13 @@ from fastapi.responses import JSONResponse
 from sqlmodel import (
     Field,
     SQLModel,
+    UniqueConstraint,
     Session,
     select,
     JSON,
     Relationship,
-    UniqueConstraint,
     desc,
+    null,
 )
 from sqlalchemy import Column, DateTime, func
 from typing import Iterable, Dict, Optional
@@ -37,12 +38,15 @@ class Item(SQLModel, table=True):
     updateTimestamp: Optional[datetime] = Field(
         sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
     )
+    deletedTimestamp: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), nullable=True),
+    )
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
 
 
 class ItemsResult(SQLModel):
-    count: int | None = None # fix types
+    count: int | None = None  # fix types
     items: Iterable[Item] | None = None
 
 
@@ -78,6 +82,9 @@ def read_items(
         countSelect = countSelect.where(Item.namespace_name == namespace_name)
         itemsSelect = itemsSelect.where(Item.namespace_name == namespace_name)
 
+    countSelect = countSelect.where(Item.deletedTimestamp == null())
+    itemsSelect = itemsSelect.where(Item.deletedTimestamp == null())
+
     result = ItemsResult()
     result.count = session.exec(countSelect).one()
     result.items = session.exec(itemsSelect).all()
@@ -93,6 +100,7 @@ def read_latest_items(
     statement = select(Item)
     if namespace_name is not None:
         statement = statement.where(Item.namespace_name == namespace_name)
+    statement = statement.where(Item.deletedTimestamp == null())
     statement = statement.order_by(desc(Item.creationTimestamp))
     statement = statement.limit(limit)
     return session.exec(statement).all()
@@ -105,6 +113,7 @@ def read_item(
     statement = select(Item)
     statement = statement.where(Item.namespace_name == namespace_name)
     statement = statement.where(Item.name == item_name)
+    statement = statement.where(Item.deletedTimestamp == null())
     return session.exec(statement).one()
 
 
@@ -131,10 +140,19 @@ def update_item(
 def delete_item(
     namespace_name: str, item_name: str, session: Session = Depends(get_session)
 ) -> JSONResponse:
-    # or how can we run a delete query directly?
+    namespace = read_namespace(namespace_name)
     item = read_item(namespace_name, item_name)
-    session.delete(item)
-    session.commit()
+
+    softDelete = namespace.labels.get("soft-delete") == "true"
+
+    if softDelete:
+        item.deletedTimestamp = datetime.now()
+        item.annotations = {}
+        session.add(item)
+        session.commit()
+    else:
+        session.delete(item)
+        session.commit()
     return JSONResponse(
         status_code=status.HTTP_202_ACCEPTED, content={"message": "Item deleted"}
     )

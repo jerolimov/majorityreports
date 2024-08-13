@@ -23,14 +23,18 @@ router.include_router(stats, prefix="/stats", tags=["stats"])
 router.include_router(
     actors, prefix="/namespaces/{namespace_name}/actors", tags=["actors"]
 )
-router.include_router(items, prefix="/namespaces/{namespace_name}/items", tags=["items"])
+router.include_router(
+    items, prefix="/namespaces/{namespace_name}/items", tags=["items"]
+)
 router.include_router(
     events, prefix="/namespaces/{namespace_name}/events", tags=["events"]
 )
 router.include_router(
     feedbacks, prefix="/namespaces/{namespace_name}/feedbacks", tags=["feedbacks"]
 )
-router.include_router(stats, prefix="/namespaces/{namespace_name}/stats", tags=["stats"])
+router.include_router(
+    stats, prefix="/namespaces/{namespace_name}/stats", tags=["stats"]
+)
 
 # reports
 router.include_router(

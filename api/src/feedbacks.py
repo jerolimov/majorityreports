@@ -2,7 +2,17 @@ from datetime import datetime
 import uuid
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, Session, select, JSON, Relationship, desc
+from sqlmodel import (
+    Field,
+    SQLModel,
+    UniqueConstraint,
+    Session,
+    select,
+    JSON,
+    Relationship,
+    desc,
+    null,
+)
 from sqlalchemy import Column, DateTime, func
 from typing import Iterable, Dict, Optional
 from .db import get_session
@@ -12,6 +22,12 @@ from .items import Item
 
 
 class Feedback(SQLModel, table=True):
+    __table_args__ = (
+        UniqueConstraint(
+            "namespace_name", "name", name="feedback_name_is_unique_in_namespace"
+        ),
+    )
+
     uid: uuid.UUID = Field(primary_key=True, default_factory=uuid.uuid4)
     namespace_name: str = Field(foreign_key="namespace.name")
     namespace: Namespace = Relationship()
@@ -28,6 +44,9 @@ class Feedback(SQLModel, table=True):
     updateTimestamp: Optional[datetime] = Field(
         sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
     )
+    deletedTimestamp: Optional[datetime] = Field(
+        sa_column=Column(DateTime(timezone=True), nullable=True),
+    )
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
     type: Optional[str] = Field(nullable=True)
@@ -35,7 +54,7 @@ class Feedback(SQLModel, table=True):
 
 
 class FeedbacksResult(SQLModel):
-    count: int | None = None # fix types
+    count: int | None = None  # fix types
     items: Iterable[Feedback] | None = None
 
 
@@ -73,6 +92,9 @@ def read_feedbacks(
         countSelect = countSelect.where(Feedback.namespace_name == namespace_name)
         itemsSelect = itemsSelect.where(Feedback.namespace_name == namespace_name)
 
+    countSelect = countSelect.where(Feedback.deletedTimestamp == null())
+    itemsSelect = itemsSelect.where(Feedback.deletedTimestamp == null())
+
     result = FeedbacksResult()
     result.count = session.exec(countSelect).one()
     result.items = session.exec(itemsSelect).all()
@@ -91,6 +113,7 @@ def read_latest_feedbacks(
         statement = statement.where(Actor.namespace_name == namespace_name)
     if type_filter is not None:
         statement = statement.where(Feedback.type == type_filter)
+    statement = statement.where(Feedback.deletedTimestamp == null())
     statement = statement.order_by(desc(Feedback.creationTimestamp))
     statement = statement.limit(limit)
     return session.exec(statement).all()
@@ -103,6 +126,7 @@ def read_feedback(
     statement = select(Feedback)
     statement = statement.where(Feedback.namespace_name == namespace_name)
     statement = statement.where(Feedback.name == feedback_name)
+    statement = statement.where(Feedback.deletedTimestamp == null())
     return session.exec(statement).one()
 
 
@@ -133,10 +157,19 @@ def update_feedback(
 def delete_feedback(
     namespace_name: str, feedback_name: str, session: Session = Depends(get_session)
 ) -> JSONResponse:
-    # or how can we run a delete query directly?
+    namespace = read_namespace(namespace_name)
     feedback = read_feedback(namespace_name, feedback_name)
-    session.delete(feedback)
-    session.commit()
+
+    softDelete = namespace.labels.get("soft-delete") == "true"
+
+    if softDelete:
+        feedback.deletedTimestamp = datetime.now()
+        feedback.annotations = {}
+        session.add(feedback)
+        session.commit()
+    else:
+        session.delete(feedback)
+        session.commit()
     return JSONResponse(
         status_code=status.HTTP_202_ACCEPTED, content={"message": "Feedback deleted"}
     )
