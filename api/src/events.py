@@ -10,7 +10,6 @@ from sqlmodel import (
     select,
     JSON,
     Relationship,
-    desc,
     null,
 )
 from sqlalchemy import Column, DateTime, func
@@ -103,24 +102,6 @@ def read_events(
     result.count = session.exec(countSelect).one()
     result.items = session.exec(itemsSelect).all()
     return result
-
-
-@router.get("/latest")
-def read_latest_events(
-    namespace_name: str | None = None,
-    type_filter: str | None = None,
-    limit: int = 10,
-    session: Session = Depends(get_session),
-) -> Iterable[Event]:
-    statement = select(Event)
-    if namespace_name is not None:
-        statement = statement.where(Actor.namespace_name == namespace_name)
-    if type_filter is not None:
-        statement = statement.where(Event.type == type_filter)
-    statement = statement.where(Event.deletedTimestamp == null())
-    statement = statement.order_by(desc(Event.creationTimestamp))
-    statement = statement.limit(limit)
-    return session.exec(statement).all()
 
 
 @router.get("/{event_name}")

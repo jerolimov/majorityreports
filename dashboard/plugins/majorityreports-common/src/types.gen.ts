@@ -6,6 +6,7 @@ export type Actor = {
     name: string;
     creationTimestamp: string | null;
     updateTimestamp: string | null;
+    deletedTimestamp: string | null;
     labels?: {
         [key: string]: (string);
     };
@@ -27,6 +28,7 @@ export type Event = {
     item_name: string | null;
     creationTimestamp: string | null;
     updateTimestamp: string | null;
+    deletedTimestamp: string | null;
     labels?: {
         [key: string]: (string);
     };
@@ -50,6 +52,7 @@ export type Feedback = {
     item_name: string;
     creationTimestamp: string | null;
     updateTimestamp: string | null;
+    deletedTimestamp: string | null;
     labels?: {
         [key: string]: (string);
     };
@@ -75,6 +78,7 @@ export type Item = {
     name: string;
     creationTimestamp: string | null;
     updateTimestamp: string | null;
+    deletedTimestamp: string | null;
     labels?: {
         [key: string]: (string);
     };
@@ -173,6 +177,7 @@ export type Namespace = {
     name: string;
     creationTimestamp: string | null;
     updateTimestamp: string | null;
+    deletedTimestamp: string | null;
     labels?: {
         [key: string]: (string);
     };
@@ -218,16 +223,6 @@ export type ReadNamespacesApiNamespacesGetData = {
 export type ReadNamespacesApiNamespacesGetResponse = NamespacesResult;
 
 export type ReadNamespacesApiNamespacesGetError = HTTPValidationError;
-
-export type ReadLatestNamespacesApiNamespacesLatestGetData = {
-    query?: {
-        limit?: number;
-    };
-};
-
-export type ReadLatestNamespacesApiNamespacesLatestGetResponse = Array<Namespace>;
-
-export type ReadLatestNamespacesApiNamespacesLatestGetError = HTTPValidationError;
 
 export type ReadNamespaceApiNamespacesNamespaceNameGetData = {
     path: {
@@ -282,18 +277,6 @@ export type ReadActorsApiActorsGetData = {
 export type ReadActorsApiActorsGetResponse = ActorsResult;
 
 export type ReadActorsApiActorsGetError = HTTPValidationError;
-
-export type ReadLatestActorsApiActorsLatestGetData = {
-    query?: {
-        limit?: number;
-        namespace_name?: string | null;
-        offset?: number;
-    };
-};
-
-export type ReadLatestActorsApiActorsLatestGetResponse = Array<Actor>;
-
-export type ReadLatestActorsApiActorsLatestGetError = HTTPValidationError;
 
 export type ReadActorApiActorsActorNameGetData = {
     path: {
@@ -358,17 +341,6 @@ export type ReadItemsApiItemsGetResponse = ItemsResult;
 
 export type ReadItemsApiItemsGetError = HTTPValidationError;
 
-export type ReadLatestItemsApiItemsLatestGetData = {
-    query?: {
-        limit?: number;
-        namespace_name?: string | null;
-    };
-};
-
-export type ReadLatestItemsApiItemsLatestGetResponse = Array<Item>;
-
-export type ReadLatestItemsApiItemsLatestGetError = HTTPValidationError;
-
 export type ReadItemApiItemsItemNameGetData = {
     path: {
         item_name: string;
@@ -431,18 +403,6 @@ export type ReadEventsApiEventsGetData = {
 export type ReadEventsApiEventsGetResponse = EventsResult;
 
 export type ReadEventsApiEventsGetError = HTTPValidationError;
-
-export type ReadLatestEventsApiEventsLatestGetData = {
-    query?: {
-        limit?: number;
-        namespace_name?: string | null;
-        type_filter?: string | null;
-    };
-};
-
-export type ReadLatestEventsApiEventsLatestGetResponse = Array<Event>;
-
-export type ReadLatestEventsApiEventsLatestGetError = HTTPValidationError;
 
 export type ReadEventApiEventsEventNameGetData = {
     path: {
@@ -507,18 +467,6 @@ export type ReadFeedbacksApiFeedbacksGetResponse = FeedbacksResult;
 
 export type ReadFeedbacksApiFeedbacksGetError = HTTPValidationError;
 
-export type ReadLatestFeedbacksApiFeedbacksLatestGetData = {
-    query?: {
-        limit?: number;
-        namespace_name?: string | null;
-        type_filter?: string | null;
-    };
-};
-
-export type ReadLatestFeedbacksApiFeedbacksLatestGetResponse = Array<Feedback>;
-
-export type ReadLatestFeedbacksApiFeedbacksLatestGetError = HTTPValidationError;
-
 export type ReadFeedbackApiFeedbacksFeedbackIdGetData = {
     query: {
         feedback_name: string;
@@ -563,18 +511,18 @@ export type GetStatsApiStatsGetResponse = Stats;
 
 export type GetStatsApiStatsGetError = HTTPValidationError;
 
-export type CreateActorApiNamespaceNamespaceNameActorsPostData = {
+export type CreateActorApiNamespacesNamespaceNameActorsPostData = {
     body: Actor;
     path: {
         namespace_name: string;
     };
 };
 
-export type CreateActorApiNamespaceNamespaceNameActorsPostResponse = Actor;
+export type CreateActorApiNamespacesNamespaceNameActorsPostResponse = Actor;
 
-export type CreateActorApiNamespaceNamespaceNameActorsPostError = HTTPValidationError;
+export type CreateActorApiNamespacesNamespaceNameActorsPostError = HTTPValidationError;
 
-export type ReadActorsApiNamespaceNamespaceNameActorsGetData = {
+export type ReadActorsApiNamespacesNamespaceNameActorsGetData = {
     path: {
         namespace_name: string | null;
     };
@@ -584,36 +532,22 @@ export type ReadActorsApiNamespaceNamespaceNameActorsGetData = {
     };
 };
 
-export type ReadActorsApiNamespaceNamespaceNameActorsGetResponse = ActorsResult;
+export type ReadActorsApiNamespacesNamespaceNameActorsGetResponse = ActorsResult;
 
-export type ReadActorsApiNamespaceNamespaceNameActorsGetError = HTTPValidationError;
+export type ReadActorsApiNamespacesNamespaceNameActorsGetError = HTTPValidationError;
 
-export type ReadLatestActorsApiNamespaceNamespaceNameActorsLatestGetData = {
-    path: {
-        namespace_name: string | null;
-    };
-    query?: {
-        limit?: number;
-        offset?: number;
-    };
-};
-
-export type ReadLatestActorsApiNamespaceNamespaceNameActorsLatestGetResponse = Array<Actor>;
-
-export type ReadLatestActorsApiNamespaceNamespaceNameActorsLatestGetError = HTTPValidationError;
-
-export type ReadActorApiNamespaceNamespaceNameActorsActorNameGetData = {
+export type ReadActorApiNamespacesNamespaceNameActorsActorNameGetData = {
     path: {
         actor_name: string;
         namespace_name: string;
     };
 };
 
-export type ReadActorApiNamespaceNamespaceNameActorsActorNameGetResponse = Actor;
+export type ReadActorApiNamespacesNamespaceNameActorsActorNameGetResponse = Actor;
 
-export type ReadActorApiNamespaceNamespaceNameActorsActorNameGetError = HTTPValidationError;
+export type ReadActorApiNamespacesNamespaceNameActorsActorNameGetError = HTTPValidationError;
 
-export type UpdateActorApiNamespaceNamespaceNameActorsActorNamePutData = {
+export type UpdateActorApiNamespacesNamespaceNameActorsActorNamePutData = {
     body: Actor;
     path: {
         actor_name: string;
@@ -621,33 +555,33 @@ export type UpdateActorApiNamespaceNamespaceNameActorsActorNamePutData = {
     };
 };
 
-export type UpdateActorApiNamespaceNamespaceNameActorsActorNamePutResponse = Actor;
+export type UpdateActorApiNamespacesNamespaceNameActorsActorNamePutResponse = Actor;
 
-export type UpdateActorApiNamespaceNamespaceNameActorsActorNamePutError = HTTPValidationError;
+export type UpdateActorApiNamespacesNamespaceNameActorsActorNamePutError = HTTPValidationError;
 
-export type DeleteActorApiNamespaceNamespaceNameActorsActorNameDeleteData = {
+export type DeleteActorApiNamespacesNamespaceNameActorsActorNameDeleteData = {
     path: {
         actor_name: string;
         namespace_name: string;
     };
 };
 
-export type DeleteActorApiNamespaceNamespaceNameActorsActorNameDeleteResponse = unknown;
+export type DeleteActorApiNamespacesNamespaceNameActorsActorNameDeleteResponse = unknown;
 
-export type DeleteActorApiNamespaceNamespaceNameActorsActorNameDeleteError = HTTPValidationError;
+export type DeleteActorApiNamespacesNamespaceNameActorsActorNameDeleteError = HTTPValidationError;
 
-export type CreateItemApiNamespaceNamespaceNameItemsPostData = {
+export type CreateItemApiNamespacesNamespaceNameItemsPostData = {
     body: Item;
     path: {
         namespace_name: string;
     };
 };
 
-export type CreateItemApiNamespaceNamespaceNameItemsPostResponse = Item;
+export type CreateItemApiNamespacesNamespaceNameItemsPostResponse = Item;
 
-export type CreateItemApiNamespaceNamespaceNameItemsPostError = HTTPValidationError;
+export type CreateItemApiNamespacesNamespaceNameItemsPostError = HTTPValidationError;
 
-export type ReadItemsApiNamespaceNamespaceNameItemsGetData = {
+export type ReadItemsApiNamespacesNamespaceNameItemsGetData = {
     path: {
         namespace_name: string | null;
     };
@@ -657,35 +591,22 @@ export type ReadItemsApiNamespaceNamespaceNameItemsGetData = {
     };
 };
 
-export type ReadItemsApiNamespaceNamespaceNameItemsGetResponse = ItemsResult;
+export type ReadItemsApiNamespacesNamespaceNameItemsGetResponse = ItemsResult;
 
-export type ReadItemsApiNamespaceNamespaceNameItemsGetError = HTTPValidationError;
+export type ReadItemsApiNamespacesNamespaceNameItemsGetError = HTTPValidationError;
 
-export type ReadLatestItemsApiNamespaceNamespaceNameItemsLatestGetData = {
-    path: {
-        namespace_name: string | null;
-    };
-    query?: {
-        limit?: number;
-    };
-};
-
-export type ReadLatestItemsApiNamespaceNamespaceNameItemsLatestGetResponse = Array<Item>;
-
-export type ReadLatestItemsApiNamespaceNamespaceNameItemsLatestGetError = HTTPValidationError;
-
-export type ReadItemApiNamespaceNamespaceNameItemsItemNameGetData = {
+export type ReadItemApiNamespacesNamespaceNameItemsItemNameGetData = {
     path: {
         item_name: string;
         namespace_name: string;
     };
 };
 
-export type ReadItemApiNamespaceNamespaceNameItemsItemNameGetResponse = Item;
+export type ReadItemApiNamespacesNamespaceNameItemsItemNameGetResponse = Item;
 
-export type ReadItemApiNamespaceNamespaceNameItemsItemNameGetError = HTTPValidationError;
+export type ReadItemApiNamespacesNamespaceNameItemsItemNameGetError = HTTPValidationError;
 
-export type UpdateItemApiNamespaceNamespaceNameItemsItemNamePutData = {
+export type UpdateItemApiNamespacesNamespaceNameItemsItemNamePutData = {
     body: Item;
     path: {
         item_name: string;
@@ -693,33 +614,33 @@ export type UpdateItemApiNamespaceNamespaceNameItemsItemNamePutData = {
     };
 };
 
-export type UpdateItemApiNamespaceNamespaceNameItemsItemNamePutResponse = Item;
+export type UpdateItemApiNamespacesNamespaceNameItemsItemNamePutResponse = Item;
 
-export type UpdateItemApiNamespaceNamespaceNameItemsItemNamePutError = HTTPValidationError;
+export type UpdateItemApiNamespacesNamespaceNameItemsItemNamePutError = HTTPValidationError;
 
-export type DeleteItemApiNamespaceNamespaceNameItemsItemNameDeleteData = {
+export type DeleteItemApiNamespacesNamespaceNameItemsItemNameDeleteData = {
     path: {
         item_name: string;
         namespace_name: string;
     };
 };
 
-export type DeleteItemApiNamespaceNamespaceNameItemsItemNameDeleteResponse = unknown;
+export type DeleteItemApiNamespacesNamespaceNameItemsItemNameDeleteResponse = unknown;
 
-export type DeleteItemApiNamespaceNamespaceNameItemsItemNameDeleteError = HTTPValidationError;
+export type DeleteItemApiNamespacesNamespaceNameItemsItemNameDeleteError = HTTPValidationError;
 
-export type CreateEventApiNamespaceNamespaceNameEventsPostData = {
+export type CreateEventApiNamespacesNamespaceNameEventsPostData = {
     body: Event;
     path: {
         namespace_name: string;
     };
 };
 
-export type CreateEventApiNamespaceNamespaceNameEventsPostResponse = Event;
+export type CreateEventApiNamespacesNamespaceNameEventsPostResponse = Event;
 
-export type CreateEventApiNamespaceNamespaceNameEventsPostError = HTTPValidationError;
+export type CreateEventApiNamespacesNamespaceNameEventsPostError = HTTPValidationError;
 
-export type ReadEventsApiNamespaceNamespaceNameEventsGetData = {
+export type ReadEventsApiNamespacesNamespaceNameEventsGetData = {
     path: {
         namespace_name: string | null;
     };
@@ -729,36 +650,22 @@ export type ReadEventsApiNamespaceNamespaceNameEventsGetData = {
     };
 };
 
-export type ReadEventsApiNamespaceNamespaceNameEventsGetResponse = EventsResult;
+export type ReadEventsApiNamespacesNamespaceNameEventsGetResponse = EventsResult;
 
-export type ReadEventsApiNamespaceNamespaceNameEventsGetError = HTTPValidationError;
+export type ReadEventsApiNamespacesNamespaceNameEventsGetError = HTTPValidationError;
 
-export type ReadLatestEventsApiNamespaceNamespaceNameEventsLatestGetData = {
-    path: {
-        namespace_name: string | null;
-    };
-    query?: {
-        limit?: number;
-        type_filter?: string | null;
-    };
-};
-
-export type ReadLatestEventsApiNamespaceNamespaceNameEventsLatestGetResponse = Array<Event>;
-
-export type ReadLatestEventsApiNamespaceNamespaceNameEventsLatestGetError = HTTPValidationError;
-
-export type ReadEventApiNamespaceNamespaceNameEventsEventNameGetData = {
+export type ReadEventApiNamespacesNamespaceNameEventsEventNameGetData = {
     path: {
         event_name: string;
         namespace_name: string;
     };
 };
 
-export type ReadEventApiNamespaceNamespaceNameEventsEventNameGetResponse = Event;
+export type ReadEventApiNamespacesNamespaceNameEventsEventNameGetResponse = Event;
 
-export type ReadEventApiNamespaceNamespaceNameEventsEventNameGetError = HTTPValidationError;
+export type ReadEventApiNamespacesNamespaceNameEventsEventNameGetError = HTTPValidationError;
 
-export type UpdateEventApiNamespaceNamespaceNameEventsEventNamePutData = {
+export type UpdateEventApiNamespacesNamespaceNameEventsEventNamePutData = {
     body: Event;
     path: {
         event_name: string;
@@ -766,33 +673,33 @@ export type UpdateEventApiNamespaceNamespaceNameEventsEventNamePutData = {
     };
 };
 
-export type UpdateEventApiNamespaceNamespaceNameEventsEventNamePutResponse = Event;
+export type UpdateEventApiNamespacesNamespaceNameEventsEventNamePutResponse = Event;
 
-export type UpdateEventApiNamespaceNamespaceNameEventsEventNamePutError = HTTPValidationError;
+export type UpdateEventApiNamespacesNamespaceNameEventsEventNamePutError = HTTPValidationError;
 
-export type DeleteEventApiNamespaceNamespaceNameEventsEventNameDeleteData = {
+export type DeleteEventApiNamespacesNamespaceNameEventsEventNameDeleteData = {
     path: {
         event_name: string;
         namespace_name: string;
     };
 };
 
-export type DeleteEventApiNamespaceNamespaceNameEventsEventNameDeleteResponse = unknown;
+export type DeleteEventApiNamespacesNamespaceNameEventsEventNameDeleteResponse = unknown;
 
-export type DeleteEventApiNamespaceNamespaceNameEventsEventNameDeleteError = HTTPValidationError;
+export type DeleteEventApiNamespacesNamespaceNameEventsEventNameDeleteError = HTTPValidationError;
 
-export type CreateFeedbackApiNamespaceNamespaceNameFeedbacksPostData = {
+export type CreateFeedbackApiNamespacesNamespaceNameFeedbacksPostData = {
     body: Feedback;
     path: {
         namespace_name: string;
     };
 };
 
-export type CreateFeedbackApiNamespaceNamespaceNameFeedbacksPostResponse = Feedback;
+export type CreateFeedbackApiNamespacesNamespaceNameFeedbacksPostResponse = Feedback;
 
-export type CreateFeedbackApiNamespaceNamespaceNameFeedbacksPostError = HTTPValidationError;
+export type CreateFeedbackApiNamespacesNamespaceNameFeedbacksPostError = HTTPValidationError;
 
-export type ReadFeedbacksApiNamespaceNamespaceNameFeedbacksGetData = {
+export type ReadFeedbacksApiNamespacesNamespaceNameFeedbacksGetData = {
     path: {
         namespace_name: string | null;
     };
@@ -802,25 +709,11 @@ export type ReadFeedbacksApiNamespaceNamespaceNameFeedbacksGetData = {
     };
 };
 
-export type ReadFeedbacksApiNamespaceNamespaceNameFeedbacksGetResponse = FeedbacksResult;
+export type ReadFeedbacksApiNamespacesNamespaceNameFeedbacksGetResponse = FeedbacksResult;
 
-export type ReadFeedbacksApiNamespaceNamespaceNameFeedbacksGetError = HTTPValidationError;
+export type ReadFeedbacksApiNamespacesNamespaceNameFeedbacksGetError = HTTPValidationError;
 
-export type ReadLatestFeedbacksApiNamespaceNamespaceNameFeedbacksLatestGetData = {
-    path: {
-        namespace_name: string | null;
-    };
-    query?: {
-        limit?: number;
-        type_filter?: string | null;
-    };
-};
-
-export type ReadLatestFeedbacksApiNamespaceNamespaceNameFeedbacksLatestGetResponse = Array<Feedback>;
-
-export type ReadLatestFeedbacksApiNamespaceNamespaceNameFeedbacksLatestGetError = HTTPValidationError;
-
-export type ReadFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdGetData = {
+export type ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdGetData = {
     path: {
         namespace_name: string;
     };
@@ -829,11 +722,11 @@ export type ReadFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdGetData = {
     };
 };
 
-export type ReadFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdGetResponse = Feedback;
+export type ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdGetResponse = Feedback;
 
-export type ReadFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdGetError = HTTPValidationError;
+export type ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdGetError = HTTPValidationError;
 
-export type UpdateFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdPutData = {
+export type UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdPutData = {
     body: Feedback;
     path: {
         namespace_name: string;
@@ -843,11 +736,11 @@ export type UpdateFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdPutData = 
     };
 };
 
-export type UpdateFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdPutResponse = Feedback;
+export type UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdPutResponse = Feedback;
 
-export type UpdateFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdPutError = HTTPValidationError;
+export type UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdPutError = HTTPValidationError;
 
-export type DeleteFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdDeleteData = {
+export type DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdDeleteData = {
     path: {
         namespace_name: string;
     };
@@ -856,89 +749,75 @@ export type DeleteFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdDeleteData
     };
 };
 
-export type DeleteFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdDeleteResponse = unknown;
+export type DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdDeleteResponse = unknown;
 
-export type DeleteFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdDeleteError = HTTPValidationError;
+export type DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdDeleteError = HTTPValidationError;
 
-export type GetStatsApiNamespaceNamespaceNameStatsGetData = {
+export type GetStatsApiNamespacesNamespaceNameStatsGetData = {
     path: {
         namespace_name: string | null;
     };
 };
 
-export type GetStatsApiNamespaceNamespaceNameStatsGetResponse = Stats;
+export type GetStatsApiNamespacesNamespaceNameStatsGetResponse = Stats;
 
-export type GetStatsApiNamespaceNamespaceNameStatsGetError = HTTPValidationError;
+export type GetStatsApiNamespacesNamespaceNameStatsGetError = HTTPValidationError;
 
-export type GetMinmaxApiNamespaceNamespaceNameReportsAverageMinmaxGetData = {
+export type GetMinmaxApiNamespacesNamespaceNameReportsAverageMinmaxGetData = {
     path: {
         namespace_name: string;
     };
 };
 
-export type GetMinmaxApiNamespaceNamespaceNameReportsAverageMinmaxGetResponse = MinMax;
+export type GetMinmaxApiNamespacesNamespaceNameReportsAverageMinmaxGetResponse = MinMax;
 
-export type GetMinmaxApiNamespaceNamespaceNameReportsAverageMinmaxGetError = HTTPValidationError;
+export type GetMinmaxApiNamespacesNamespaceNameReportsAverageMinmaxGetError = HTTPValidationError;
 
-export type GetItemMinmaxApiNamespaceNamespaceNameReportsAverageItemItemNameGetData = {
+export type GetItemMinmaxApiNamespacesNamespaceNameReportsAverageItemItemNameGetData = {
     path: {
         item_name: string;
         namespace_name: string;
     };
 };
 
-export type GetItemMinmaxApiNamespaceNamespaceNameReportsAverageItemItemNameGetResponse = MinMax;
+export type GetItemMinmaxApiNamespacesNamespaceNameReportsAverageItemItemNameGetResponse = MinMax;
 
-export type GetItemMinmaxApiNamespaceNamespaceNameReportsAverageItemItemNameGetError = HTTPValidationError;
+export type GetItemMinmaxApiNamespacesNamespaceNameReportsAverageItemItemNameGetError = HTTPValidationError;
 
-export type GetAllItemsMinmaxApiNamespaceNamespaceNameReportsAverageItemsGetData = {
+export type GetAllItemsMinmaxApiNamespacesNamespaceNameReportsAverageItemsGetData = {
     path: {
         namespace_name: string | null;
     };
 };
 
-export type GetAllItemsMinmaxApiNamespaceNamespaceNameReportsAverageItemsGetResponse = Array<ItemMinMax>;
+export type GetAllItemsMinmaxApiNamespacesNamespaceNameReportsAverageItemsGetResponse = Array<ItemMinMax>;
 
-export type GetAllItemsMinmaxApiNamespaceNamespaceNameReportsAverageItemsGetError = HTTPValidationError;
+export type GetAllItemsMinmaxApiNamespacesNamespaceNameReportsAverageItemsGetError = HTTPValidationError;
 
-export type GetRandomItemApiNamespaceNamespaceNameReportsRandomItemGetData = {
+export type GetRandomItemApiNamespacesNamespaceNameReportsRandomItemGetData = {
     path: {
         namespace_name: string | null;
     };
 };
 
-export type GetRandomItemApiNamespaceNamespaceNameReportsRandomItemGetResponse = Item;
+export type GetRandomItemApiNamespacesNamespaceNameReportsRandomItemGetResponse = Item;
 
-export type GetRandomItemApiNamespaceNamespaceNameReportsRandomItemGetError = HTTPValidationError;
+export type GetRandomItemApiNamespacesNamespaceNameReportsRandomItemGetError = HTTPValidationError;
 
-export type GetRandomItemsApiNamespaceNamespaceNameReportsRandomItemsGetData = {
-    path: {
-        namespace_name: string | null;
-    };
-    query?: {
-        limit?: number;
-    };
-};
-
-export type GetRandomItemsApiNamespaceNamespaceNameReportsRandomItemsGetResponse = Array<Item>;
-
-export type GetRandomItemsApiNamespaceNamespaceNameReportsRandomItemsGetError = HTTPValidationError;
-
-export type GetItemsWithMostEventsApiNamespaceNamespaceNameReportsMostEventsItemsGetData = {
+export type GetRandomItemsApiNamespacesNamespaceNameReportsRandomItemsGetData = {
     path: {
         namespace_name: string | null;
     };
     query?: {
         limit?: number;
-        type_filter?: string | null;
     };
 };
 
-export type GetItemsWithMostEventsApiNamespaceNamespaceNameReportsMostEventsItemsGetResponse = Array<ItemWithEventCount>;
+export type GetRandomItemsApiNamespacesNamespaceNameReportsRandomItemsGetResponse = Array<Item>;
 
-export type GetItemsWithMostEventsApiNamespaceNamespaceNameReportsMostEventsItemsGetError = HTTPValidationError;
+export type GetRandomItemsApiNamespacesNamespaceNameReportsRandomItemsGetError = HTTPValidationError;
 
-export type GetItemsWithMostFeedbackApiNamespaceNamespaceNameReportsMostFeedbackItemsGetData = {
+export type GetItemsWithMostEventsApiNamespacesNamespaceNameReportsMostEventsItemsGetData = {
     path: {
         namespace_name: string | null;
     };
@@ -948,11 +827,25 @@ export type GetItemsWithMostFeedbackApiNamespaceNamespaceNameReportsMostFeedback
     };
 };
 
-export type GetItemsWithMostFeedbackApiNamespaceNamespaceNameReportsMostFeedbackItemsGetResponse = Array<ItemWithFeedbackCount>;
+export type GetItemsWithMostEventsApiNamespacesNamespaceNameReportsMostEventsItemsGetResponse = Array<ItemWithEventCount>;
 
-export type GetItemsWithMostFeedbackApiNamespaceNamespaceNameReportsMostFeedbackItemsGetError = HTTPValidationError;
+export type GetItemsWithMostEventsApiNamespacesNamespaceNameReportsMostEventsItemsGetError = HTTPValidationError;
 
-export type GetItemsWithLatestEventsApiNamespaceNamespaceNameReportsLatestEventsItemsGetData = {
+export type GetItemsWithMostFeedbackApiNamespacesNamespaceNameReportsMostFeedbackItemsGetData = {
+    path: {
+        namespace_name: string | null;
+    };
+    query?: {
+        limit?: number;
+        type_filter?: string | null;
+    };
+};
+
+export type GetItemsWithMostFeedbackApiNamespacesNamespaceNameReportsMostFeedbackItemsGetResponse = Array<ItemWithFeedbackCount>;
+
+export type GetItemsWithMostFeedbackApiNamespacesNamespaceNameReportsMostFeedbackItemsGetError = HTTPValidationError;
+
+export type GetItemsWithLatestEventsApiNamespacesNamespaceNameReportsLatestEventsItemsGetData = {
     path: {
         namespace_name: string | null;
     };
@@ -964,9 +857,9 @@ export type GetItemsWithLatestEventsApiNamespaceNamespaceNameReportsLatestEvents
     };
 };
 
-export type GetItemsWithLatestEventsApiNamespaceNamespaceNameReportsLatestEventsItemsGetResponse = Array<ItemWithEventDetails>;
+export type GetItemsWithLatestEventsApiNamespacesNamespaceNameReportsLatestEventsItemsGetResponse = Array<ItemWithEventDetails>;
 
-export type GetItemsWithLatestEventsApiNamespaceNamespaceNameReportsLatestEventsItemsGetError = HTTPValidationError;
+export type GetItemsWithLatestEventsApiNamespacesNamespaceNameReportsLatestEventsItemsGetError = HTTPValidationError;
 
 export type $OpenApiTs = {
     '/api/namespaces': {
@@ -990,21 +883,6 @@ export type $OpenApiTs = {
                  * Successful Response
                  */
                 '200': NamespacesResult;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/namespaces/latest': {
-        get: {
-            req: ReadLatestNamespacesApiNamespacesLatestGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': Array<Namespace>;
                 /**
                  * Validation Error
                  */
@@ -1081,21 +959,6 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/actors/latest': {
-        get: {
-            req: ReadLatestActorsApiActorsLatestGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': Array<Actor>;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
     '/api/actors/{actor_name}': {
         get: {
             req: ReadActorApiActorsActorNameGetData;
@@ -1158,21 +1021,6 @@ export type $OpenApiTs = {
                  * Successful Response
                  */
                 '200': ItemsResult;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/items/latest': {
-        get: {
-            req: ReadLatestItemsApiItemsLatestGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': Array<Item>;
                 /**
                  * Validation Error
                  */
@@ -1249,21 +1097,6 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/events/latest': {
-        get: {
-            req: ReadLatestEventsApiEventsLatestGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': Array<Event>;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
     '/api/events/{event_name}': {
         get: {
             req: ReadEventApiEventsEventNameGetData;
@@ -1333,21 +1166,6 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/feedbacks/latest': {
-        get: {
-            req: ReadLatestFeedbacksApiFeedbacksLatestGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': Array<Feedback>;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
     '/api/feedbacks/{feedback_id}': {
         get: {
             req: ReadFeedbackApiFeedbacksFeedbackIdGetData;
@@ -1404,9 +1222,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/actors': {
+    '/api/namespaces/{namespace_name}/actors': {
         post: {
-            req: CreateActorApiNamespaceNamespaceNameActorsPostData;
+            req: CreateActorApiNamespacesNamespaceNameActorsPostData;
             res: {
                 /**
                  * Successful Response
@@ -1419,7 +1237,7 @@ export type $OpenApiTs = {
             };
         };
         get: {
-            req: ReadActorsApiNamespaceNamespaceNameActorsGetData;
+            req: ReadActorsApiNamespacesNamespaceNameActorsGetData;
             res: {
                 /**
                  * Successful Response
@@ -1432,24 +1250,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/actors/latest': {
+    '/api/namespaces/{namespace_name}/actors/{actor_name}': {
         get: {
-            req: ReadLatestActorsApiNamespaceNamespaceNameActorsLatestGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': Array<Actor>;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/namespace/{namespace_name}/actors/{actor_name}': {
-        get: {
-            req: ReadActorApiNamespaceNamespaceNameActorsActorNameGetData;
+            req: ReadActorApiNamespacesNamespaceNameActorsActorNameGetData;
             res: {
                 /**
                  * Successful Response
@@ -1462,7 +1265,7 @@ export type $OpenApiTs = {
             };
         };
         put: {
-            req: UpdateActorApiNamespaceNamespaceNameActorsActorNamePutData;
+            req: UpdateActorApiNamespacesNamespaceNameActorsActorNamePutData;
             res: {
                 /**
                  * Successful Response
@@ -1475,7 +1278,7 @@ export type $OpenApiTs = {
             };
         };
         delete: {
-            req: DeleteActorApiNamespaceNamespaceNameActorsActorNameDeleteData;
+            req: DeleteActorApiNamespacesNamespaceNameActorsActorNameDeleteData;
             res: {
                 /**
                  * Successful Response
@@ -1488,9 +1291,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/items': {
+    '/api/namespaces/{namespace_name}/items': {
         post: {
-            req: CreateItemApiNamespaceNamespaceNameItemsPostData;
+            req: CreateItemApiNamespacesNamespaceNameItemsPostData;
             res: {
                 /**
                  * Successful Response
@@ -1503,7 +1306,7 @@ export type $OpenApiTs = {
             };
         };
         get: {
-            req: ReadItemsApiNamespaceNamespaceNameItemsGetData;
+            req: ReadItemsApiNamespacesNamespaceNameItemsGetData;
             res: {
                 /**
                  * Successful Response
@@ -1516,24 +1319,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/items/latest': {
+    '/api/namespaces/{namespace_name}/items/{item_name}': {
         get: {
-            req: ReadLatestItemsApiNamespaceNamespaceNameItemsLatestGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': Array<Item>;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/namespace/{namespace_name}/items/{item_name}': {
-        get: {
-            req: ReadItemApiNamespaceNamespaceNameItemsItemNameGetData;
+            req: ReadItemApiNamespacesNamespaceNameItemsItemNameGetData;
             res: {
                 /**
                  * Successful Response
@@ -1546,7 +1334,7 @@ export type $OpenApiTs = {
             };
         };
         put: {
-            req: UpdateItemApiNamespaceNamespaceNameItemsItemNamePutData;
+            req: UpdateItemApiNamespacesNamespaceNameItemsItemNamePutData;
             res: {
                 /**
                  * Successful Response
@@ -1559,7 +1347,7 @@ export type $OpenApiTs = {
             };
         };
         delete: {
-            req: DeleteItemApiNamespaceNamespaceNameItemsItemNameDeleteData;
+            req: DeleteItemApiNamespacesNamespaceNameItemsItemNameDeleteData;
             res: {
                 /**
                  * Successful Response
@@ -1572,9 +1360,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/events': {
+    '/api/namespaces/{namespace_name}/events': {
         post: {
-            req: CreateEventApiNamespaceNamespaceNameEventsPostData;
+            req: CreateEventApiNamespacesNamespaceNameEventsPostData;
             res: {
                 /**
                  * Successful Response
@@ -1587,7 +1375,7 @@ export type $OpenApiTs = {
             };
         };
         get: {
-            req: ReadEventsApiNamespaceNamespaceNameEventsGetData;
+            req: ReadEventsApiNamespacesNamespaceNameEventsGetData;
             res: {
                 /**
                  * Successful Response
@@ -1600,24 +1388,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/events/latest': {
+    '/api/namespaces/{namespace_name}/events/{event_name}': {
         get: {
-            req: ReadLatestEventsApiNamespaceNamespaceNameEventsLatestGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': Array<Event>;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/namespace/{namespace_name}/events/{event_name}': {
-        get: {
-            req: ReadEventApiNamespaceNamespaceNameEventsEventNameGetData;
+            req: ReadEventApiNamespacesNamespaceNameEventsEventNameGetData;
             res: {
                 /**
                  * Successful Response
@@ -1630,7 +1403,7 @@ export type $OpenApiTs = {
             };
         };
         put: {
-            req: UpdateEventApiNamespaceNamespaceNameEventsEventNamePutData;
+            req: UpdateEventApiNamespacesNamespaceNameEventsEventNamePutData;
             res: {
                 /**
                  * Successful Response
@@ -1643,7 +1416,7 @@ export type $OpenApiTs = {
             };
         };
         delete: {
-            req: DeleteEventApiNamespaceNamespaceNameEventsEventNameDeleteData;
+            req: DeleteEventApiNamespacesNamespaceNameEventsEventNameDeleteData;
             res: {
                 /**
                  * Successful Response
@@ -1656,9 +1429,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/feedbacks': {
+    '/api/namespaces/{namespace_name}/feedbacks': {
         post: {
-            req: CreateFeedbackApiNamespaceNamespaceNameFeedbacksPostData;
+            req: CreateFeedbackApiNamespacesNamespaceNameFeedbacksPostData;
             res: {
                 /**
                  * Successful Response
@@ -1671,7 +1444,7 @@ export type $OpenApiTs = {
             };
         };
         get: {
-            req: ReadFeedbacksApiNamespaceNamespaceNameFeedbacksGetData;
+            req: ReadFeedbacksApiNamespacesNamespaceNameFeedbacksGetData;
             res: {
                 /**
                  * Successful Response
@@ -1684,24 +1457,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/feedbacks/latest': {
+    '/api/namespaces/{namespace_name}/feedbacks/{feedback_id}': {
         get: {
-            req: ReadLatestFeedbacksApiNamespaceNamespaceNameFeedbacksLatestGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': Array<Feedback>;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/namespace/{namespace_name}/feedbacks/{feedback_id}': {
-        get: {
-            req: ReadFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdGetData;
+            req: ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdGetData;
             res: {
                 /**
                  * Successful Response
@@ -1714,7 +1472,7 @@ export type $OpenApiTs = {
             };
         };
         put: {
-            req: UpdateFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdPutData;
+            req: UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdPutData;
             res: {
                 /**
                  * Successful Response
@@ -1727,7 +1485,7 @@ export type $OpenApiTs = {
             };
         };
         delete: {
-            req: DeleteFeedbackApiNamespaceNamespaceNameFeedbacksFeedbackIdDeleteData;
+            req: DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdDeleteData;
             res: {
                 /**
                  * Successful Response
@@ -1740,9 +1498,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/stats': {
+    '/api/namespaces/{namespace_name}/stats': {
         get: {
-            req: GetStatsApiNamespaceNamespaceNameStatsGetData;
+            req: GetStatsApiNamespacesNamespaceNameStatsGetData;
             res: {
                 /**
                  * Successful Response
@@ -1755,9 +1513,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/reports/average/minmax': {
+    '/api/namespaces/{namespace_name}/reports/average/minmax': {
         get: {
-            req: GetMinmaxApiNamespaceNamespaceNameReportsAverageMinmaxGetData;
+            req: GetMinmaxApiNamespacesNamespaceNameReportsAverageMinmaxGetData;
             res: {
                 /**
                  * Successful Response
@@ -1770,9 +1528,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/reports/average/item/{item_name}': {
+    '/api/namespaces/{namespace_name}/reports/average/item/{item_name}': {
         get: {
-            req: GetItemMinmaxApiNamespaceNamespaceNameReportsAverageItemItemNameGetData;
+            req: GetItemMinmaxApiNamespacesNamespaceNameReportsAverageItemItemNameGetData;
             res: {
                 /**
                  * Successful Response
@@ -1785,9 +1543,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/reports/average/items': {
+    '/api/namespaces/{namespace_name}/reports/average/items': {
         get: {
-            req: GetAllItemsMinmaxApiNamespaceNamespaceNameReportsAverageItemsGetData;
+            req: GetAllItemsMinmaxApiNamespacesNamespaceNameReportsAverageItemsGetData;
             res: {
                 /**
                  * Successful Response
@@ -1800,9 +1558,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/reports/random/item': {
+    '/api/namespaces/{namespace_name}/reports/random/item': {
         get: {
-            req: GetRandomItemApiNamespaceNamespaceNameReportsRandomItemGetData;
+            req: GetRandomItemApiNamespacesNamespaceNameReportsRandomItemGetData;
             res: {
                 /**
                  * Successful Response
@@ -1815,9 +1573,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/reports/random/items': {
+    '/api/namespaces/{namespace_name}/reports/random/items': {
         get: {
-            req: GetRandomItemsApiNamespaceNamespaceNameReportsRandomItemsGetData;
+            req: GetRandomItemsApiNamespacesNamespaceNameReportsRandomItemsGetData;
             res: {
                 /**
                  * Successful Response
@@ -1830,9 +1588,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/reports/most_events/items': {
+    '/api/namespaces/{namespace_name}/reports/most_events/items': {
         get: {
-            req: GetItemsWithMostEventsApiNamespaceNamespaceNameReportsMostEventsItemsGetData;
+            req: GetItemsWithMostEventsApiNamespacesNamespaceNameReportsMostEventsItemsGetData;
             res: {
                 /**
                  * Successful Response
@@ -1845,9 +1603,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/reports/most_feedback/items': {
+    '/api/namespaces/{namespace_name}/reports/most_feedback/items': {
         get: {
-            req: GetItemsWithMostFeedbackApiNamespaceNamespaceNameReportsMostFeedbackItemsGetData;
+            req: GetItemsWithMostFeedbackApiNamespacesNamespaceNameReportsMostFeedbackItemsGetData;
             res: {
                 /**
                  * Successful Response
@@ -1860,9 +1618,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespace/{namespace_name}/reports/latest_events/items': {
+    '/api/namespaces/{namespace_name}/reports/latest_events/items': {
         get: {
-            req: GetItemsWithLatestEventsApiNamespaceNamespaceNameReportsLatestEventsItemsGetData;
+            req: GetItemsWithLatestEventsApiNamespacesNamespaceNameReportsLatestEventsItemsGetData;
             res: {
                 /**
                  * Successful Response

@@ -2,7 +2,15 @@ import uuid
 from datetime import datetime
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import Field, SQLModel, UniqueConstraint, Session, select, JSON, desc, null
+from sqlmodel import (
+    Field,
+    SQLModel,
+    UniqueConstraint,
+    Session,
+    select,
+    JSON,
+    null,
+)
 from sqlalchemy import Column, DateTime, func
 from typing import Iterable, Dict, Optional
 from .db import get_session
@@ -66,17 +74,6 @@ def read_namespaces(
     result.count = session.exec(countSelect).one()
     result.items = session.exec(itemsSelect).all()
     return result
-
-
-@router.get("/latest")
-def read_latest_namespaces(
-    limit: int = 10, session: Session = Depends(get_session)
-) -> Iterable[Namespace]:
-    statement = select(Namespace)
-    statement = statement.where(Namespace.deletedTimestamp == null())
-    statement = statement.order_by(desc(Namespace.creationTimestamp))
-    statement = statement.limit(limit)
-    return session.exec(statement).all()
 
 
 @router.get("/{namespace_name}")

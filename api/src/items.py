@@ -10,7 +10,6 @@ from sqlmodel import (
     select,
     JSON,
     Relationship,
-    desc,
     null,
 )
 from sqlalchemy import Column, DateTime, func
@@ -89,21 +88,6 @@ def read_items(
     result.count = session.exec(countSelect).one()
     result.items = session.exec(itemsSelect).all()
     return result
-
-
-@router.get("/latest")
-def read_latest_items(
-    namespace_name: str | None = None,
-    limit: int = 10,
-    session: Session = Depends(get_session),
-) -> Iterable[Item]:
-    statement = select(Item)
-    if namespace_name is not None:
-        statement = statement.where(Item.namespace_name == namespace_name)
-    statement = statement.where(Item.deletedTimestamp == null())
-    statement = statement.order_by(desc(Item.creationTimestamp))
-    statement = statement.limit(limit)
-    return session.exec(statement).all()
 
 
 @router.get("/{item_name}")

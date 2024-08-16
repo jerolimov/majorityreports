@@ -10,7 +10,6 @@ from sqlmodel import (
     select,
     JSON,
     Relationship,
-    desc,
     null,
 )
 from sqlalchemy import Column, DateTime, func
@@ -99,24 +98,6 @@ def read_feedbacks(
     result.count = session.exec(countSelect).one()
     result.items = session.exec(itemsSelect).all()
     return result
-
-
-@router.get("/latest")
-def read_latest_feedbacks(
-    namespace_name: str | None = None,
-    type_filter: str | None = None,
-    limit: int = 10,
-    session: Session = Depends(get_session),
-) -> Iterable[Feedback]:
-    statement = select(Feedback)
-    if namespace_name is not None:
-        statement = statement.where(Actor.namespace_name == namespace_name)
-    if type_filter is not None:
-        statement = statement.where(Feedback.type == type_filter)
-    statement = statement.where(Feedback.deletedTimestamp == null())
-    statement = statement.order_by(desc(Feedback.creationTimestamp))
-    statement = statement.limit(limit)
-    return session.exec(statement).all()
 
 
 @router.get("/{feedback_id}")

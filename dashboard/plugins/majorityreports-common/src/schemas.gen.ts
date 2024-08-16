@@ -39,6 +39,18 @@ export const $Actor = {
             ],
             title: 'Updatetimestamp'
         },
+        deletedTimestamp: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Deletedtimestamp'
+        },
         labels: {
             additionalProperties: {
                 type: 'string'
@@ -57,7 +69,7 @@ export const $Actor = {
         }
     },
     type: 'object',
-    required: ['namespace_name', 'name', 'creationTimestamp', 'updateTimestamp'],
+    required: ['namespace_name', 'name', 'creationTimestamp', 'updateTimestamp', 'deletedTimestamp'],
     title: 'Actor'
 } as const;
 
@@ -154,6 +166,18 @@ export const $Event = {
             ],
             title: 'Updatetimestamp'
         },
+        deletedTimestamp: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Deletedtimestamp'
+        },
         labels: {
             additionalProperties: {
                 type: 'string'
@@ -194,7 +218,7 @@ export const $Event = {
         }
     },
     type: 'object',
-    required: ['namespace_name', 'name', 'actor_name', 'item_name', 'creationTimestamp', 'updateTimestamp', 'type', 'value'],
+    required: ['namespace_name', 'name', 'actor_name', 'item_name', 'creationTimestamp', 'updateTimestamp', 'deletedTimestamp', 'type', 'value'],
     title: 'Event'
 } as const;
 
@@ -277,6 +301,18 @@ export const $Feedback = {
             ],
             title: 'Updatetimestamp'
         },
+        deletedTimestamp: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Deletedtimestamp'
+        },
         labels: {
             additionalProperties: {
                 type: 'string'
@@ -310,7 +346,7 @@ export const $Feedback = {
         }
     },
     type: 'object',
-    required: ['namespace_name', 'name', 'actor_name', 'item_name', 'creationTimestamp', 'updateTimestamp', 'type', 'value'],
+    required: ['namespace_name', 'name', 'actor_name', 'item_name', 'creationTimestamp', 'updateTimestamp', 'deletedTimestamp', 'type', 'value'],
     title: 'Feedback'
 } as const;
 
@@ -399,6 +435,18 @@ export const $Item = {
             ],
             title: 'Updatetimestamp'
         },
+        deletedTimestamp: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Deletedtimestamp'
+        },
         labels: {
             additionalProperties: {
                 type: 'string'
@@ -417,7 +465,7 @@ export const $Item = {
         }
     },
     type: 'object',
-    required: ['namespace_name', 'name', 'creationTimestamp', 'updateTimestamp'],
+    required: ['namespace_name', 'name', 'creationTimestamp', 'updateTimestamp', 'deletedTimestamp'],
     title: 'Item'
 } as const;
 
@@ -844,6 +892,18 @@ export const $Namespace = {
             ],
             title: 'Updatetimestamp'
         },
+        deletedTimestamp: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Deletedtimestamp'
+        },
         labels: {
             additionalProperties: {
                 type: 'string'
@@ -862,7 +922,7 @@ export const $Namespace = {
         }
     },
     type: 'object',
-    required: ['name', 'creationTimestamp', 'updateTimestamp'],
+    required: ['name', 'creationTimestamp', 'updateTimestamp', 'deletedTimestamp'],
     title: 'Namespace'
 } as const;
 

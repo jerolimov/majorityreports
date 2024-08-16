@@ -97,53 +97,6 @@
         }
       }
     },
-    "/api/namespaces/latest": {
-      "get": {
-        "tags": [
-          "namespaces"
-        ],
-        "summary": "Read Latest Namespaces",
-        "operationId": "read_latest_namespaces_api_namespaces_latest_get",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Namespace"
-                  },
-                  "title": "Response Read Latest Namespaces Api Namespaces Latest Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/namespaces/{namespace_name}": {
       "get": {
         "tags": [
@@ -376,79 +329,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ActorsResult"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/actors/latest": {
-      "get": {
-        "tags": [
-          "actors"
-        ],
-        "summary": "Read Latest Actors",
-        "operationId": "read_latest_actors_api_actors_latest_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "title": "Offset"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Actor"
-                  },
-                  "title": "Response Read Latest Actors Api Actors Latest Get"
                 }
               }
             }
@@ -742,69 +622,6 @@
         }
       }
     },
-    "/api/items/latest": {
-      "get": {
-        "tags": [
-          "items"
-        ],
-        "summary": "Read Latest Items",
-        "operationId": "read_latest_items_api_items_latest_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Item"
-                  },
-                  "title": "Response Read Latest Items Api Items Latest Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/items/{item_name}": {
       "get": {
         "tags": [
@@ -1064,85 +881,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EventsResult"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/events/latest": {
-      "get": {
-        "tags": [
-          "events"
-        ],
-        "summary": "Read Latest Events",
-        "operationId": "read_latest_events_api_events_latest_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "type_filter",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Type Filter"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Event"
-                  },
-                  "title": "Response Read Latest Events Api Events Latest Get"
                 }
               }
             }
@@ -1436,85 +1174,6 @@
         }
       }
     },
-    "/api/feedbacks/latest": {
-      "get": {
-        "tags": [
-          "feedbacks"
-        ],
-        "summary": "Read Latest Feedbacks",
-        "operationId": "read_latest_feedbacks_api_feedbacks_latest_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "type_filter",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Type Filter"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Feedback"
-                  },
-                  "title": "Response Read Latest Feedbacks Api Feedbacks Latest Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/feedbacks/{feedback_id}": {
       "get": {
         "tags": [
@@ -1721,13 +1380,13 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/actors": {
+    "/api/namespaces/{namespace_name}/actors": {
       "post": {
         "tags": [
           "actors"
         ],
         "summary": "Create Actor",
-        "operationId": "create_actor_api_namespace__namespace_name__actors_post",
+        "operationId": "create_actor_api_namespaces__namespace_name__actors_post",
         "parameters": [
           {
             "name": "namespace_name",
@@ -1777,7 +1436,7 @@
           "actors"
         ],
         "summary": "Read Actors",
-        "operationId": "read_actors_api_namespace__namespace_name__actors_get",
+        "operationId": "read_actors_api_namespaces__namespace_name__actors_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -1840,86 +1499,13 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/actors/latest": {
-      "get": {
-        "tags": [
-          "actors"
-        ],
-        "summary": "Read Latest Actors",
-        "operationId": "read_latest_actors_api_namespace__namespace_name__actors_latest_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "title": "Offset"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Actor"
-                  },
-                  "title": "Response Read Latest Actors Api Namespace  Namespace Name  Actors Latest Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/namespace/{namespace_name}/actors/{actor_name}": {
+    "/api/namespaces/{namespace_name}/actors/{actor_name}": {
       "get": {
         "tags": [
           "actors"
         ],
         "summary": "Read Actor",
-        "operationId": "read_actor_api_namespace__namespace_name__actors__actor_name__get",
+        "operationId": "read_actor_api_namespaces__namespace_name__actors__actor_name__get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -1968,7 +1554,7 @@
           "actors"
         ],
         "summary": "Update Actor",
-        "operationId": "update_actor_api_namespace__namespace_name__actors__actor_name__put",
+        "operationId": "update_actor_api_namespaces__namespace_name__actors__actor_name__put",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2027,7 +1613,7 @@
           "actors"
         ],
         "summary": "Delete Actor",
-        "operationId": "delete_actor_api_namespace__namespace_name__actors__actor_name__delete",
+        "operationId": "delete_actor_api_namespaces__namespace_name__actors__actor_name__delete",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2070,13 +1656,13 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/items": {
+    "/api/namespaces/{namespace_name}/items": {
       "post": {
         "tags": [
           "items"
         ],
         "summary": "Create Item",
-        "operationId": "create_item_api_namespace__namespace_name__items_post",
+        "operationId": "create_item_api_namespaces__namespace_name__items_post",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2126,7 +1712,7 @@
           "items"
         ],
         "summary": "Read Items",
-        "operationId": "read_items_api_namespace__namespace_name__items_get",
+        "operationId": "read_items_api_namespaces__namespace_name__items_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2189,76 +1775,13 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/items/latest": {
-      "get": {
-        "tags": [
-          "items"
-        ],
-        "summary": "Read Latest Items",
-        "operationId": "read_latest_items_api_namespace__namespace_name__items_latest_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Item"
-                  },
-                  "title": "Response Read Latest Items Api Namespace  Namespace Name  Items Latest Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/namespace/{namespace_name}/items/{item_name}": {
+    "/api/namespaces/{namespace_name}/items/{item_name}": {
       "get": {
         "tags": [
           "items"
         ],
         "summary": "Read Item",
-        "operationId": "read_item_api_namespace__namespace_name__items__item_name__get",
+        "operationId": "read_item_api_namespaces__namespace_name__items__item_name__get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2307,7 +1830,7 @@
           "items"
         ],
         "summary": "Update Item",
-        "operationId": "update_item_api_namespace__namespace_name__items__item_name__put",
+        "operationId": "update_item_api_namespaces__namespace_name__items__item_name__put",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2366,7 +1889,7 @@
           "items"
         ],
         "summary": "Delete Item",
-        "operationId": "delete_item_api_namespace__namespace_name__items__item_name__delete",
+        "operationId": "delete_item_api_namespaces__namespace_name__items__item_name__delete",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2409,13 +1932,13 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/events": {
+    "/api/namespaces/{namespace_name}/events": {
       "post": {
         "tags": [
           "events"
         ],
         "summary": "Create Event",
-        "operationId": "create_event_api_namespace__namespace_name__events_post",
+        "operationId": "create_event_api_namespaces__namespace_name__events_post",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2465,7 +1988,7 @@
           "events"
         ],
         "summary": "Read Events",
-        "operationId": "read_events_api_namespace__namespace_name__events_get",
+        "operationId": "read_events_api_namespaces__namespace_name__events_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2528,92 +2051,13 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/events/latest": {
-      "get": {
-        "tags": [
-          "events"
-        ],
-        "summary": "Read Latest Events",
-        "operationId": "read_latest_events_api_namespace__namespace_name__events_latest_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "type_filter",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Type Filter"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Event"
-                  },
-                  "title": "Response Read Latest Events Api Namespace  Namespace Name  Events Latest Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/namespace/{namespace_name}/events/{event_name}": {
+    "/api/namespaces/{namespace_name}/events/{event_name}": {
       "get": {
         "tags": [
           "events"
         ],
         "summary": "Read Event",
-        "operationId": "read_event_api_namespace__namespace_name__events__event_name__get",
+        "operationId": "read_event_api_namespaces__namespace_name__events__event_name__get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2662,7 +2106,7 @@
           "events"
         ],
         "summary": "Update Event",
-        "operationId": "update_event_api_namespace__namespace_name__events__event_name__put",
+        "operationId": "update_event_api_namespaces__namespace_name__events__event_name__put",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2721,7 +2165,7 @@
           "events"
         ],
         "summary": "Delete Event",
-        "operationId": "delete_event_api_namespace__namespace_name__events__event_name__delete",
+        "operationId": "delete_event_api_namespaces__namespace_name__events__event_name__delete",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2764,13 +2208,13 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/feedbacks": {
+    "/api/namespaces/{namespace_name}/feedbacks": {
       "post": {
         "tags": [
           "feedbacks"
         ],
         "summary": "Create Feedback",
-        "operationId": "create_feedback_api_namespace__namespace_name__feedbacks_post",
+        "operationId": "create_feedback_api_namespaces__namespace_name__feedbacks_post",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2820,7 +2264,7 @@
           "feedbacks"
         ],
         "summary": "Read Feedbacks",
-        "operationId": "read_feedbacks_api_namespace__namespace_name__feedbacks_get",
+        "operationId": "read_feedbacks_api_namespaces__namespace_name__feedbacks_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -2883,92 +2327,13 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/feedbacks/latest": {
-      "get": {
-        "tags": [
-          "feedbacks"
-        ],
-        "summary": "Read Latest Feedbacks",
-        "operationId": "read_latest_feedbacks_api_namespace__namespace_name__feedbacks_latest_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "type_filter",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Type Filter"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Feedback"
-                  },
-                  "title": "Response Read Latest Feedbacks Api Namespace  Namespace Name  Feedbacks Latest Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/namespace/{namespace_name}/feedbacks/{feedback_id}": {
+    "/api/namespaces/{namespace_name}/feedbacks/{feedback_id}": {
       "get": {
         "tags": [
           "feedbacks"
         ],
         "summary": "Read Feedback",
-        "operationId": "read_feedback_api_namespace__namespace_name__feedbacks__feedback_id__get",
+        "operationId": "read_feedback_api_namespaces__namespace_name__feedbacks__feedback_id__get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3017,7 +2382,7 @@
           "feedbacks"
         ],
         "summary": "Update Feedback",
-        "operationId": "update_feedback_api_namespace__namespace_name__feedbacks__feedback_id__put",
+        "operationId": "update_feedback_api_namespaces__namespace_name__feedbacks__feedback_id__put",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3076,7 +2441,7 @@
           "feedbacks"
         ],
         "summary": "Delete Feedback",
-        "operationId": "delete_feedback_api_namespace__namespace_name__feedbacks__feedback_id__delete",
+        "operationId": "delete_feedback_api_namespaces__namespace_name__feedbacks__feedback_id__delete",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3119,13 +2484,13 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/stats": {
+    "/api/namespaces/{namespace_name}/stats": {
       "get": {
         "tags": [
           "stats"
         ],
         "summary": "Get Stats",
-        "operationId": "get_stats_api_namespace__namespace_name__stats_get",
+        "operationId": "get_stats_api_namespaces__namespace_name__stats_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3168,14 +2533,14 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/reports/average/minmax": {
+    "/api/namespaces/{namespace_name}/reports/average/minmax": {
       "get": {
         "tags": [
           "reports",
           "average"
         ],
         "summary": "Get Minmax",
-        "operationId": "get_minmax_api_namespace__namespace_name__reports_average_minmax_get",
+        "operationId": "get_minmax_api_namespaces__namespace_name__reports_average_minmax_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3211,14 +2576,14 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/reports/average/item/{item_name}": {
+    "/api/namespaces/{namespace_name}/reports/average/item/{item_name}": {
       "get": {
         "tags": [
           "reports",
           "average"
         ],
         "summary": "Get Item Minmax",
-        "operationId": "get_item_minmax_api_namespace__namespace_name__reports_average_item__item_name__get",
+        "operationId": "get_item_minmax_api_namespaces__namespace_name__reports_average_item__item_name__get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3263,14 +2628,14 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/reports/average/items": {
+    "/api/namespaces/{namespace_name}/reports/average/items": {
       "get": {
         "tags": [
           "reports",
           "average"
         ],
         "summary": "Get All Items Minmax",
-        "operationId": "get_all_items_minmax_api_namespace__namespace_name__reports_average_items_get",
+        "operationId": "get_all_items_minmax_api_namespaces__namespace_name__reports_average_items_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3299,7 +2664,7 @@
                   "items": {
                     "$ref": "#/components/schemas/ItemMinMax"
                   },
-                  "title": "Response Get All Items Minmax Api Namespace  Namespace Name  Reports Average Items Get"
+                  "title": "Response Get All Items Minmax Api Namespaces  Namespace Name  Reports Average Items Get"
                 }
               }
             }
@@ -3317,14 +2682,14 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/reports/random/item": {
+    "/api/namespaces/{namespace_name}/reports/random/item": {
       "get": {
         "tags": [
           "reports",
           "random"
         ],
         "summary": "Get Random Item",
-        "operationId": "get_random_item_api_namespace__namespace_name__reports_random_item_get",
+        "operationId": "get_random_item_api_namespaces__namespace_name__reports_random_item_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3367,14 +2732,14 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/reports/random/items": {
+    "/api/namespaces/{namespace_name}/reports/random/items": {
       "get": {
         "tags": [
           "reports",
           "random"
         ],
         "summary": "Get Random Items",
-        "operationId": "get_random_items_api_namespace__namespace_name__reports_random_items_get",
+        "operationId": "get_random_items_api_namespaces__namespace_name__reports_random_items_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3413,7 +2778,7 @@
                   "items": {
                     "$ref": "#/components/schemas/Item"
                   },
-                  "title": "Response Get Random Items Api Namespace  Namespace Name  Reports Random Items Get"
+                  "title": "Response Get Random Items Api Namespaces  Namespace Name  Reports Random Items Get"
                 }
               }
             }
@@ -3431,14 +2796,14 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/reports/most_events/items": {
+    "/api/namespaces/{namespace_name}/reports/most_events/items": {
       "get": {
         "tags": [
           "reports",
           "most_events"
         ],
         "summary": "Get Items With Most Events",
-        "operationId": "get_items_with_most_events_api_namespace__namespace_name__reports_most_events_items_get",
+        "operationId": "get_items_with_most_events_api_namespaces__namespace_name__reports_most_events_items_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3493,7 +2858,7 @@
                   "items": {
                     "$ref": "#/components/schemas/ItemWithEventCount"
                   },
-                  "title": "Response Get Items With Most Events Api Namespace  Namespace Name  Reports Most Events Items Get"
+                  "title": "Response Get Items With Most Events Api Namespaces  Namespace Name  Reports Most Events Items Get"
                 }
               }
             }
@@ -3511,14 +2876,14 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/reports/most_feedback/items": {
+    "/api/namespaces/{namespace_name}/reports/most_feedback/items": {
       "get": {
         "tags": [
           "reports",
           "most_feedback"
         ],
         "summary": "Get Items With Most Feedback",
-        "operationId": "get_items_with_most_feedback_api_namespace__namespace_name__reports_most_feedback_items_get",
+        "operationId": "get_items_with_most_feedback_api_namespaces__namespace_name__reports_most_feedback_items_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3573,7 +2938,7 @@
                   "items": {
                     "$ref": "#/components/schemas/ItemWithFeedbackCount"
                   },
-                  "title": "Response Get Items With Most Feedback Api Namespace  Namespace Name  Reports Most Feedback Items Get"
+                  "title": "Response Get Items With Most Feedback Api Namespaces  Namespace Name  Reports Most Feedback Items Get"
                 }
               }
             }
@@ -3591,14 +2956,14 @@
         }
       }
     },
-    "/api/namespace/{namespace_name}/reports/latest_events/items": {
+    "/api/namespaces/{namespace_name}/reports/latest_events/items": {
       "get": {
         "tags": [
           "reports",
           "latest_events"
         ],
         "summary": "Get Items With Latest Events",
-        "operationId": "get_items_with_latest_events_api_namespace__namespace_name__reports_latest_events_items_get",
+        "operationId": "get_items_with_latest_events_api_namespaces__namespace_name__reports_latest_events_items_get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -3679,7 +3044,7 @@
                   "items": {
                     "$ref": "#/components/schemas/ItemWithEventDetails"
                   },
-                  "title": "Response Get Items With Latest Events Api Namespace  Namespace Name  Reports Latest Events Items Get"
+                  "title": "Response Get Items With Latest Events Api Namespaces  Namespace Name  Reports Latest Events Items Get"
                 }
               }
             }
@@ -3739,6 +3104,18 @@
             ],
             "title": "Updatetimestamp"
           },
+          "deletedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deletedtimestamp"
+          },
           "labels": {
             "additionalProperties": {
               "type": "string"
@@ -3761,7 +3138,8 @@
           "namespace_name",
           "name",
           "creationTimestamp",
-          "updateTimestamp"
+          "updateTimestamp",
+          "deletedTimestamp"
         ],
         "title": "Actor"
       },
@@ -3857,6 +3235,18 @@
             ],
             "title": "Updatetimestamp"
           },
+          "deletedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deletedtimestamp"
+          },
           "labels": {
             "additionalProperties": {
               "type": "string"
@@ -3904,6 +3294,7 @@
           "item_name",
           "creationTimestamp",
           "updateTimestamp",
+          "deletedTimestamp",
           "type",
           "value"
         ],
@@ -3987,6 +3378,18 @@
             ],
             "title": "Updatetimestamp"
           },
+          "deletedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deletedtimestamp"
+          },
           "labels": {
             "additionalProperties": {
               "type": "string"
@@ -4027,6 +3430,7 @@
           "item_name",
           "creationTimestamp",
           "updateTimestamp",
+          "deletedTimestamp",
           "type",
           "value"
         ],
@@ -4115,6 +3519,18 @@
             ],
             "title": "Updatetimestamp"
           },
+          "deletedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deletedtimestamp"
+          },
           "labels": {
             "additionalProperties": {
               "type": "string"
@@ -4137,7 +3553,8 @@
           "namespace_name",
           "name",
           "creationTimestamp",
-          "updateTimestamp"
+          "updateTimestamp",
+          "deletedTimestamp"
         ],
         "title": "Item"
       },
@@ -4608,6 +4025,18 @@
             ],
             "title": "Updatetimestamp"
           },
+          "deletedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deletedtimestamp"
+          },
           "labels": {
             "additionalProperties": {
               "type": "string"
@@ -4629,7 +4058,8 @@
         "required": [
           "name",
           "creationTimestamp",
-          "updateTimestamp"
+          "updateTimestamp",
+          "deletedTimestamp"
         ],
         "title": "Namespace"
       },
