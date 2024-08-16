@@ -1,55 +1,17 @@
 from datetime import datetime
-import uuid
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 from sqlmodel import (
-    Field,
     SQLModel,
-    UniqueConstraint,
     Session,
     select,
-    JSON,
-    Relationship,
     null,
 )
-from sqlalchemy import Column, DateTime, func
-from typing import Iterable, Dict, Optional
-from .db import get_session
-from .namespaces import Namespace, read_namespace
-from .actors import Actor
-from .items import Item
-
-
-class Feedback(SQLModel, table=True):
-    __table_args__ = (
-        UniqueConstraint(
-            "namespace_name", "name", name="feedback_name_is_unique_in_namespace"
-        ),
-    )
-
-    uid: uuid.UUID = Field(primary_key=True, default_factory=uuid.uuid4)
-    namespace_name: str = Field(foreign_key="namespace.name")
-    namespace: Namespace = Relationship()
-    name: str = Field()
-    actor_name: str = Field(foreign_key="actor.name")
-    actor: Actor = Relationship()
-    item_name: str = Field(foreign_key="item.name")
-    item: Item = Relationship()
-    creationTimestamp: Optional[datetime] = Field(
-        sa_column=Column(
-            DateTime(timezone=True), server_default=func.now(), nullable=True
-        ),
-    )
-    updateTimestamp: Optional[datetime] = Field(
-        sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
-    )
-    deletedTimestamp: Optional[datetime] = Field(
-        sa_column=Column(DateTime(timezone=True), nullable=True),
-    )
-    labels: Dict[str, str] = Field(default={}, sa_type=JSON)
-    annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
-    type: Optional[str] = Field(nullable=True)
-    value: str = Field()
+from sqlalchemy import func
+from typing import Iterable
+from ..db import get_session
+from ..db.feedback import Feedback
+from .namespaces import read_namespace
 
 
 class FeedbacksResult(SQLModel):

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session, select, func
 from typing import Iterable
 
-from ..db import get_session
+from ...db import get_session
 from ..items import Item
 
 

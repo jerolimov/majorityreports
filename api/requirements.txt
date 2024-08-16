@@ -4,5 +4,6 @@ mypy
 numpy
 pandas
 pandas-stubs
+pydantic-yaml
 ruff
 sqlmodel

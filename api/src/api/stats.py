@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlmodel import SQLModel, Session, select, func
-from .db import get_session
+
+from ..db import get_session
 from .namespaces import Namespace
 from .actors import Actor
 from .items import Item

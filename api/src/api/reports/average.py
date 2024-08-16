@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session, SQLModel, select, func
 from typing import Iterable, Dict, Optional
 
-from ..db import get_session
+from ...db import get_session
 from ..feedbacks import Feedback
 from ..items import Item
 

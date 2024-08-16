@@ -5,7 +5,7 @@ from sqlmodel import SQLModel, Session, select, and_, desc, null
 from sqlmodel.sql.expression import Select
 from typing import Iterable, Dict, Optional, cast
 
-from ..db import get_session
+from ...db import get_session
 from ..items import Item
 from ..events import Event
 

@@ -1,11 +1,14 @@
 from sqlmodel import Session, select, func, and_
 
 from .db import engine
-from .namespaces import Namespace
-from .actors import Actor, read_actor
-from .items import Item, read_item
-from .events import Event
-from .feedbacks import Feedback
+from .db.namespace import Namespace
+from .db.actor import Actor
+from .db.item import Item
+from .db.event import Event
+from .db.feedback import Feedback
+
+from .api.actors import read_actor
+from .api.items import read_item
 
 
 namespace_name = "default"
