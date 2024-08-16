@@ -2,20 +2,25 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
 from sqlmodel import (
-    SQLModel,
     Session,
     select,
     null,
 )
 from sqlalchemy import func
-from typing import Iterable
+from pydantic import BaseModel
+from typing import Sequence
+
+from ..types.v1alpha1.namespace import NamespaceQuery, ListMeta, Pagination
+
 from ..db import get_session
-from ..db.namespace import Namespace
+from ..db.namespace import Namespace, apply_query
 
 
-class NamespacesResult(SQLModel):
-    count: int | None = None  # fix types
-    items: Iterable[Namespace] | None = None
+class NamespaceList(BaseModel):
+    apiVersion: str = "v1alpha1"
+    kind: str = "NamespaceList"
+    meta: ListMeta
+    items: Sequence[Namespace]
 
 
 router = APIRouter()
@@ -37,18 +42,54 @@ def create_namespace(
 
 @router.get("")
 def read_namespaces(
-    offset: int = 0, limit: int = 10, session: Session = Depends(get_session)
-) -> NamespacesResult:
+    start: int = 0, limit: int = 10, session: Session = Depends(get_session)
+) -> NamespaceList:
+    # convert all http query parameters to a NamespaceQuery
+    # filter.label_selector=...    or label_selector=...
+    # exclude.label_selector=...   or label_selector!=...
+    # order=name DESC
+    # order=name DESC
+    # start=
+    # limit=
+    query = NamespaceQuery(
+        filter={},
+        exclude={},
+        order=[],
+        pagination=Pagination(
+            start=start,
+            limit=limit,
+        ),
+    )
+
+    return query_namespaces(query, session)
+
+
+@router.post("/query")
+def query_namespaces(
+    query: NamespaceQuery, session: Session = Depends(get_session)
+) -> NamespaceList:
     countSelect = select(func.count("*")).select_from(Namespace)
-    itemsSelect = select(Namespace).offset(offset).limit(limit)
+    itemsSelect = select(Namespace)
 
-    countSelect = countSelect.where(Namespace.deletedTimestamp == null())
-    itemsSelect = itemsSelect.where(Namespace.deletedTimestamp == null())
+    countSelect = apply_query(countSelect, query, count=True)
+    itemsSelect = apply_query(itemsSelect, query)
 
-    result = NamespacesResult()
-    result.count = session.exec(countSelect).one()
-    result.items = session.exec(itemsSelect).all()
-    return result
+    start = query.pagination.start if query.pagination and query.pagination.start else 0
+    limit = (
+        query.pagination.limit if query.pagination and query.pagination.limit else 10
+    )
+    itemCount = session.exec(countSelect).one()
+    remainingItemCount = max(itemCount - start - limit, 0)
+
+    return NamespaceList(
+        meta=ListMeta(
+            start=start,
+            limit=limit,
+            itemCount=itemCount,
+            remainingItemCount=remainingItemCount,
+        ),
+        items=session.exec(itemsSelect).all(),
+    )
 
 
 @router.get("/{namespace_name}")

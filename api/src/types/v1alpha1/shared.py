@@ -40,8 +40,9 @@ class DateTimeFilter:
 class ListMeta(BaseModel):
     start: Optional[int] = None
     limit: Optional[int] = None
-    # remainingItemCount: Optional[int] = None
-    # next: Optional[str] = None
+    itemCount: Optional[int] = None
+    remainingItemCount: Optional[int] = None
+    next: Optional[str] = None
 
 
 class NamesFilter:
@@ -49,4 +50,14 @@ class NamesFilter:
 
 
 class LabelSelectorFilter:
-    labelSelector: Optional[Dict[str, str]] = None
+    label_selector: Optional[Dict[str, str]] = Field(None, alias="labelSelector")
+
+
+class OrderBy(BaseModel):
+    attribute: str
+    direction: Optional[str] = None
+
+
+class Pagination(BaseModel):
+    start: Optional[int] = None
+    limit: Optional[int] = None

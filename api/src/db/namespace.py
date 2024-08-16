@@ -1,13 +1,10 @@
 import uuid
 from datetime import datetime
-from sqlmodel import (
-    Field,
-    SQLModel,
-    UniqueConstraint,
-    JSON,
-)
-from sqlalchemy import Column, DateTime, func
+from sqlmodel import Field, SQLModel, UniqueConstraint, JSON, null, not_
+from sqlalchemy import Column, DateTime, func, desc
 from typing import Dict, Optional
+
+from ..types.v1alpha1.namespace import NamespaceQuery
 
 
 class Namespace(SQLModel, table=True):
@@ -30,3 +27,35 @@ class Namespace(SQLModel, table=True):
     )
     labels: Dict[str, str] = Field(default={}, sa_type=JSON)
     annotations: Dict[str, str] = Field(default={}, sa_type=JSON)
+
+
+def apply_query(sql, query: NamespaceQuery, count: bool = False):
+    # sql = select(Namespace)
+
+    if filter := query.filter:
+        if filter.label_selector:
+            sql = sql.where(Namespace.labels == filter.label_selector)
+        if filter.names:
+            sql = sql.where(Namespace.name.in_(filter.names))
+
+    if exclude := query.exclude:
+        if exclude.label_selector:
+            sql = sql.where(not_(Namespace.labels == exclude.label_selector))
+        if exclude.names:
+            sql = sql.where(not_(Namespace.name.in_(exclude.names)))
+
+    sql = sql.where(Namespace.deletedTimestamp == null())
+
+    if not count:
+        if order := query.order:
+            for order_by in order:
+                if order_by.direction == "DESC":
+                    sql = sql.order_by(desc(order_by.attribute))
+                else:
+                    sql = sql.order_by(order_by.attribute)
+
+        if pagination := query.pagination:
+            sql = sql.offset(pagination.start)
+            sql = sql.limit(pagination.limit)
+
+    return sql

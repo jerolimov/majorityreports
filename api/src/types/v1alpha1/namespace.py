@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Sequence
 from pydantic import BaseModel
 
 from .shared import (
@@ -8,6 +8,8 @@ from .shared import (
     ListMeta,
     NamesFilter,
     LabelSelectorFilter,
+    OrderBy,
+    Pagination,
 )
 
 
@@ -36,17 +38,17 @@ class NamespaceFilter(BaseModel, LabelSelectorFilter, NamesFilter):
 class NamespaceQuery(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "NamespaceQuery"
-    filter: NamespaceFilter
+    filter: Optional[NamespaceFilter] = None
     exclude: Optional[NamespaceFilter] = None
-    # order by
-    # pagination
+    order: Optional[list[OrderBy]] = None
+    pagination: Optional[Pagination] = None
 
 
 class NamespaceList(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "NamespaceList"
     meta: ListMeta
-    items: list[Namespace]
+    items: Sequence[Namespace]
 
 
 class NamespaceStatsResult(BaseModel):
