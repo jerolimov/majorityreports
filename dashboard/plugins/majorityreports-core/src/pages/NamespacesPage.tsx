@@ -15,7 +15,7 @@ import {
 
 import Box from '@material-ui/core/Box';
 
-import { Namespace, NamespacesResult } from '@internal/backstage-plugin-majorityreports-common';
+import { Namespace, NamespaceList } from '@internal/backstage-plugin-majorityreports-common';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -27,17 +27,30 @@ import { usePageSize } from '../hooks/usePageSize';
 const columns: TableColumn<Namespace>[] = [
   {
     title: 'Name',
-    field: 'name',
+    field: 'meta.name',
     highlight: true,
-    render: (data) => <Link to={data.name}>{data.name}</Link>
+    render: (data) => <Link to={data.meta.name!}>{data.meta.name}</Link>
+  },
+  {
+    title: 'Title',
+    field: 'meta.title',
+  },
+  {
+    title: 'Lifecycle',
+    field: 'spec.lifecycle',
+  },
+  {
+    title: 'Owner',
+    field: 'spec.owner',
   },
   {
     title: 'Created',
-    field: 'creationTimestamp',
+    field: 'meta.creationTimestamp',
     type: 'datetime',
   },
   {
     title: 'Tags',
+    field: 'meta.tags',
     render: (data) => <Tags object={data} />,
   },
 ];
@@ -62,7 +75,7 @@ export const TableContent = () => {
   const [page, setPage] = usePage();
   const [pageSize, setPageSize] = usePageSize();
 
-  const result = useQuery<NamespacesResult>({
+  const result = useQuery<NamespaceList>({
     queryKey: ['namespaces', page, pageSize],
     queryFn: function getNamespaces() {
       const proxyUrl = 'http://localhost:7007/api/proxy/api/';
@@ -88,7 +101,7 @@ export const TableContent = () => {
       options={{ pageSize }}
       onPageChange={setPage}
       onRowsPerPageChange={setPageSize}
-      totalCount={result.data?.count || 0}
+      totalCount={result.data?.meta.itemCount || 0}
     />
   );
 };
