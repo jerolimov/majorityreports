@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 
 export interface AboutFieldProps {
   label: string;
-  value?: string;
+  value?: string | null;
   gridSizes?: Record<string, number>;
   children?: React.ReactNode;
 }

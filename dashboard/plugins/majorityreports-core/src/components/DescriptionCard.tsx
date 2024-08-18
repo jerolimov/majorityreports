@@ -1,16 +1,19 @@
 import React from 'react';
 
-import {
-  MarkdownContent,
-  InfoCard,
-} from '@backstage/core-components';
+import { InfoCard, MarkdownContent } from '@backstage/core-components';
 
-export const DescriptionCard = ({ annotations }: { annotations?: Record<string, string> }) => {
-  const content = annotations?.['description'] ?? '# hello\n\n## hello 2';
+import { Namespace/*, Actor, Event, Feedback, Item*/ } from '@internal/backstage-plugin-majorityreports-common';
+
+export const DescriptionCard = ({ object }: { object?: Namespace /*| Actor | Item | Event | Feedback*/ }) => {
+  const description = object?.meta?.description;
+
+  if (!description) {
+    return null;
+  }
 
   return (
     <InfoCard title="Description">
-      <MarkdownContent content={content} />
+      <MarkdownContent content={description} />
     </InfoCard>
   );
 }

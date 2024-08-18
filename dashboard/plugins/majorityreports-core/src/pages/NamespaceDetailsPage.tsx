@@ -52,27 +52,28 @@ export const NamespaceDetailsPage = () => {
   }
 
   const namespace = result.data;
-  const title = namespace?.annotations?.['title'] || namespaceName;
 
   return (
     <Page themeId="namespaces">
-      <Header title={title} type="Namespace" typeLink="./.." />
+      <Header title={namespace?.meta.title} type="Namespace" typeLink="./.." />
       <Content>
         <Grid container>
-          <Grid item md={6}>
-            <AboutCard object={namespace} />
+          <Grid item container md={6}>
+            <Grid item sm={12}>
+              <AboutCard object={namespace} />
+            </Grid>
+            <Grid item sm={12}>
+              <LabelsCard object={namespace} />
+              </Grid>
+            <Grid item sm={12}>
+              <AnnotationsCard object={namespace} />
+            </Grid>
           </Grid>
-          {/* <Grid item md={6}>
-            <CountCard />
-          </Grid> */}
           <Grid item md={6}>
-            <DescriptionCard annotations={namespace?.annotations} />
-          </Grid>
-          <Grid item md={6}>
-            <LabelsCard labels={namespace?.labels} />
-          </Grid>
-          <Grid item md={6}>
-            <AnnotationsCard annotations={namespace?.annotations} />
+            {/* <Grid item md={6}>
+              <CountCard />
+            </Grid> */}
+            <DescriptionCard object={namespace} />
           </Grid>
         </Grid>
       </Content>

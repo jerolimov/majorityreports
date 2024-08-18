@@ -1,15 +1,24 @@
 import React from 'react';
 import YAML from 'yaml'
 
-import {
-  InfoCard,
-  CodeSnippet,
-} from '@backstage/core-components';
+import { InfoCard, Progress, CodeSnippet } from '@backstage/core-components';
 
-export const LabelsCard = ({ labels }: { labels?: Record<string, string> }) => {
+import { Namespace/*, Actor, Event, Feedback, Item*/ } from '@internal/backstage-plugin-majorityreports-common';
+
+export const LabelsCard = ({ object }: { object?: Namespace /*| Actor | Item | Event | Feedback*/ }) => {
+  if (!object) {
+    return (
+      <InfoCard title="About">
+        <Progress />
+      </InfoCard>
+    );
+  }
+
+  const labels = object.meta.labels || {};
+
   return (
     <InfoCard title="Labels">
-      <CodeSnippet text={YAML.stringify(labels || {})} language="yaml" showCopyCodeButton />
+      <CodeSnippet text={YAML.stringify(labels)} language="yaml" showCopyCodeButton />
     </InfoCard>
   );
 }
