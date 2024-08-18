@@ -6,47 +6,50 @@ from sqlmodel import (
     select,
     null,
 )
-from sqlalchemy import func
-from pydantic import BaseModel
-from typing import Sequence
 
-from .entity import NamespaceEntity as Namespace, apply_query
-from .types import NamespaceQuery, ListMeta, Pagination
 from ..db import get_session
-
-
-class NamespaceList(BaseModel):
-    apiVersion: str = "v1alpha1"
-    kind: str = "NamespaceList"
-    meta: ListMeta
-    items: Sequence[Namespace]
+from .entity import NamespaceEntity
+from .types import Namespace, NamespaceMeta, NamespaceSpec
 
 
 router = APIRouter()
+
+
+def find_namespace_entity(namespace_name: str, session: Session) -> NamespaceEntity:
+    statement = select(NamespaceEntity)
+    statement = statement.where(NamespaceEntity.name == namespace_name)
+    statement = statement.where(NamespaceEntity.deletedTimestamp == null())
+    return session.exec(statement).one()
+
+
+def serialize(entity: NamespaceEntity) -> Namespace:
+    return Namespace(
+        meta=NamespaceMeta(**entity.model_dump()),
+        spec=NamespaceSpec(**entity.model_dump()),
+    )
 
 
 @router.post("")
 def create_namespace(
     newNamespace: Namespace, session: Session = Depends(get_session)
 ) -> Namespace:
-    namespace = Namespace()
-    namespace.name = newNamespace.name
-    namespace.labels = newNamespace.labels
-    namespace.annotations = newNamespace.annotations
-    session.add(namespace)
+    entity = NamespaceEntity()
+    if newNamespace.meta:
+        entity.sqlmodel_update(newNamespace.meta.model_dump(exclude_unset=True))
+    if newNamespace.spec:
+        entity.sqlmodel_update(newNamespace.spec.model_dump(exclude_unset=True))
+    session.add(entity)
     session.commit()
-    session.refresh(namespace)
-    return namespace
+    session.refresh(entity)
+    return newNamespace
 
 
 @router.get("/{namespace_name}")
 def read_namespace(
     namespace_name: str, session: Session = Depends(get_session)
 ) -> Namespace:
-    statement = select(Namespace)
-    statement = statement.where(Namespace.name == namespace_name)
-    statement = statement.where(Namespace.deletedTimestamp == null())
-    return session.exec(statement).one()
+    entity = find_namespace_entity(namespace_name, session)
+    return serialize(entity)
 
 
 @router.put("/{namespace_name}")
@@ -55,33 +58,31 @@ def update_namespace(
     updateNamespace: Namespace,
     session: Session = Depends(get_session),
 ) -> Namespace:
-    namespace = read_namespace(namespace_name)
-    if name := updateNamespace.name:
-        namespace.name = name
-    if labels := updateNamespace.labels:
-        namespace.labels = labels
-    if annotations := updateNamespace.annotations:
-        namespace.annotations = annotations
+    entity = find_namespace_entity(namespace_name, session)
+    if updateNamespace.meta:
+        entity.sqlmodel_update(updateNamespace.meta.model_dump(exclude_unset=True))
+    if updateNamespace.spec:
+        entity.sqlmodel_update(updateNamespace.spec.model_dump(exclude_unset=True))
     session.commit()
-    session.refresh(namespace)
-    return namespace
+    session.refresh(entity)
+    return serialize(entity)
 
 
 @router.delete("/{namespace_name}")
 def delete_namespace(
     namespace_name: str, session: Session = Depends(get_session)
 ) -> JSONResponse:
-    namespace = read_namespace(namespace_name, session)
+    entity = find_namespace_entity(namespace_name, session)
 
-    softDelete = namespace.labels.get("soft-delete") == "true"
+    softDelete = entity.labels and entity.labels.get("soft-delete") == "true"
 
     if softDelete:
-        namespace.deletedTimestamp = datetime.now()
-        namespace.annotations = {}
-        session.add(namespace)
+        entity.deletedTimestamp = datetime.now()
+        entity.annotations = {}
+        session.add(entity)
         session.commit()
     else:
-        session.delete(namespace)
+        session.delete(entity)
         session.commit()
     return JSONResponse(
         status_code=status.HTTP_202_ACCEPTED, content={"message": "Namespace deleted"}

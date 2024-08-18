@@ -1,25 +1,52 @@
 from fastapi import APIRouter, Depends
-from sqlmodel import (
-    Session,
-    select,
-)
-from sqlalchemy import func
-from pydantic import BaseModel
-from typing import Sequence
+from sqlmodel import Session, select, null, not_
+from sqlmodel.sql.expression import SelectOfScalar
+from sqlalchemy import func, desc
 
 from ..db import get_session
-from .entity import NamespaceEntity as Namespace, apply_query
-from .types import NamespaceQuery, ListMeta, Pagination
-
-
-class NamespaceList(BaseModel):
-    apiVersion: str = "v1alpha1"
-    kind: str = "NamespaceList"
-    meta: ListMeta
-    items: Sequence[Namespace]
+from ..shared.types import ListMeta, Pagination
+from .entity import NamespaceEntity
+from .types import NamespaceList, NamespaceQuery
+from .crud import serialize
 
 
 router = APIRouter()
+
+
+def apply_query(
+    sql: SelectOfScalar[NamespaceEntity],
+    query: NamespaceQuery,
+    count: bool = False,
+) -> SelectOfScalar[NamespaceEntity]:
+    # sql = select(Namespace)
+
+    if filter := query.filter:
+        if filter.label_selector:
+            sql = sql.where(NamespaceEntity.labels == filter.label_selector)
+        if filter.names:
+            sql = sql.where(NamespaceEntity.name.in_(filter.names))
+
+    if exclude := query.exclude:
+        if exclude.label_selector:
+            sql = sql.where(not_(NamespaceEntity.labels == exclude.label_selector))
+        if exclude.names:
+            sql = sql.where(not_(NamespaceEntity.name.in_(exclude.names)))
+
+    sql = sql.where(NamespaceEntity.deletedTimestamp == null())
+
+    if not count:
+        if order := query.order:
+            for order_by in order:
+                if order_by.direction == "DESC":
+                    sql = sql.order_by(desc(order_by.attribute))
+                else:
+                    sql = sql.order_by(order_by.attribute)
+
+        if pagination := query.pagination:
+            sql = sql.offset(pagination.start)
+            sql = sql.limit(pagination.limit)
+
+    return sql
 
 
 @router.get("")
@@ -34,9 +61,9 @@ def read_namespaces(
     # start=
     # limit=
     query = NamespaceQuery(
-        filter={},
-        exclude={},
-        order=[],
+        filter=None,
+        exclude=None,
+        order=None,
         pagination=Pagination(
             start=start,
             limit=limit,
@@ -50,8 +77,8 @@ def read_namespaces(
 def query_namespaces(
     query: NamespaceQuery, session: Session = Depends(get_session)
 ) -> NamespaceList:
-    countSelect = select(func.count("*")).select_from(Namespace)
-    itemsSelect = select(Namespace)
+    countSelect = select(func.count("*")).select_from(NamespaceEntity)
+    itemsSelect = select(NamespaceEntity)
 
     countSelect = apply_query(countSelect, query, count=True)
     itemsSelect = apply_query(itemsSelect, query)
@@ -63,6 +90,8 @@ def query_namespaces(
     itemCount = session.exec(countSelect).one()
     remainingItemCount = max(itemCount - start - limit, 0)
 
+    entities = session.exec(itemsSelect).all()
+
     return NamespaceList(
         meta=ListMeta(
             start=start,
@@ -70,5 +99,5 @@ def query_namespaces(
             itemCount=itemCount,
             remainingItemCount=remainingItemCount,
         ),
-        items=session.exec(itemsSelect).all(),
+        items=map(serialize, entities),
     )

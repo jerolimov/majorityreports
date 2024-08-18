@@ -9,7 +9,6 @@ from sqlalchemy import func
 from typing import Iterable
 
 from ..db import get_session
-from ..namespaces.crud import read_namespace
 from .entity import ItemEntity as Item
 
 
