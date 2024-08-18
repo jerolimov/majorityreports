@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Optional
 from pydantic import BaseModel
 
 from ..shared.types import (
@@ -28,7 +28,7 @@ class Namespace(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "Namespace"
     meta: NamespaceMeta
-    spec: NamespaceSpec
+    spec: Optional[NamespaceSpec] = None
 
 
 class NamespaceFilter(BaseModel, LabelSelectorFilter, NamesFilter):
@@ -48,7 +48,7 @@ class NamespaceList(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "NamespaceList"
     meta: ListMeta
-    items: Sequence[Namespace]
+    items: list[Namespace]
 
 
 class NamespaceStatsResult(BaseModel):

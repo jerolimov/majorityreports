@@ -25,6 +25,10 @@ def init_testdata() -> None:
                 labels={
                     "test": "testdata",
                 },
+                tags=[
+                    "testdata",
+                ],
+                lifecycle="experiment",
             )
             session.add(namespace)
             session.commit()
