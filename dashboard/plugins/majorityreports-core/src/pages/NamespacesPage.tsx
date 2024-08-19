@@ -44,14 +44,14 @@ const columns: TableColumn<Namespace>[] = [
     field: 'spec.owner',
   },
   {
-    title: 'Created',
-    field: 'meta.creationTimestamp',
-    type: 'datetime',
-  },
-  {
     title: 'Tags',
     field: 'meta.tags',
     render: (data) => <Tags object={data} />,
+  },
+  {
+    title: 'Created',
+    field: 'meta.creationTimestamp',
+    type: 'datetime',
   },
 ];
 

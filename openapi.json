@@ -273,33 +273,17 @@
         "tags": [
           "actors"
         ],
-        "summary": "Read Actors",
-        "operationId": "read_actors_api_actors_get",
+        "summary": "Read Items",
+        "operationId": "read_items_api_actors_get",
         "parameters": [
           {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "offset",
+            "name": "start",
             "in": "query",
             "required": false,
             "schema": {
               "type": "integer",
               "default": 0,
-              "title": "Offset"
+              "title": "Start"
             }
           },
           {
@@ -319,7 +303,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ActorsResult"
+                  "$ref": "#/components/schemas/ActorList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/actors/query": {
+      "post": {
+        "tags": [
+          "actors"
+        ],
+        "summary": "Query Items",
+        "operationId": "query_items_api_actors_query_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActorQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActorList"
                 }
               }
             }
@@ -346,29 +371,13 @@
         "operationId": "read_items_api_items_get",
         "parameters": [
           {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "offset",
+            "name": "start",
             "in": "query",
             "required": false,
             "schema": {
               "type": "integer",
               "default": 0,
-              "title": "Offset"
+              "title": "Start"
             }
           },
           {
@@ -388,7 +397,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemsResult"
+                  "$ref": "#/components/schemas/ItemList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/query": {
+      "post": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Query Items",
+        "operationId": "query_items_api_items_query_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemList"
                 }
               }
             }
@@ -411,33 +461,17 @@
         "tags": [
           "events"
         ],
-        "summary": "Read Events",
-        "operationId": "read_events_api_events_get",
+        "summary": "Read Items",
+        "operationId": "read_items_api_events_get",
         "parameters": [
           {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "offset",
+            "name": "start",
             "in": "query",
             "required": false,
             "schema": {
               "type": "integer",
               "default": 0,
-              "title": "Offset"
+              "title": "Start"
             }
           },
           {
@@ -457,7 +491,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EventsResult"
+                  "$ref": "#/components/schemas/EventList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/events/query": {
+      "post": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Query Items",
+        "operationId": "query_items_api_events_query_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventList"
                 }
               }
             }
@@ -480,33 +555,17 @@
         "tags": [
           "feedbacks"
         ],
-        "summary": "Read Feedbacks",
-        "operationId": "read_feedbacks_api_feedbacks_get",
+        "summary": "Read Items",
+        "operationId": "read_items_api_feedbacks_get",
         "parameters": [
           {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "offset",
+            "name": "start",
             "in": "query",
             "required": false,
             "schema": {
               "type": "integer",
               "default": 0,
-              "title": "Offset"
+              "title": "Start"
             }
           },
           {
@@ -526,7 +585,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FeedbacksResult"
+                  "$ref": "#/components/schemas/FeedbackList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/feedbacks/query": {
+      "post": {
+        "tags": [
+          "feedbacks"
+        ],
+        "summary": "Query Items",
+        "operationId": "query_items_api_feedbacks_query_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackList"
                 }
               }
             }
@@ -616,7 +716,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ActorEntity"
+                "$ref": "#/components/schemas/Actor"
               }
             }
           }
@@ -627,7 +727,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ActorEntity"
+                  "$ref": "#/components/schemas/Actor"
                 }
               }
             }
@@ -678,7 +778,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ActorEntity"
+                  "$ref": "#/components/schemas/Actor"
                 }
               }
             }
@@ -726,7 +826,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ActorEntity"
+                "$ref": "#/components/schemas/Actor"
               }
             }
           }
@@ -737,7 +837,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ActorEntity"
+                  "$ref": "#/components/schemas/Actor"
                 }
               }
             }
@@ -825,7 +925,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ItemEntity"
+                "$ref": "#/components/schemas/Item"
               }
             }
           }
@@ -836,7 +936,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemEntity"
+                  "$ref": "#/components/schemas/Item"
                 }
               }
             }
@@ -861,29 +961,13 @@
         "operationId": "read_items_api_namespaces__namespace_name__items_get",
         "parameters": [
           {
-            "name": "namespace_name",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "offset",
+            "name": "start",
             "in": "query",
             "required": false,
             "schema": {
               "type": "integer",
               "default": 0,
-              "title": "Offset"
+              "title": "Start"
             }
           },
           {
@@ -903,7 +987,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemsResult"
+                  "$ref": "#/components/schemas/ItemList"
                 }
               }
             }
@@ -954,7 +1038,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemEntity"
+                  "$ref": "#/components/schemas/Item"
                 }
               }
             }
@@ -1002,7 +1086,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ItemEntity"
+                "$ref": "#/components/schemas/Item"
               }
             }
           }
@@ -1013,7 +1097,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemEntity"
+                  "$ref": "#/components/schemas/Item"
                 }
               }
             }
@@ -1078,6 +1162,47 @@
         }
       }
     },
+    "/api/namespaces/{namespace_name}/items/query": {
+      "post": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Query Items",
+        "operationId": "query_items_api_namespaces__namespace_name__items_query_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/namespaces/{namespace_name}/events": {
       "post": {
         "tags": [
@@ -1101,7 +1226,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EventEntity"
+                "$ref": "#/components/schemas/Event"
               }
             }
           }
@@ -1112,7 +1237,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EventEntity"
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
@@ -1133,33 +1258,17 @@
         "tags": [
           "events"
         ],
-        "summary": "Read Events",
-        "operationId": "read_events_api_namespaces__namespace_name__events_get",
+        "summary": "Read Items",
+        "operationId": "read_items_api_namespaces__namespace_name__events_get",
         "parameters": [
           {
-            "name": "namespace_name",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "offset",
+            "name": "start",
             "in": "query",
             "required": false,
             "schema": {
               "type": "integer",
               "default": 0,
-              "title": "Offset"
+              "title": "Start"
             }
           },
           {
@@ -1179,7 +1288,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EventsResult"
+                  "$ref": "#/components/schemas/EventList"
                 }
               }
             }
@@ -1230,7 +1339,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EventEntity"
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
@@ -1278,7 +1387,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EventEntity"
+                "$ref": "#/components/schemas/Event"
               }
             }
           }
@@ -1289,7 +1398,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EventEntity"
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
@@ -1354,6 +1463,47 @@
         }
       }
     },
+    "/api/namespaces/{namespace_name}/events/query": {
+      "post": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Query Items",
+        "operationId": "query_items_api_namespaces__namespace_name__events_query_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/namespaces/{namespace_name}/feedbacks": {
       "post": {
         "tags": [
@@ -1377,7 +1527,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FeedbackEntity"
+                "$ref": "#/components/schemas/Feedback"
               }
             }
           }
@@ -1388,7 +1538,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FeedbackEntity"
+                  "$ref": "#/components/schemas/Feedback"
                 }
               }
             }
@@ -1409,33 +1559,17 @@
         "tags": [
           "feedbacks"
         ],
-        "summary": "Read Feedbacks",
-        "operationId": "read_feedbacks_api_namespaces__namespace_name__feedbacks_get",
+        "summary": "Read Items",
+        "operationId": "read_items_api_namespaces__namespace_name__feedbacks_get",
         "parameters": [
           {
-            "name": "namespace_name",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "offset",
+            "name": "start",
             "in": "query",
             "required": false,
             "schema": {
               "type": "integer",
               "default": 0,
-              "title": "Offset"
+              "title": "Start"
             }
           },
           {
@@ -1455,7 +1589,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FeedbacksResult"
+                  "$ref": "#/components/schemas/FeedbackList"
                 }
               }
             }
@@ -1506,7 +1640,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FeedbackEntity"
+                  "$ref": "#/components/schemas/Feedback"
                 }
               }
             }
@@ -1554,7 +1688,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FeedbackEntity"
+                "$ref": "#/components/schemas/Feedback"
               }
             }
           }
@@ -1565,7 +1699,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FeedbackEntity"
+                  "$ref": "#/components/schemas/Feedback"
                 }
               }
             }
@@ -1614,6 +1748,47 @@
             "content": {
               "application/json": {
                 "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/feedbacks/query": {
+      "post": {
+        "tags": [
+          "feedbacks"
+        ],
+        "summary": "Query Items",
+        "operationId": "query_items_api_namespaces__namespace_name__feedbacks_query_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackList"
+                }
               }
             }
           },
@@ -2211,102 +2386,53 @@
   },
   "components": {
     "schemas": {
-      "ActorEntity": {
+      "Actor": {
         "properties": {
-          "uid": {
+          "apiVersion": {
             "type": "string",
-            "format": "uuid",
-            "title": "Uid"
+            "title": "Apiversion",
+            "default": "v1alpha1"
           },
-          "namespace_name": {
+          "kind": {
             "type": "string",
-            "title": "Namespace Name"
+            "title": "Kind",
+            "default": "Actor"
           },
-          "name": {
-            "type": "string",
-            "title": "Name"
+          "meta": {
+            "$ref": "#/components/schemas/ActorMeta"
           },
-          "creationTimestamp": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Creationtimestamp"
-          },
-          "updateTimestamp": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Updatetimestamp"
-          },
-          "deletedTimestamp": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Deletedtimestamp"
-          },
-          "labels": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "type": "object",
-            "title": "Labels",
-            "default": {}
-          },
-          "annotations": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "type": "object",
-            "title": "Annotations",
-            "default": {}
+          "spec": {
+            "$ref": "#/components/schemas/ActorSpec"
           }
         },
         "type": "object",
         "required": [
-          "namespace_name",
-          "name",
-          "creationTimestamp",
-          "updateTimestamp",
-          "deletedTimestamp"
+          "meta",
+          "spec"
         ],
-        "title": "ActorEntity"
+        "title": "Actor"
       },
-      "ActorsResult": {
+      "ActorFilter": {
         "properties": {
-          "count": {
+          "labelSelector": {
             "anyOf": [
               {
-                "type": "integer"
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Count"
+            "title": "Labelselector"
           },
-          "items": {
+          "names": {
             "anyOf": [
               {
                 "items": {
-                  "$ref": "#/components/schemas/ActorEntity"
+                  "type": "string"
                 },
                 "type": "array"
               },
@@ -2314,28 +2440,83 @@
                 "type": "null"
               }
             ],
+            "title": "Names"
+          }
+        },
+        "type": "object",
+        "title": "ActorFilter"
+      },
+      "ActorList": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "ActorList"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ListMeta"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Actor"
+            },
+            "type": "array",
             "title": "Items"
           }
         },
         "type": "object",
-        "title": "ActorsResult"
+        "required": [
+          "meta",
+          "items"
+        ],
+        "title": "ActorList"
       },
-      "EventEntity": {
+      "ActorMeta": {
         "properties": {
+          "namespace": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Namespace"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "generateName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generatename"
+          },
           "uid": {
             "type": "string",
             "format": "uuid",
             "title": "Uid"
           },
-          "namespace_name": {
-            "type": "string",
-            "title": "Namespace Name"
-          },
-          "name": {
-            "type": "string",
-            "title": "Name"
-          },
-          "actor_name": {
+          "title": {
             "anyOf": [
               {
                 "type": "string"
@@ -2344,9 +2525,9 @@
                 "type": "null"
               }
             ],
-            "title": "Actor Name"
+            "title": "Title"
           },
-          "item_name": {
+          "description": {
             "anyOf": [
               {
                 "type": "string"
@@ -2355,7 +2536,49 @@
                 "type": "null"
               }
             ],
-            "title": "Item Name"
+            "title": "Description"
+          },
+          "labels": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labels"
+          },
+          "annotations": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Annotations"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags"
           },
           "creationTimestamp": {
             "anyOf": [
@@ -2392,23 +2615,387 @@
               }
             ],
             "title": "Deletedtimestamp"
+          }
+        },
+        "type": "object",
+        "title": "ActorMeta"
+      },
+      "ActorQuery": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "ActorQuery"
+          },
+          "filter": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ActorFilter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "exclude": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ActorFilter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "order": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/OrderBy"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order"
+          },
+          "pagination": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Pagination"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "title": "ActorQuery"
+      },
+      "ActorSpec": {
+        "properties": {
+          "features": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Features"
+          }
+        },
+        "type": "object",
+        "title": "ActorSpec"
+      },
+      "Event": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "Event"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/EventMeta"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/EventSpec"
+          }
+        },
+        "type": "object",
+        "required": [
+          "meta",
+          "spec"
+        ],
+        "title": "Event"
+      },
+      "EventFilter": {
+        "properties": {
+          "labelSelector": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labelselector"
+          },
+          "names": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Names"
+          }
+        },
+        "type": "object",
+        "title": "EventFilter"
+      },
+      "EventList": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "EventList"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ListMeta"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "meta",
+          "items"
+        ],
+        "title": "EventList"
+      },
+      "EventMeta": {
+        "properties": {
+          "namespace": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Namespace"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "generateName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generatename"
+          },
+          "uid": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Uid"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
           },
           "labels": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "type": "object",
-            "title": "Labels",
-            "default": {}
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labels"
           },
           "annotations": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "type": "object",
-            "title": "Annotations",
-            "default": {}
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Annotations"
           },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags"
+          },
+          "creationTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Creationtimestamp"
+          },
+          "updateTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updatetimestamp"
+          },
+          "deletedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deletedtimestamp"
+          }
+        },
+        "type": "object",
+        "title": "EventMeta"
+      },
+      "EventQuery": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "EventQuery"
+          },
+          "filter": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EventFilter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "exclude": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EventFilter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "order": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/OrderBy"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order"
+          },
+          "pagination": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Pagination"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "title": "EventQuery"
+      },
+      "EventSpec": {
+        "properties": {
           "type": {
             "anyOf": [
               {
@@ -2419,6 +3006,28 @@
               }
             ],
             "title": "Type"
+          },
+          "actor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actor"
+          },
+          "item": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item"
           },
           "value": {
             "anyOf": [
@@ -2433,37 +3042,55 @@
           }
         },
         "type": "object",
-        "required": [
-          "namespace_name",
-          "name",
-          "actor_name",
-          "item_name",
-          "creationTimestamp",
-          "updateTimestamp",
-          "deletedTimestamp",
-          "type",
-          "value"
-        ],
-        "title": "EventEntity"
+        "title": "EventSpec"
       },
-      "EventsResult": {
+      "Feedback": {
         "properties": {
-          "count": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "Feedback"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/FeedbackMeta"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/FeedbackSpec"
+          }
+        },
+        "type": "object",
+        "required": [
+          "meta",
+          "spec"
+        ],
+        "title": "Feedback"
+      },
+      "FeedbackFilter": {
+        "properties": {
+          "labelSelector": {
             "anyOf": [
               {
-                "type": "integer"
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Count"
+            "title": "Labelselector"
           },
-          "items": {
+          "names": {
             "anyOf": [
               {
                 "items": {
-                  "$ref": "#/components/schemas/EventEntity"
+                  "type": "string"
                 },
                 "type": "array"
               },
@@ -2471,34 +3098,145 @@
                 "type": "null"
               }
             ],
+            "title": "Names"
+          }
+        },
+        "type": "object",
+        "title": "FeedbackFilter"
+      },
+      "FeedbackList": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "FeedbackList"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ListMeta"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Feedback"
+            },
+            "type": "array",
             "title": "Items"
           }
         },
         "type": "object",
-        "title": "EventsResult"
+        "required": [
+          "meta",
+          "items"
+        ],
+        "title": "FeedbackList"
       },
-      "FeedbackEntity": {
+      "FeedbackMeta": {
         "properties": {
+          "namespace": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Namespace"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "generateName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generatename"
+          },
           "uid": {
             "type": "string",
             "format": "uuid",
             "title": "Uid"
           },
-          "namespace_name": {
-            "type": "string",
-            "title": "Namespace Name"
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
           },
-          "name": {
-            "type": "string",
-            "title": "Name"
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
           },
-          "actor_name": {
-            "type": "string",
-            "title": "Actor Name"
+          "labels": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labels"
           },
-          "item_name": {
-            "type": "string",
-            "title": "Item Name"
+          "annotations": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Annotations"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags"
           },
           "creationTimestamp": {
             "anyOf": [
@@ -2535,23 +3273,73 @@
               }
             ],
             "title": "Deletedtimestamp"
+          }
+        },
+        "type": "object",
+        "title": "FeedbackMeta"
+      },
+      "FeedbackQuery": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
           },
-          "labels": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "type": "object",
-            "title": "Labels",
-            "default": {}
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "FeedbackQuery"
           },
-          "annotations": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "type": "object",
-            "title": "Annotations",
-            "default": {}
+          "filter": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FeedbackFilter"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
+          "exclude": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FeedbackFilter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "order": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/OrderBy"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order"
+          },
+          "pagination": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Pagination"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "title": "FeedbackQuery"
+      },
+      "FeedbackSpec": {
+        "properties": {
           "type": {
             "anyOf": [
               {
@@ -2563,6 +3351,14 @@
             ],
             "title": "Type"
           },
+          "actor": {
+            "type": "string",
+            "title": "Actor"
+          },
+          "item": {
+            "type": "string",
+            "title": "Item"
+          },
           "value": {
             "type": "string",
             "title": "Value"
@@ -2570,48 +3366,11 @@
         },
         "type": "object",
         "required": [
-          "namespace_name",
-          "name",
-          "actor_name",
-          "item_name",
-          "creationTimestamp",
-          "updateTimestamp",
-          "deletedTimestamp",
-          "type",
+          "actor",
+          "item",
           "value"
         ],
-        "title": "FeedbackEntity"
-      },
-      "FeedbacksResult": {
-        "properties": {
-          "count": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Count"
-          },
-          "items": {
-            "anyOf": [
-              {
-                "items": {
-                  "$ref": "#/components/schemas/FeedbackEntity"
-                },
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Items"
-          }
-        },
-        "type": "object",
-        "title": "FeedbacksResult"
+        "title": "FeedbackSpec"
       },
       "HTTPValidationError": {
         "properties": {
@@ -2626,6 +3385,32 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
+      "Item": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "Item"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ItemMeta"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/ItemSpec"
+          }
+        },
+        "type": "object",
+        "required": [
+          "meta",
+          "spec"
+        ],
+        "title": "Item"
+      },
       "ItemEntity": {
         "properties": {
           "uid": {
@@ -2633,13 +3418,77 @@
             "format": "uuid",
             "title": "Uid"
           },
-          "namespace_name": {
+          "namespace": {
             "type": "string",
-            "title": "Namespace Name"
+            "title": "Namespace"
           },
           "name": {
             "type": "string",
             "title": "Name"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "labels": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labels"
+          },
+          "annotations": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Annotations"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags"
           },
           "creationTimestamp": {
             "anyOf": [
@@ -2677,32 +3526,242 @@
             ],
             "title": "Deletedtimestamp"
           },
-          "labels": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "type": "object",
-            "title": "Labels",
-            "default": {}
-          },
-          "annotations": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "type": "object",
-            "title": "Annotations",
-            "default": {}
+          "features": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Features"
           }
         },
         "type": "object",
         "required": [
-          "namespace_name",
+          "namespace",
           "name",
+          "labels",
+          "annotations",
+          "tags",
           "creationTimestamp",
           "updateTimestamp",
-          "deletedTimestamp"
+          "deletedTimestamp",
+          "features"
         ],
         "title": "ItemEntity"
+      },
+      "ItemFilter": {
+        "properties": {
+          "labelSelector": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labelselector"
+          },
+          "names": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Names"
+          }
+        },
+        "type": "object",
+        "title": "ItemFilter"
+      },
+      "ItemList": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "ItemList"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ListMeta"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "meta",
+          "items"
+        ],
+        "title": "ItemList"
+      },
+      "ItemMeta": {
+        "properties": {
+          "namespace": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Namespace"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "generateName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generatename"
+          },
+          "uid": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Uid"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "labels": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labels"
+          },
+          "annotations": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Annotations"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags"
+          },
+          "creationTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Creationtimestamp"
+          },
+          "updateTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updatetimestamp"
+          },
+          "deletedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deletedtimestamp"
+          }
+        },
+        "type": "object",
+        "title": "ItemMeta"
       },
       "ItemMinMax": {
         "properties": {
@@ -2791,6 +3850,86 @@
           "max"
         ],
         "title": "ItemMinMax"
+      },
+      "ItemQuery": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "ItemQuery"
+          },
+          "filter": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ItemFilter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "exclude": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ItemFilter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "order": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/OrderBy"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order"
+          },
+          "pagination": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Pagination"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "title": "ItemQuery"
+      },
+      "ItemSpec": {
+        "properties": {
+          "features": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Features"
+          }
+        },
+        "type": "object",
+        "title": "ItemSpec"
       },
       "ItemWithEventCount": {
         "properties": {
@@ -3067,37 +4206,6 @@
           "count"
         ],
         "title": "ItemWithFeedbackCount"
-      },
-      "ItemsResult": {
-        "properties": {
-          "count": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Count"
-          },
-          "items": {
-            "anyOf": [
-              {
-                "items": {
-                  "$ref": "#/components/schemas/ItemEntity"
-                },
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Items"
-          }
-        },
-        "type": "object",
-        "title": "ItemsResult"
       },
       "ListMeta": {
         "properties": {

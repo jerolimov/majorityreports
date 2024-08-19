@@ -10,12 +10,12 @@ import { useQuery } from '@tanstack/react-query';
 
 import { useNamespace } from '../../hooks/useNamespace';
 
-import { NamespacesResult } from '@internal/backstage-plugin-majorityreports-common';
+import { NamespaceList } from '@internal/backstage-plugin-majorityreports-common';
 
 export const NamespaceDropdown = () => {
   const [namespace, setNamespace] = useNamespace();
 
-  const result = useQuery<NamespacesResult>({
+  const result = useQuery<NamespaceList>({
     queryKey: ['namespaces', 0, 1000],
     queryFn: function getNamespaces() {
       const proxyUrl = 'http://localhost:7007/api/proxy/api/';
@@ -84,7 +84,7 @@ export const NamespaceDropdown = () => {
           divider
           children="All namespaces"
         />
-        {namespaces?.map(({ name }) => (
+        {namespaces?.map(({ meta: { name }}) => (
           <MenuItem
             key={name}
             href={`/namespaces/${name}`}
