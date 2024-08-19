@@ -51,10 +51,10 @@ class NamespaceList(BaseModel):
     items: list[Namespace]
 
 
-class NamespaceStatsResult(BaseModel):
-    apiVersion: str = "v1alpha1"
-    kind: str = "NamespaceStatsResult"
-    actors: int
-    items: int
-    events: int
-    feedbacks: int
+# class NamespaceStatsResult(BaseModel):
+#     apiVersion: str = "v1alpha1"
+#     kind: str = "NamespaceStatsResult"
+#     actors: int
+#     items: int
+#     events: int
+#     feedbacks: int

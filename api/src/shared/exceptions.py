@@ -6,7 +6,7 @@ from sqlalchemy.exc import NoResultFound, ArgumentError, IntegrityError
 from pydantic import ValidationError
 
 
-def add_exception_handler(app: FastAPI):
+def add_exception_handler(app: FastAPI) -> None:
     @app.exception_handler(NoResultFound)
     async def no_result_found_exception_handler(
         request: Request, exception: NoResultFound

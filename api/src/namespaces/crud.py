@@ -41,7 +41,7 @@ def create_namespace(
     session.add(entity)
     session.commit()
     session.refresh(entity)
-    return newNamespace
+    return serialize(entity)
 
 
 @router.get("/{namespace_name}")

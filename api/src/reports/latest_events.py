@@ -6,8 +6,8 @@ from sqlmodel.sql.expression import Select
 from typing import Iterable, Dict, Optional, cast
 
 from ..db import get_session
-from ..items.entity import ItemEntity as Item
-from ..events.entity import EventEntity as Event
+from ..items.entity import ItemEntity
+from ..events.entity import EventEntity
 
 
 router = APIRouter()
@@ -45,47 +45,47 @@ def get_items_with_latest_events(
     statement = cast(
         Select[ItemWithEventDetails],
         select(  # type: ignore
-            Item.uid,
-            Item.namespace_name,
-            Item.name,
-            Item.creationTimestamp,
-            Item.updateTimestamp,
-            Item.labels,
-            Item.annotations,
-            Event.uid.label("eventUid"),  # type: ignore
-            Event.name.label("eventName"),  # type: ignore
-            Event.actor_name.label("eventActor"),  # type: ignore
-            Event.creationTimestamp.label("eventCreated"),  # type: ignore
-            Event.updateTimestamp.label("eventUpdated"),  # type: ignore
-            Event.labels.label("eventLabels"),  # type: ignore
-            Event.annotations.label("eventAnnotations"),  # type: ignore
-            Event.type.label("eventType"),  # type: ignore
-            Event.value.label("eventValue"),  # type: ignore
+            ItemEntity.uid,
+            ItemEntity.namespace,
+            ItemEntity.name,
+            ItemEntity.creationTimestamp,
+            ItemEntity.updateTimestamp,
+            ItemEntity.labels,
+            ItemEntity.annotations,
+            EventEntity.uid.label("eventUid"),  # type: ignore
+            EventEntity.name.label("eventName"),  # type: ignore
+            EventEntity.actor.label("eventActor"),  # type: ignore
+            EventEntity.creationTimestamp.label("eventCreated"),  # type: ignore
+            EventEntity.updateTimestamp.label("eventUpdated"),  # type: ignore
+            EventEntity.labels.label("eventLabels"),  # type: ignore
+            EventEntity.annotations.label("eventAnnotations"),  # type: ignore
+            EventEntity.type.label("eventType"),  # type: ignore
+            EventEntity.value.label("eventValue"),  # type: ignore
         )
-        .select_from(Event)
-        .where(Event.item != null())
+        .select_from(EventEntity)
+        .where(EventEntity.item != null())
         .join(
-            Item,
+            ItemEntity,
             and_(
-                Event.item_name == Item.name,
-                Event.namespace_name == Item.namespace_name,
+                EventEntity.item == ItemEntity.name,
+                EventEntity.namespace == ItemEntity.namespace,
             ),
         ),
     )
 
     if namespace_name is not None:
-        statement = statement.where(Event.namespace_name == namespace_name)
+        statement = statement.where(EventEntity.namespace == namespace_name)
 
     if actor_filter is not None:
-        statement = statement.where(Event.actor_name == actor_filter)
+        statement = statement.where(EventEntity.actor == actor_filter)
 
     if type_filter is not None:
-        statement = statement.where(Event.type == type_filter)
+        statement = statement.where(EventEntity.type == type_filter)
 
     if unique_items:
-        statement = statement.group_by(Item.uid)  # type: ignore
+        statement = statement.group_by(ItemEntity.uid)  # type: ignore
 
-    statement = statement.order_by(desc(Event.creationTimestamp))
+    statement = statement.order_by(desc(EventEntity.creationTimestamp))
 
     statement = statement.limit(limit)
 

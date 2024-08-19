@@ -1,66 +1,66 @@
 from sqlmodel import Session
 from src.db import engine, init_db
-from src.namespaces import Namespace
-from src.actors import Actor
-from src.items import Item
-from src.events import Event
-from src.feedbacks import Feedback
+from src.namespaces.entity import NamespaceEntity
+from src.actors.entity import ActorEntity
+from src.items.entity import ItemEntity
+from src.events.entity import EventEntity
+from src.feedbacks.entity import FeedbackEntity
 
 with Session(engine) as session:
     init_db()
 
-    namespace1 = Namespace(
-        name="namespace 1",
+    namespace1 = NamespaceEntity(
+        name="namespace-1",
         labels={
             "test": "import-test-data",
         },
     )
-    namespace2 = Namespace(
-        name="namespace 2",
-        labels={
-            "test": "import-test-data",
-        },
-    )
-
-    actor1 = Actor(
-        namespace=namespace1,
-        name="actor 1",
-        labels={
-            "test": "import-test-data",
-        },
-    )
-    actor2 = Actor(
-        namespace=namespace1,
-        name="actor 2",
+    namespace2 = NamespaceEntity(
+        name="namespace-2",
         labels={
             "test": "import-test-data",
         },
     )
 
-    item1 = Item(
+    actor1 = ActorEntity(
         namespace=namespace1,
-        name="item 1",
+        name="actor-1",
         labels={
             "test": "import-test-data",
         },
     )
-    item2 = Item(
+    actor2 = ActorEntity(
         namespace=namespace1,
-        name="item 2",
+        name="actor-2",
         labels={
             "test": "import-test-data",
         },
     )
 
-    event1 = Event(
+    item1 = ItemEntity(
+        namespace=namespace1,
+        name="item-1",
+        labels={
+            "test": "import-test-data",
+        },
+    )
+    item2 = ItemEntity(
+        namespace=namespace1,
+        name="item-2",
+        labels={
+            "test": "import-test-data",
+        },
+    )
+
+    event1 = EventEntity(
         namespace=namespace1,
         name="same-event-name",
-        actor=actor1,
+        actor="actor-1",
         labels={
             "test": "import-test-data",
         },
     )
-    event2 = Event(
+    event2 = EventEntity(
         namespace=namespace1,
         name="same-event-name",
         # event without actor
@@ -69,21 +69,21 @@ with Session(engine) as session:
         },
     )
 
-    feedback1 = Feedback(
+    feedback1 = FeedbackEntity(
         namespace=namespace1,
         name="same-feedback-name",
-        actor=actor1,
-        item=item1,
+        actor="actor-1",
+        item="item-1",
         labels={
             "test": "import-test-data",
         },
         value=3,
     )
-    feedback2 = Feedback(
+    feedback2 = FeedbackEntity(
         namespace=namespace1,
         name="same-feedback-name",
-        actor=actor1,
-        item=item2,
+        actor="actor-1",
+        item="item-2",
         labels={
             "test": "import-test-data",
         },

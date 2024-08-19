@@ -49,7 +49,7 @@ def apply_query(
     return sql
 
 
-@router.get("")
+@router.get("", response_model_exclude_none=True)
 def read_namespaces(
     start: int = 0, limit: int = 10, session: Session = Depends(get_session)
 ) -> NamespaceList:
@@ -73,7 +73,7 @@ def read_namespaces(
     return query_namespaces(query, session)
 
 
-@router.post("/query")
+@router.post("/query", response_model_exclude_none=True)
 def query_namespaces(
     query: NamespaceQuery, session: Session = Depends(get_session)
 ) -> NamespaceList:

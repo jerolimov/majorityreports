@@ -9,6 +9,8 @@ from ..shared.types import (
     ListMeta,
     NamesFilter,
     LabelSelectorFilter,
+    OrderBy,
+    Pagination,
 )
 
 
@@ -44,8 +46,10 @@ class FeedbackFilter(BaseModel, NamesFilter, LabelSelectorFilter):
 class FeedbackQuery(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "FeedbackQuery"
-    filter: FeedbackFilter
+    filter: Optional[FeedbackFilter] = None
     exclude: Optional[FeedbackFilter] = None
+    order: Optional[list[OrderBy]] = None
+    pagination: Optional[Pagination] = None
 
 
 class FeedbackList(BaseModel):

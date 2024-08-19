@@ -2,9 +2,9 @@ import pandas as pd
 from typing import Any
 from sqlmodel import Session, select
 from src.db import engine, init_db
-from src.namespaces import Namespace
-from src.items import Item
-from src.feedbacks import Feedback
+from src.namespaces.entity import NamespaceEntity
+from src.items.entity import ItemEntity
+from src.feedbacks.entity import FeedbackEntity
 
 
 namespace_name = "movie-test"
@@ -12,13 +12,13 @@ namespace_name = "movie-test"
 test_name = "import-recommender-tutorial-movie-data"
 
 
-def convert_movie_to_item(movie: Any) -> Item:
+def convert_movie_to_item(movie: Any) -> ItemEntity:
     movieId = str(movie.movieId)
     title = str(movie.title)
     genres = str(movie.genres).split("|")
 
     print("genres", genres)
-    item = Item()
+    item = ItemEntity()
     item.namespace_name = namespace_name
     item.name = f"movie-{movieId}"
     item.labels = {
@@ -35,17 +35,17 @@ def convert_movie_to_item(movie: Any) -> Item:
     return item
 
 
-def convert_rating_to_feedback(rating: Any) -> Feedback:
+def convert_rating_to_feedback(rating: Any) -> FeedbackEntity:
     userId = str(rating.userId)
     movieId = str(rating.movieId)
     rating = str(rating.rating)
     # timestamp = str(rating.timestamp)
 
-    feedback = Feedback()
-    feedback.namespace_name = namespace_name
+    feedback = FeedbackEntity()
+    feedback.namespace = namespace_name
     feedback.name = f"movie-{movieId}-user-{userId}"
-    feedback.actor_name = f"user-{userId}"
-    feedback.item_name = f"movie-{movieId}"
+    feedback.actor = f"user-{userId}"
+    feedback.item = f"movie-{movieId}"
     feedback.labels = {
         "test": test_name,
         "movieId": movieId,
@@ -66,10 +66,10 @@ with Session(engine) as session:
     init_db()
 
     namespace = session.exec(
-        select(Namespace).where(Namespace.name == namespace_name)
+        select(NamespaceEntity).where(NamespaceEntity.name == namespace_name)
     ).one_or_none()
     if namespace is None:
-        namespace = Namespace(
+        namespace = NamespaceEntity(
             name=namespace_name,
             labels={
                 "test": test_name,

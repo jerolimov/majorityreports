@@ -5,8 +5,8 @@ from sqlmodel import Session, SQLModel, select, func
 from typing import Iterable, Dict, Optional
 
 from ..db import get_session
-from ..feedbacks.entity import FeedbackEntity as Feedback
-from ..items.entity import ItemEntity as Item
+from ..feedbacks.entity import FeedbackEntity
+from ..items.entity import ItemEntity
 
 
 router = APIRouter()
@@ -39,13 +39,13 @@ def get_minmax(
     session: Session = Depends(get_session),
 ) -> MinMax:
     statement = select(  # type: ignore
-        func.count(Feedback.uid).label("count"),  # type: ignore
-        func.min(Feedback.value).label("min"),
-        func.max(Feedback.value).label("max"),
+        func.count(FeedbackEntity.uid).label("count"),  # type: ignore
+        func.min(FeedbackEntity.value).label("min"),
+        func.max(FeedbackEntity.value).label("max"),
         # func.avg(Feedback.value).label('avg'),
-    ).select_from(Feedback)
+    ).select_from(FeedbackEntity)
 
-    statement = statement.where(Feedback.namespace_name == namespace_name)
+    statement = statement.where(FeedbackEntity.namespace == namespace_name)
 
     return session.exec(statement).one()  # type: ignore
 
@@ -57,15 +57,15 @@ def get_item_minmax(
     session: Session = Depends(get_session),
 ) -> MinMax:
     statement = select(  # type: ignore
-        func.count(Feedback.uid).label("count"),  # type: ignore
-        func.min(Feedback.value).label("min"),
-        func.max(Feedback.value).label("max"),
-        # func.avg(Feedback.value).label('avg'),
-    ).select_from(Feedback)
+        func.count(FeedbackEntity.uid).label("count"),  # type: ignore
+        func.min(FeedbackEntity.value).label("min"),
+        func.max(FeedbackEntity.value).label("max"),
+        # func.avg(FeedbackEntity.value).label('avg'),
+    ).select_from(FeedbackEntity)
 
-    statement = statement.where(Feedback.namespace_name == namespace_name)
+    statement = statement.where(FeedbackEntity.namespace == namespace_name)
 
-    statement = statement.where(Feedback.name == item_name)
+    statement = statement.where(FeedbackEntity.name == item_name)
 
     return session.exec(statement).one()  # type: ignore
 
@@ -77,22 +77,22 @@ def get_all_items_minmax(
 ) -> Iterable[ItemMinMax]:
     statement = (
         select(  # type: ignore
-            Item.uid,
-            Item.namespace_name,
-            Item.name,
-            Item.creationTimestamp,
-            Item.updateTimestamp,
-            Item.labels,
-            Item.annotations,
-            func.count(Feedback.uid).label("count"),  # type: ignore
-            func.min(Feedback.value).label("min"),
-            func.max(Feedback.value).label("max"),
-            # func.avg(Feedback.value).label('avg'),
+            ItemEntity.uid,
+            ItemEntity.namespace,
+            ItemEntity.name,
+            ItemEntity.creationTimestamp,
+            ItemEntity.updateTimestamp,
+            ItemEntity.labels,
+            ItemEntity.annotations,
+            func.count(FeedbackEntity.uid).label("count"),  # type: ignore
+            func.min(FeedbackEntity.value).label("min"),
+            func.max(FeedbackEntity.value).label("max"),
+            # func.avg(FeedbackEntity.value).label('avg'),
         )
-        .select_from(Feedback)
-        .group_by(Feedback.item_name)
+        .select_from(FeedbackEntity)
+        .group_by(FeedbackEntity.item)
     )
 
-    statement = statement.where(Feedback.namespace_name == namespace_name)
+    statement = statement.where(FeedbackEntity.namespace == namespace_name)
 
     return session.exec(statement).all()  # type: ignore
