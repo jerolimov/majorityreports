@@ -1607,13 +1607,13 @@
         }
       }
     },
-    "/api/namespaces/{namespace_name}/feedbacks/{feedback_id}": {
+    "/api/namespaces/{namespace_name}/feedbacks/{feedback_name}": {
       "get": {
         "tags": [
           "feedbacks"
         ],
         "summary": "Read Feedback",
-        "operationId": "read_feedback_api_namespaces__namespace_name__feedbacks__feedback_id__get",
+        "operationId": "read_feedback_api_namespaces__namespace_name__feedbacks__feedback_name__get",
         "parameters": [
           {
             "name": "namespace_name",
@@ -1626,7 +1626,7 @@
           },
           {
             "name": "feedback_name",
-            "in": "query",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -1662,7 +1662,7 @@
           "feedbacks"
         ],
         "summary": "Update Feedback",
-        "operationId": "update_feedback_api_namespaces__namespace_name__feedbacks__feedback_id__put",
+        "operationId": "update_feedback_api_namespaces__namespace_name__feedbacks__feedback_name__put",
         "parameters": [
           {
             "name": "namespace_name",
@@ -1675,7 +1675,7 @@
           },
           {
             "name": "feedback_name",
-            "in": "query",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",
@@ -1721,7 +1721,7 @@
           "feedbacks"
         ],
         "summary": "Delete Feedback",
-        "operationId": "delete_feedback_api_namespaces__namespace_name__feedbacks__feedback_id__delete",
+        "operationId": "delete_feedback_api_namespaces__namespace_name__feedbacks__feedback_name__delete",
         "parameters": [
           {
             "name": "namespace_name",
@@ -1734,7 +1734,7 @@
           },
           {
             "name": "feedback_name",
-            "in": "query",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string",

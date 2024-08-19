@@ -752,45 +752,39 @@ export type ReadItemsApiNamespacesNamespaceNameFeedbacksGetResponse = FeedbackLi
 
 export type ReadItemsApiNamespacesNamespaceNameFeedbacksGetError = HTTPValidationError;
 
-export type ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdGetData = {
+export type ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNameGetData = {
     path: {
-        namespace_name: string;
-    };
-    query: {
         feedback_name: string;
+        namespace_name: string;
     };
 };
 
-export type ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdGetResponse = Feedback;
+export type ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNameGetResponse = Feedback;
 
-export type ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdGetError = HTTPValidationError;
+export type ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNameGetError = HTTPValidationError;
 
-export type UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdPutData = {
+export type UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNamePutData = {
     body: Feedback;
     path: {
-        namespace_name: string;
-    };
-    query: {
         feedback_name: string;
+        namespace_name: string;
     };
 };
 
-export type UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdPutResponse = Feedback;
+export type UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNamePutResponse = Feedback;
 
-export type UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdPutError = HTTPValidationError;
+export type UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNamePutError = HTTPValidationError;
 
-export type DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdDeleteData = {
+export type DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNameDeleteData = {
     path: {
-        namespace_name: string;
-    };
-    query: {
         feedback_name: string;
+        namespace_name: string;
     };
 };
 
-export type DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdDeleteResponse = unknown;
+export type DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNameDeleteResponse = unknown;
 
-export type DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdDeleteError = HTTPValidationError;
+export type DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNameDeleteError = HTTPValidationError;
 
 export type QueryItemsApiNamespacesNamespaceNameFeedbacksQueryPostData = {
     body: FeedbackQuery;
@@ -1380,9 +1374,9 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespaces/{namespace_name}/feedbacks/{feedback_id}': {
+    '/api/namespaces/{namespace_name}/feedbacks/{feedback_name}': {
         get: {
-            req: ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdGetData;
+            req: ReadFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNameGetData;
             res: {
                 /**
                  * Successful Response
@@ -1395,7 +1389,7 @@ export type $OpenApiTs = {
             };
         };
         put: {
-            req: UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdPutData;
+            req: UpdateFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNamePutData;
             res: {
                 /**
                  * Successful Response
@@ -1408,7 +1402,7 @@ export type $OpenApiTs = {
             };
         };
         delete: {
-            req: DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackIdDeleteData;
+            req: DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNameDeleteData;
             res: {
                 /**
                  * Successful Response

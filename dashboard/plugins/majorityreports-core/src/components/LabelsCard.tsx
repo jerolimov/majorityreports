@@ -3,9 +3,9 @@ import YAML from 'yaml'
 
 import { InfoCard, Progress, CodeSnippet } from '@backstage/core-components';
 
-import { Namespace/*, Actor, Event, Feedback, Item*/ } from '@internal/backstage-plugin-majorityreports-common';
+import { Namespace, Actor, Event, Feedback, Item } from '@internal/backstage-plugin-majorityreports-common';
 
-export const LabelsCard = ({ object }: { object?: Namespace /*| Actor | Item | Event | Feedback*/ }) => {
+export const LabelsCard = ({ object }: { object?: Namespace | Actor | Item | Event | Feedback }) => {
   if (!object) {
     return (
       <InfoCard title="About">
@@ -14,7 +14,7 @@ export const LabelsCard = ({ object }: { object?: Namespace /*| Actor | Item | E
     );
   }
 
-  const labels = object.meta.labels || {};
+  const labels = object.meta?.labels || {};
 
   return (
     <InfoCard title="Labels">

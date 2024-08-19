@@ -39,11 +39,10 @@ export const ItemDetailsPage = () => {
   }
 
   const item = result.data;
-  const title = item?.annotations?.['title'] || itemName;
 
   return (
     <Page themeId="item">
-      <Header title={title} type="Item" typeLink="./.." />
+      <Header title={item?.meta?.title || item?.meta?.name} type="Item" typeLink="./.." />
       <Content>
         <Grid container>
           <Grid item md={6}>
@@ -53,13 +52,13 @@ export const ItemDetailsPage = () => {
             <CountCard />
           </Grid> */}
           <Grid item md={6}>
-            <DescriptionCard annotations={item?.annotations} />
+            <DescriptionCard object={item} />
           </Grid>
           <Grid item md={6}>
-            <LabelsCard labels={item?.labels} />
+            <LabelsCard object={item} />
           </Grid>
           <Grid item md={6}>
-            <AnnotationsCard annotations={item?.annotations} />
+            <AnnotationsCard object={item} />
           </Grid>
         </Grid>
       </Content>

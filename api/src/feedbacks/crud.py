@@ -43,7 +43,7 @@ def create_feedback(
     return serialize(entity)
 
 
-@router.get("/{feedback_id}")
+@router.get("/{feedback_name}")
 def read_feedback(
     namespace_name: str, feedback_name: str, session: Session = Depends(get_session)
 ) -> Feedback:
@@ -51,7 +51,7 @@ def read_feedback(
     return serialize(entity)
 
 
-@router.put("/{feedback_id}")
+@router.put("/{feedback_name}")
 def update_feedback(
     namespace_name: str,
     feedback_name: str,
@@ -68,7 +68,7 @@ def update_feedback(
     return serialize(entity)
 
 
-@router.delete("/{feedback_id}")
+@router.delete("/{feedback_name}")
 def delete_feedback(
     namespace_name: str, feedback_name: str, session: Session = Depends(get_session)
 ) -> JSONResponse:

@@ -39,11 +39,10 @@ export const ActorDetailsPage = () => {
   }
 
   const actor = result.data;
-  const title = actor?.annotations?.['title'] || actorName;
 
   return (
     <Page themeId="actor">
-      <Header title={title} type="Actor" typeLink="./.." />
+      <Header title={actor?.meta?.title || actor?.meta?.name} type="Actor" typeLink="./.." />
       <Content>
         <Grid container>
           <Grid item md={6}>
@@ -53,13 +52,13 @@ export const ActorDetailsPage = () => {
             <CountCard />
           </Grid> */}
           <Grid item md={6}>
-            <DescriptionCard annotations={actor?.annotations} />
+            <DescriptionCard object={actor} />
           </Grid>
           <Grid item md={6}>
-            <LabelsCard labels={actor?.labels} />
+            <LabelsCard object={actor} />
           </Grid>
           <Grid item md={6}>
-            <AnnotationsCard annotations={actor?.annotations} />
+            <AnnotationsCard object={actor} />
           </Grid>
         </Grid>
       </Content>
