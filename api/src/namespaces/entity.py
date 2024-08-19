@@ -11,13 +11,11 @@ class NamespaceEntity(SQLModel, table=True):
         UniqueConstraint("name", "deletedTimestamp", name="namespace_name_is_unique"),
     )
 
-    # name
+    # ids
     name: str = Field(primary_key=True)
-
-    # uuid
     uid: uuid.UUID = Field(unique=True, default_factory=uuid.uuid4)
 
-    # common
+    # meta
     title: Optional[str] = None
     description: Optional[str] = None
     labels: Optional[Dict[str, str]] = Field(sa_type=JSON)

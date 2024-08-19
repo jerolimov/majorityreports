@@ -1,25 +1,31 @@
 from datetime import datetime
 from fastapi import APIRouter, Depends, status
 from fastapi.responses import JSONResponse
-from sqlmodel import (
-    SQLModel,
-    Session,
-    select,
-    null,
-)
-from typing import Iterable
+from sqlmodel import Session, select, null
 
 from ..db import get_session
-from ..namespaces.crud import read_namespace
-from .entity import EventEntity as Event
-
-
-class EventsResult(SQLModel):
-    count: int | None = None  # fix types
-    items: Iterable[Event] | None = None
+from .entity import EventEntity
+from .types import Event, EventMeta, EventSpec
 
 
 router = APIRouter()
+
+
+def find_event_entity(
+    namespace_name: str, item_name: str, session: Session
+) -> EventEntity:
+    statement = select(EventEntity)
+    statement = statement.where(EventEntity.namespace == namespace_name)
+    statement = statement.where(EventEntity.name == item_name)
+    statement = statement.where(EventEntity.deletedTimestamp == null())
+    return session.exec(statement).one()
+
+
+def serialize(entity: EventEntity) -> Event:
+    return Event(
+        meta=EventMeta(**entity.model_dump()),
+        spec=EventSpec(**entity.model_dump()),
+    )
 
 
 @router.post("")
@@ -28,29 +34,23 @@ def create_event(
     newEvent: Event,
     session: Session = Depends(get_session),
 ) -> Event:
-    event = Event()
-    event.namespace = read_namespace(namespace_name, session)
-    event.name = newEvent.name
-    event.actor = newEvent.actor
-    event.labels = newEvent.labels
-    event.annotations = newEvent.annotations
-    event.type = newEvent.type
-    event.value = newEvent.value
-    session.add(event)
+    entity = EventEntity()
+    if newEvent.meta:
+        entity.sqlmodel_update(newEvent.meta.model_dump(exclude_unset=True))
+    if newEvent.spec:
+        entity.sqlmodel_update(newEvent.spec.model_dump(exclude_unset=True))
+    session.add(entity)
     session.commit()
-    session.refresh(event)
-    return event
+    session.refresh(entity)
+    return serialize(entity)
 
 
 @router.get("/{event_name}")
 def read_event(
     namespace_name: str, event_name: str, session: Session = Depends(get_session)
 ) -> Event:
-    statement = select(Event)
-    statement = statement.where(Event.namespace_name == namespace_name)
-    statement = statement.where(Event.name == event_name)
-    statement = statement.where(Event.deletedTimestamp == null())
-    return session.exec(statement).one()
+    entity = find_event_entity(namespace_name, event_name, session)
+    return serialize(entity)
 
 
 @router.put("/{event_name}")
@@ -60,22 +60,14 @@ def update_event(
     updateEvent: Event,
     session: Session = Depends(get_session),
 ) -> Event:
-    event = read_event(namespace_name, event_name)
-    if name := updateEvent.name:
-        event.name = name
-    if actor := updateEvent.actor:
-        event.actor = actor
-    if labels := updateEvent.labels:
-        event.labels = labels
-    if annotations := updateEvent.annotations:
-        event.annotations = annotations
-    if type := updateEvent.type:
-        event.type = type
-    if value := updateEvent.value:
-        event.value = value
+    entity = find_event_entity(namespace_name, event_name, session)
+    if updateEvent.meta:
+        entity.sqlmodel_update(updateEvent.meta.model_dump(exclude_unset=True))
+    if updateEvent.spec:
+        entity.sqlmodel_update(updateEvent.spec.model_dump(exclude_unset=True))
     session.commit()
-    session.refresh(event)
-    return event
+    session.refresh(entity)
+    return serialize(entity)
 
 
 @router.delete("/{event_name}")
@@ -84,18 +76,17 @@ def delete_event(
     event_name: str,
     session: Session = Depends(get_session),
 ) -> JSONResponse:
-    namespace = read_namespace(namespace_name, session)
-    event = read_event(namespace_name, event_name, session)
+    entity = find_event_entity(namespace_name, event_name, session)
 
-    softDelete = namespace.labels.get("soft-delete") == "true"
+    softDelete = entity.labels and entity.labels.get("soft-delete") == "true"
 
     if softDelete:
-        event.deletedTimestamp = datetime.now()
-        event.annotations = {}
-        session.add(event)
+        entity.deletedTimestamp = datetime.now()
+        entity.annotations = {}
+        session.add(entity)
         session.commit()
     else:
-        session.delete(event)
+        session.delete(entity)
         session.commit()
     return JSONResponse(
         status_code=status.HTTP_202_ACCEPTED, content={"message": "Event deleted"}

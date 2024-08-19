@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict
 from pydantic import BaseModel
 
 from ..shared.types import (
@@ -9,6 +9,8 @@ from ..shared.types import (
     ListMeta,
     NamesFilter,
     LabelSelectorFilter,
+    OrderBy,
+    Pagination,
 )
 
 
@@ -24,7 +26,7 @@ class ItemMeta(
 
 
 class ItemSpec(BaseModel):
-    pass
+    features: Optional[Dict[str, str]] = None
 
 
 class Item(BaseModel):
@@ -41,8 +43,10 @@ class ItemFilter(BaseModel, NamesFilter, LabelSelectorFilter):
 class ItemQuery(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "ItemQuery"
-    filter: ItemFilter
+    filter: Optional[ItemFilter] = None
     exclude: Optional[ItemFilter] = None
+    order: Optional[list[OrderBy]] = None
+    pagination: Optional[Pagination] = None
 
 
 class ItemList(BaseModel):

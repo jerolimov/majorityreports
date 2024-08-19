@@ -6,8 +6,8 @@ from sqlmodel.sql.expression import Select
 from typing import Iterable, Dict, Optional, cast
 
 from ..db import get_session
-from ..items.entity import ItemEntity as Item
-from ..events.entity import EventEntity as Event
+from ..items.entity import ItemEntity
+from ..events.entity import EventEntity
 
 
 router = APIRouter()
@@ -34,34 +34,34 @@ def get_items_with_most_events(
     statement = cast(
         Select[ItemWithEventCount],
         select(  # type: ignore
-            Item.uid,
-            Item.namespace_name,
-            Item.name,
-            Item.creationTimestamp,
-            Item.updateTimestamp,
-            Item.labels,
-            Item.annotations,
+            ItemEntity.uid,
+            ItemEntity.namespace,
+            ItemEntity.name,
+            ItemEntity.creationTimestamp,
+            ItemEntity.updateTimestamp,
+            ItemEntity.labels,
+            ItemEntity.annotations,
         )
-        .select_from(Item)
-        .add_columns(func.count(Event.name).label("count")),  # type: ignore
+        .select_from(ItemEntity)
+        .add_columns(func.count(EventEntity.name).label("count")),  # type: ignore
     )
 
     statement = statement.join(
-        Event,
+        EventEntity,
         and_(
-            Item.name == Event.item_name,
-            Item.namespace_name == Event.namespace_name,
+            ItemEntity.name == EventEntity.item,
+            ItemEntity.namespace == EventEntity.namespace,
         ),
         isouter=True,
     )
-    statement = statement.group_by(Item.uid)  # type: ignore
+    statement = statement.group_by(ItemEntity.uid)  # type: ignore
     statement = statement.order_by(desc("count"))
 
     if namespace_name is not None:
-        statement = statement.where(Item.namespace_name == namespace_name)
+        statement = statement.where(ItemEntity.namespace == namespace_name)
 
     if type_filter is not None:
-        statement = statement.where(Event.type == type_filter)
+        statement = statement.where(EventEntity.type == type_filter)
 
     statement = statement.limit(limit)
 

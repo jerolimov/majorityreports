@@ -7,9 +7,6 @@ from .items.entity import ItemEntity as Item
 from .events.entity import EventEntity as Event
 from .feedbacks.entity import FeedbackEntity as Feedback
 
-from .actors.crud import read_actor
-from .items.crud import read_item
-
 
 namespace_name = "default"
 
@@ -38,80 +35,57 @@ def init_testdata() -> None:
             session.scalar(
                 select(func.count())
                 .select_from(Actor)
-                .where(
-                    and_(
-                        Actor.namespace_name == namespace_name, Actor.name == "actor-a"
-                    )
-                )
+                .where(and_(Actor.namespace == namespace_name, Actor.name == "actor-a"))
             )
             == 0
         ):
-            session.add(Actor(namespace=namespace, name="actor-a"))
+            session.add(Actor(namespace=namespace_name, name="actor-a"))
         if (
             session.scalar(
                 select(func.count())
                 .select_from(Actor)
-                .where(
-                    and_(
-                        Actor.namespace_name == namespace_name, Actor.name == "actor-b"
-                    )
-                )
+                .where(and_(Actor.namespace == namespace_name, Actor.name == "actor-b"))
             )
             == 0
         ):
-            session.add(Actor(namespace=namespace, name="actor-b"))
+            session.add(Actor(namespace=namespace_name, name="actor-b"))
         if (
             session.scalar(
                 select(func.count())
                 .select_from(Actor)
-                .where(
-                    and_(
-                        Actor.namespace_name == namespace_name, Actor.name == "actor-c"
-                    )
-                )
+                .where(and_(Actor.namespace == namespace_name, Actor.name == "actor-c"))
             )
             == 0
         ):
-            session.add(Actor(namespace=namespace, name="actor-c"))
+            session.add(Actor(namespace=namespace_name, name="actor-c"))
 
         if (
             session.scalar(
                 select(func.count())
                 .select_from(Item)
-                .where(
-                    and_(Item.namespace_name == namespace_name, Item.name == "item-a")
-                )
+                .where(and_(Item.namespace == namespace_name, Item.name == "item-a"))
             )
             == 0
         ):
-            session.add(Item(namespace=namespace, name="item-a"))
+            session.add(Item(namespace=namespace_name, name="item-a"))
         if (
             session.scalar(
                 select(func.count())
                 .select_from(Item)
-                .where(
-                    and_(Item.namespace_name == namespace_name, Item.name == "item-b")
-                )
+                .where(and_(Item.namespace == namespace_name, Item.name == "item-b"))
             )
             == 0
         ):
-            session.add(Item(namespace=namespace, name="item-b"))
+            session.add(Item(namespace=namespace_name, name="item-b"))
         if (
             session.scalar(
                 select(func.count())
                 .select_from(Item)
-                .where(
-                    and_(Item.namespace_name == namespace_name, Item.name == "item-c")
-                )
+                .where(and_(Item.namespace == namespace_name, Item.name == "item-c"))
             )
             == 0
         ):
-            session.add(Item(namespace=namespace, name="item-c"))
-
-        actorA = read_actor(namespace_name, "actor-a", session)
-        actorB = read_actor(namespace_name, "actor-b", session)
-        itemA = read_item(namespace_name, "item-a", session)
-        itemB = read_item(namespace_name, "item-b", session)
+            session.add(Item(namespace=namespace_name, name="item-c"))
 
         if (
             session.scalar(
@@ -119,7 +93,7 @@ def init_testdata() -> None:
                 .select_from(Event)
                 .where(
                     and_(
-                        Event.namespace_name == namespace_name,
+                        Event.namespace == namespace_name,
                         Event.name == "event-from-actor-a-for-item-a",
                     )
                 )
@@ -128,10 +102,10 @@ def init_testdata() -> None:
         ):
             session.add(
                 Event(
-                    namespace=namespace,
+                    namespace=namespace_name,
                     name="event-from-actor-a-for-item-a",
-                    actor=actorA,
-                    item=itemA,
+                    actor="actor-a",
+                    item="item-a",
                     type="watched",
                 )
             )
@@ -141,7 +115,7 @@ def init_testdata() -> None:
                 .select_from(Event)
                 .where(
                     and_(
-                        Event.namespace_name == namespace_name,
+                        Event.namespace == namespace_name,
                         Event.name == "event-from-actor-a-for-item-b",
                     )
                 )
@@ -150,10 +124,10 @@ def init_testdata() -> None:
         ):
             session.add(
                 Event(
-                    namespace=namespace,
+                    namespace=namespace_name,
                     name="event-from-actor-a-for-item-b",
-                    actor=actorA,
-                    item=itemB,
+                    actor="actor-a",
+                    item="item-b",
                     type="watched",
                 )
             )
@@ -163,7 +137,7 @@ def init_testdata() -> None:
                 .select_from(Event)
                 .where(
                     and_(
-                        Event.namespace_name == namespace_name,
+                        Event.namespace == namespace_name,
                         Event.name == "event-from-actor-b-for-item-a",
                     )
                 )
@@ -172,10 +146,10 @@ def init_testdata() -> None:
         ):
             session.add(
                 Event(
-                    namespace=namespace,
+                    namespace=namespace_name,
                     name="event-from-actor-b-for-item-a",
-                    actor=actorB,
-                    item=itemA,
+                    actor="actor-b",
+                    item="item-a",
                     type="watched",
                 )
             )
@@ -185,7 +159,7 @@ def init_testdata() -> None:
                 .select_from(Event)
                 .where(
                     and_(
-                        Event.namespace_name == namespace_name,
+                        Event.namespace == namespace_name,
                         Event.name == "event-from-actor-b-for-item-b",
                     )
                 )
@@ -194,10 +168,10 @@ def init_testdata() -> None:
         ):
             session.add(
                 Event(
-                    namespace=namespace,
+                    namespace=namespace_name,
                     name="event-from-actor-b-for-item-b",
-                    actor=actorB,
-                    item=itemB,
+                    actor="actor-b",
+                    item="item-b",
                     type="canceled",
                 )
             )
@@ -208,7 +182,7 @@ def init_testdata() -> None:
                 .select_from(Feedback)
                 .where(
                     and_(
-                        Feedback.namespace_name == namespace_name,
+                        Feedback.namespace == namespace_name,
                         Feedback.name == "feedback-from-actor-a-for-item-a",
                     )
                 )
@@ -217,10 +191,10 @@ def init_testdata() -> None:
         ):
             session.add(
                 Feedback(
-                    namespace=namespace,
+                    namespace=namespace_name,
                     name="feedback-from-actor-a-for-item-a",
-                    actor=actorA,
-                    item=itemA,
+                    actor="actor-a",
+                    item="item-a",
                     value=3,
                 )
             )
@@ -230,7 +204,7 @@ def init_testdata() -> None:
                 .select_from(Feedback)
                 .where(
                     and_(
-                        Feedback.namespace_name == namespace_name,
+                        Feedback.namespace == namespace_name,
                         Feedback.name == "feedback-from-actor-a-for-item-b",
                     )
                 )
@@ -239,10 +213,10 @@ def init_testdata() -> None:
         ):
             session.add(
                 Feedback(
-                    namespace=namespace,
+                    namespace=namespace_name,
                     name="feedback-from-actor-a-for-item-b",
-                    actor=actorA,
-                    item=itemB,
+                    actor="actor-a",
+                    item="item-b",
                     value=4,
                 )
             )
@@ -252,7 +226,7 @@ def init_testdata() -> None:
                 .select_from(Feedback)
                 .where(
                     and_(
-                        Feedback.namespace_name == namespace_name,
+                        Feedback.namespace == namespace_name,
                         Feedback.name == "feedback-from-actor-b-for-item-a",
                     )
                 )
@@ -261,10 +235,10 @@ def init_testdata() -> None:
         ):
             session.add(
                 Feedback(
-                    namespace=namespace,
+                    namespace=namespace_name,
                     name="feedback-from-actor-b-for-item-a",
-                    actor=actorB,
-                    item=itemA,
+                    actor="actor-b",
+                    item="item-a",
                     value=5,
                 )
             )
@@ -274,7 +248,7 @@ def init_testdata() -> None:
                 .select_from(Feedback)
                 .where(
                     and_(
-                        Feedback.namespace_name == namespace_name,
+                        Feedback.namespace == namespace_name,
                         Feedback.name == "feedback-from-actor-b-for-item-b",
                     )
                 )
@@ -283,10 +257,10 @@ def init_testdata() -> None:
         ):
             session.add(
                 Feedback(
-                    namespace=namespace,
+                    namespace=namespace_name,
                     name="feedback-from-actor-b-for-item-b",
-                    actor=actorB,
-                    item=itemB,
+                    actor="actor-b",
+                    item="item-b",
                     value=5,
                 )
             )

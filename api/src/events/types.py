@@ -9,6 +9,8 @@ from ..shared.types import (
     ListMeta,
     NamesFilter,
     LabelSelectorFilter,
+    OrderBy,
+    Pagination,
 )
 
 
@@ -45,8 +47,10 @@ class EventFilter(BaseModel, NamesFilter, LabelSelectorFilter):
 class EventQuery(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "EventQuery"
-    filter: EventFilter
+    filter: Optional[EventFilter] = None
     exclude: Optional[EventFilter] = None
+    order: Optional[list[OrderBy]] = None
+    pagination: Optional[Pagination] = None
 
 
 class EventList(BaseModel):

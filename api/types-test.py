@@ -1,7 +1,7 @@
 import json
 from pydantic_yaml import to_yaml_str
 
-from v1alpha1.namespace import (
+from src.namespaces.types import (
     NamespaceQuery,
     NamespaceFilter,
     Namespace,
@@ -13,7 +13,7 @@ from v1alpha1.namespace import (
 
 nq = NamespaceQuery(
     filter=NamespaceFilter(
-        labelSelector={
+        label_selector={
             "testdata": "yeah",
         },
     ),

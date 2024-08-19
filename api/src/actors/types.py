@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict
 from pydantic import BaseModel
 
 from ..shared.types import (
@@ -9,6 +9,8 @@ from ..shared.types import (
     ListMeta,
     NamesFilter,
     LabelSelectorFilter,
+    OrderBy,
+    Pagination,
 )
 
 
@@ -24,7 +26,7 @@ class ActorMeta(
 
 
 class ActorSpec(BaseModel):
-    pass
+    features: Optional[Dict[str, str]] = None
 
 
 class Actor(BaseModel):
@@ -41,8 +43,10 @@ class ActorFilter(BaseModel, NamesFilter, LabelSelectorFilter):
 class ActorQuery(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "ActorQuery"
-    filter: ActorFilter
+    filter: Optional[ActorFilter] = None
     exclude: Optional[ActorFilter] = None
+    order: Optional[list[OrderBy]] = None
+    pagination: Optional[Pagination] = None
 
 
 class ActorList(BaseModel):
