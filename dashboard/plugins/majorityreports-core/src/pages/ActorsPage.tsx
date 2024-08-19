@@ -15,7 +15,7 @@ import {
 
 import Box from '@material-ui/core/Box';
 
-import { Actor, ActorsResult } from '@internal/backstage-plugin-majorityreports-common';
+import { Actor, ActorList } from '@internal/backstage-plugin-majorityreports-common';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -23,26 +23,32 @@ import { FilterLayout } from '../components/FilterLayout';
 import { Tags } from '../components/Tags';
 import { usePage } from '../hooks/usePage';
 import { usePageSize } from '../hooks/usePageSize';
+import { useNamespace } from '../../../../packages/app/src/hooks/useNamespace';
 
 const columns: TableColumn<Actor>[] = [
   {
     title: 'Name',
-    field: 'name',
+    field: 'meta.name',
     highlight: true,
-    render: (data) => <Link to={`/namespaces/${data.namespace_name}/actors/${data.name}`}>{data.name}</Link>
+    render: (data) => <Link to={`/namespaces/${data.meta.namespace!}/actors/${data.meta.name!}`}>{data.meta.name}</Link>
   },
   {
     title: 'Namespace',
-    field: 'namespace_name',
-    render: (data) => <Link to={`/namespaces/${data.namespace_name}`}>{data.namespace_name}</Link>
+    field: 'meta.namespace',
+    render: (data) => <Link to={`/namespaces/${data.meta.namespace!}`}>{data.meta.namespace}</Link>
+  },
+  {
+    title: 'Title',
+    field: 'meta.title',
   },
   {
     title: 'Tags',
+    field: 'meta.tags',
     render: (data) => <Tags object={data} />,
   },
   {
     title: 'Created',
-    field: 'creationTimestamp',
+    field: 'meta.creationTimestamp',
     type: 'datetime',
   },
 ];
@@ -64,10 +70,12 @@ export const Filter = () => {
 }
 
 export const TableContent = () => {
+  const [namespace] = useNamespace();
+  const filteredColumns = React.useMemo(() => namespace ? columns.filter((c) => c.field !== 'meta.namespace') : columns, [namespace]);
   const [page, setPage] = usePage();
   const [pageSize, setPageSize] = usePageSize();
 
-  const result = useQuery<ActorsResult>({
+  const result = useQuery<ActorList>({
     queryKey: ['actors', page, pageSize],
     queryFn: function getNamespaces() {
       const proxyUrl = 'http://localhost:7007/api/proxy/api/';
@@ -86,14 +94,14 @@ export const TableContent = () => {
 
   return (
     <Table
-      columns={columns}
+      columns={filteredColumns}
       isLoading={result.isLoading}
       data={result.data?.items || []}
       page={page}
       options={{ pageSize }}
       onPageChange={setPage}
       onRowsPerPageChange={setPageSize}
-      totalCount={result.data?.count || 0}
+      totalCount={result.data?.meta.itemCount || 0}
     />
   );
 };
