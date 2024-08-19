@@ -55,7 +55,7 @@ export const NamespaceDetailsPage = () => {
 
   return (
     <Page themeId="namespaces">
-      <Header title={namespace?.meta.title} type="Namespace" typeLink="./.." />
+      <Header title={namespace?.meta?.title || namespace?.meta?.name} type="Namespace" typeLink="./.." />
       <Content>
         <Grid container>
           <Grid item container md={6}>
