@@ -4,20 +4,20 @@ from pydantic import BaseModel, Field
 from typing import Optional, Dict
 
 
-class HasUUID:
+class HasUUID(BaseModel):
     uid: UUID = Field(default_factory=create_uuid)
 
 
-class OptionalNameOrGenerateName:
+class OptionalNameOrGenerateName(BaseModel):
     name: Optional[str] = None
     generateName: Optional[str] = None
 
 
-class OptionalNamespace:
+class OptionalNamespace(BaseModel):
     namespace: Optional[str] = None
 
 
-class OptionalCommonMeta:
+class OptionalCommonMeta(BaseModel):
     title: Optional[str] = None
     description: Optional[str] = None
     labels: Optional[Dict[str, str]] = None
@@ -29,7 +29,7 @@ class OptionalCommonMeta:
     deletedTimestamp: Optional[datetime] = None
 
 
-class DateTimeFilter:
+class DateTimeFilter(BaseModel):
     # alternative: gt, ge, eq, lt, le ???
     after: Optional[datetime] = None
     afterIncl: Optional[bool] = None  # default true?
@@ -45,12 +45,12 @@ class ListMeta(BaseModel):
     next: Optional[str] = None
 
 
-class NamesFilter:
+class NamesFilter(BaseModel):
     names: Optional[list[str]] = None
 
 
-class LabelSelectorFilter:
-    label_selector: Optional[Dict[str, str]] = Field(None, alias="labelSelector")
+class LabelSelectorFilter(BaseModel):
+    label_selector: Optional[Dict[str, str]] = Field(default=None, validation_alias="labelSelector")
 
 
 class OrderBy(BaseModel):

@@ -19,19 +19,19 @@ def convert_movie_to_item(movie: Any) -> ItemEntity:
 
     print("genres", genres)
     item = ItemEntity()
-    item.namespace_name = namespace_name
+    item.namespace = namespace_name
     item.name = f"movie-{movieId}"
+    item.title = title
     item.labels = {
         "test": test_name,
-        "genres": ", ".join(genres),
     }
     item.annotations = {
         "movieId": movieId,
-        "title": title,
         "genres": ", ".join(genres),
     }
-    # for genre in genres:
-    #     item.labels.update(genre, "true")
+    item.features = {}
+    for genre in genres:
+        item.labels[genre.lower()] = "true"
     return item
 
 
@@ -54,7 +54,6 @@ def convert_rating_to_feedback(rating: Any) -> FeedbackEntity:
     feedback.annotations = {
         "movieId": movieId,
         "userId": userId,
-        "rating": rating,
         # "timestamp": timestamp,
     }
     feedback.type = "rating"

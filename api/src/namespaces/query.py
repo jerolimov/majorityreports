@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends
-from sqlmodel import Session, select, null, not_
+from sqlmodel import Session, select, null, not_, col
 from sqlmodel.sql.expression import SelectOfScalar
 from sqlalchemy import func, desc
+from typing import TypeVar
 
 from ..db import get_session
 from ..shared.types import ListMeta, Pagination
@@ -12,25 +13,27 @@ from .crud import serialize
 
 router = APIRouter()
 
+T = TypeVar("T")
+
 
 def apply_query(
-    sql: SelectOfScalar[NamespaceEntity],
+    sql: SelectOfScalar[T],
     query: NamespaceQuery,
     count: bool = False,
-) -> SelectOfScalar[NamespaceEntity]:
+) -> SelectOfScalar[T]:
     # sql = select(Namespace)
 
     if filter := query.filter:
         if filter.label_selector:
             sql = sql.where(NamespaceEntity.labels == filter.label_selector)
         if filter.names:
-            sql = sql.where(NamespaceEntity.name.in_(filter.names))
+            sql = sql.where(col(NamespaceEntity.name).in_(filter.names))
 
     if exclude := query.exclude:
         if exclude.label_selector:
             sql = sql.where(not_(NamespaceEntity.labels == exclude.label_selector))
         if exclude.names:
-            sql = sql.where(not_(NamespaceEntity.name.in_(exclude.names)))
+            sql = sql.where(not_(col(NamespaceEntity.name).in_(exclude.names)))
 
     sql = sql.where(NamespaceEntity.deletedTimestamp == null())
 
@@ -99,5 +102,5 @@ def query_namespaces(
             itemCount=itemCount,
             remainingItemCount=remainingItemCount,
         ),
-        items=map(serialize, entities),
+        items=list(map(serialize, entities)),
     )

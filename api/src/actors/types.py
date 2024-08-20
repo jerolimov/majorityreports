@@ -16,7 +16,6 @@ from ..shared.types import (
 
 # JSON output order is from right to left
 class ActorMeta(
-    BaseModel,
     OptionalCommonMeta,
     HasUUID,
     OptionalNameOrGenerateName,
@@ -36,7 +35,7 @@ class Actor(BaseModel):
     spec: ActorSpec
 
 
-class ActorFilter(BaseModel, NamesFilter, LabelSelectorFilter):
+class ActorFilter(LabelSelectorFilter, NamesFilter):
     pass
 
 
