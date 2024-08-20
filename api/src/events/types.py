@@ -16,7 +16,6 @@ from ..shared.types import (
 
 # JSON output order is from right to left
 class EventMeta(
-    BaseModel,
     OptionalCommonMeta,
     HasUUID,
     OptionalNameOrGenerateName,
@@ -40,7 +39,7 @@ class Event(BaseModel):
     spec: EventSpec
 
 
-class EventFilter(BaseModel, NamesFilter, LabelSelectorFilter):
+class EventFilter(LabelSelectorFilter, NamesFilter):
     pass
 
 

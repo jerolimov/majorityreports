@@ -1,6 +1,7 @@
 import json
 from pydantic_yaml import to_yaml_str
 
+from src.shared.types import ListMeta
 from src.namespaces.types import (
     NamespaceQuery,
     NamespaceFilter,
@@ -8,7 +9,6 @@ from src.namespaces.types import (
     NamespaceMeta,
     NamespaceSpec,
     NamespaceList,
-    ListMeta,
 )
 
 nq = NamespaceQuery(

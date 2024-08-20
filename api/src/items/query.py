@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends
-from sqlmodel import Session, select, null, not_
+from sqlmodel import Session, select, null, not_, col
 from sqlmodel.sql.expression import SelectOfScalar
 from sqlalchemy import func, desc
+from typing import TypeVar
 
 from ..db import get_session
 from ..shared.types import ListMeta, Pagination
@@ -13,24 +14,27 @@ from .crud import serialize
 router = APIRouter()
 
 
+T = TypeVar("T")
+
+
 def apply_query(
-    sql: SelectOfScalar[ItemEntity],
+    sql: SelectOfScalar[T],
     query: ItemQuery,
     count: bool = False,
-) -> SelectOfScalar[ItemEntity]:
+) -> SelectOfScalar[T]:
     # sql = select(Item)
 
     if filter := query.filter:
         if filter.label_selector:
             sql = sql.where(ItemEntity.labels == filter.label_selector)
         if filter.names:
-            sql = sql.where(ItemEntity.name.in_(filter.names))
+            sql = sql.where(col(ItemEntity.name).in_(filter.names))
 
     if exclude := query.exclude:
         if exclude.label_selector:
             sql = sql.where(not_(ItemEntity.labels == exclude.label_selector))
         if exclude.names:
-            sql = sql.where(not_(ItemEntity.name.in_(exclude.names)))
+            sql = sql.where(not_(col(ItemEntity.name).in_(exclude.names)))
 
     sql = sql.where(ItemEntity.deletedTimestamp == null())
 
@@ -97,5 +101,5 @@ def query_items(query: ItemQuery, session: Session = Depends(get_session)) -> It
             itemCount=itemCount,
             remainingItemCount=remainingItemCount,
         ),
-        items=map(serialize, entities),
+        items=list(map(serialize, entities)),
     )

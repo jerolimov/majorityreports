@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends
-from sqlmodel import Session, select, null, not_
+from sqlmodel import Session, select, null, not_, col
 from sqlmodel.sql.expression import SelectOfScalar
 from sqlalchemy import func, desc
+from typing import TypeVar
 
 from ..db import get_session
 from ..shared.types import ListMeta, Pagination
@@ -13,24 +14,27 @@ from .crud import serialize
 router = APIRouter()
 
 
+T = TypeVar("T")
+
+
 def apply_query(
-    sql: SelectOfScalar[FeedbackEntity],
+    sql: SelectOfScalar[T],
     query: FeedbackQuery,
     count: bool = False,
-) -> SelectOfScalar[FeedbackEntity]:
+) -> SelectOfScalar[T]:
     # sql = select(Feedback)
 
     if filter := query.filter:
         if filter.label_selector:
             sql = sql.where(FeedbackEntity.labels == filter.label_selector)
         if filter.names:
-            sql = sql.where(FeedbackEntity.name.in_(filter.names))
+            sql = sql.where(col(FeedbackEntity.name).in_(filter.names))
 
     if exclude := query.exclude:
         if exclude.label_selector:
             sql = sql.where(not_(FeedbackEntity.labels == exclude.label_selector))
         if exclude.names:
-            sql = sql.where(not_(FeedbackEntity.name.in_(exclude.names)))
+            sql = sql.where(not_(col(FeedbackEntity.name).in_(exclude.names)))
 
     sql = sql.where(FeedbackEntity.deletedTimestamp == null())
 
@@ -99,5 +103,5 @@ def query_items(
             itemCount=itemCount,
             remainingItemCount=remainingItemCount,
         ),
-        items=map(serialize, entities),
+        items=list(map(serialize, entities)),
     )

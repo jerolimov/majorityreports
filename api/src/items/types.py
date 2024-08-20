@@ -16,7 +16,6 @@ from ..shared.types import (
 
 # JSON output order is from right to left
 class ItemMeta(
-    BaseModel,
     OptionalCommonMeta,
     HasUUID,
     OptionalNameOrGenerateName,
@@ -36,7 +35,7 @@ class Item(BaseModel):
     spec: ItemSpec
 
 
-class ItemFilter(BaseModel, NamesFilter, LabelSelectorFilter):
+class ItemFilter(LabelSelectorFilter, NamesFilter):
     pass
 
 

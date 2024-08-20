@@ -14,7 +14,7 @@ from ..shared.types import (
 
 
 # JSON output order is from right to left
-class NamespaceMeta(BaseModel, OptionalCommonMeta, HasUUID, OptionalNameOrGenerateName):
+class NamespaceMeta(OptionalCommonMeta, HasUUID, OptionalNameOrGenerateName):
     pass
 
 
@@ -31,7 +31,7 @@ class Namespace(BaseModel):
     spec: Optional[NamespaceSpec] = None
 
 
-class NamespaceFilter(BaseModel, LabelSelectorFilter, NamesFilter):
+class NamespaceFilter(LabelSelectorFilter, NamesFilter):
     pass
 
 

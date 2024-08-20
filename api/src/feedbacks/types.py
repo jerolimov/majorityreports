@@ -16,7 +16,6 @@ from ..shared.types import (
 
 # JSON output order is from right to left
 class FeedbackMeta(
-    BaseModel,
     OptionalCommonMeta,
     HasUUID,
     OptionalNameOrGenerateName,
@@ -39,7 +38,7 @@ class Feedback(BaseModel):
     spec: FeedbackSpec
 
 
-class FeedbackFilter(BaseModel, NamesFilter, LabelSelectorFilter):
+class FeedbackFilter(LabelSelectorFilter, NamesFilter):
     pass
 
 
