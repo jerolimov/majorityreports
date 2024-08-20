@@ -19,6 +19,7 @@ import { AboutCard } from '../components/AboutCard';
 import { DescriptionCard } from '../components/DescriptionCard';
 import { LabelsCard } from '../components/LabelsCard';
 import { AnnotationsCard } from '../components/AnnotationsCard';
+import { FeaturesCard } from '../components/FeaturesCard';
 
 export const ActorDetailsPage = () => {
   const { namespace_name: namespaceName, actor_name: actorName } = useParams();
@@ -45,20 +46,25 @@ export const ActorDetailsPage = () => {
       <Header title={actor?.meta?.title || actor?.meta?.name} type="Actor" typeLink="./.." />
       <Content>
         <Grid container>
-          <Grid item md={6}>
-            <AboutCard object={actor} />
+          <Grid item container md={6}>
+            <Grid item sm={12}>
+              <AboutCard object={actor} />
+            </Grid>
+            <Grid item sm={12}>
+              <LabelsCard object={actor} />
+              </Grid>
+            <Grid item sm={12}>
+              <AnnotationsCard object={actor} />
+            </Grid>
+            <Grid item sm={12}>
+              <FeaturesCard object={actor} />
+            </Grid>
           </Grid>
-          {/* <Grid item md={6}>
-            <CountCard />
-          </Grid> */}
           <Grid item md={6}>
+            {/* <Grid item md={6}>
+              <CountCard />
+            </Grid> */}
             <DescriptionCard object={actor} />
-          </Grid>
-          <Grid item md={6}>
-            <LabelsCard object={actor} />
-          </Grid>
-          <Grid item md={6}>
-            <AnnotationsCard object={actor} />
           </Grid>
         </Grid>
       </Content>

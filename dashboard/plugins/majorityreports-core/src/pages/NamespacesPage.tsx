@@ -80,7 +80,7 @@ export const TableContent = () => {
     queryFn: function getNamespaces() {
       const proxyUrl = 'http://localhost:7007/api/proxy/api/';
       const url = new URL('api/namespaces', proxyUrl);
-      url.searchParams.set('offset', (page * pageSize).toString());
+      url.searchParams.set('start', (page * pageSize).toString());
       url.searchParams.set('limit', pageSize.toString());    
       return fetch(url.toString()).then((response) => response.json());
     },

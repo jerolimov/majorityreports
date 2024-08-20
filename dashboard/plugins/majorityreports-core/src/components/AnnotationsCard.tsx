@@ -8,7 +8,7 @@ import { Namespace, Actor, Event, Feedback, Item } from '@internal/backstage-plu
 export const AnnotationsCard = ({ object }: { object?: Namespace | Actor | Item | Event | Feedback }) => {
   if (!object) {
     return (
-      <InfoCard title="About">
+      <InfoCard title="Annotations">
         <Progress />
       </InfoCard>
     );
