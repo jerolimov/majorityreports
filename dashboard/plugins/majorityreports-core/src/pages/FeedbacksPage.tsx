@@ -88,13 +88,18 @@ export const TableContent = () => {
   const [pageSize, setPageSize] = usePageSize();
 
   const result = useQuery<FeedbackList>({
-    queryKey: ['feedbacks', page, pageSize],
-    queryFn: function getNamespaces() {
+    queryKey: ['feedbacks', namespace, page, pageSize],
+    queryFn: async function getNamespaces() {
       const proxyUrl = 'http://localhost:7007/api/proxy/api/';
-      const url = new URL('api/feedbacks', proxyUrl);
+      const path = namespace ? `api/namespaces/${namespace}/feedbacks` : 'api/feedbacks';
+      const url = new URL(path, proxyUrl);
       url.searchParams.set('start', (page * pageSize).toString());
       url.searchParams.set('limit', pageSize.toString());    
-      return fetch(url.toString()).then((response) => response.json());
+      const response = await fetch(url.toString());
+      if (!response.ok) {
+        throw new Error(`Failed to fetch feedbacks, ${response.status} ${response.statusText}`);
+      }
+      return response.json();
     },
   });
 

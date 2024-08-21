@@ -76,13 +76,18 @@ export const TableContent = () => {
   const [pageSize, setPageSize] = usePageSize();
 
   const result = useQuery<ActorList>({
-    queryKey: ['actors', page, pageSize],
-    queryFn: function getNamespaces() {
+    queryKey: ['actors', namespace, page, pageSize],
+    queryFn: async function getNamespaces() {
       const proxyUrl = 'http://localhost:7007/api/proxy/api/';
-      const url = new URL('api/actors', proxyUrl);
+      const path = namespace ? `api/namespaces/${namespace}/actors` : 'api/actors';
+      const url = new URL(path, proxyUrl);
       url.searchParams.set('start', (page * pageSize).toString());
       url.searchParams.set('limit', pageSize.toString());    
-        return fetch(url.toString()).then((response) => response.json());
+      const response = await fetch(url.toString());
+      if (!response.ok) {
+        throw new Error(`Failed to fetch actors, ${response.status} ${response.statusText}`);
+      }
+      return response.json();
     },
   });
 

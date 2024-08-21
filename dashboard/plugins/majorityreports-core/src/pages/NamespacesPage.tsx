@@ -77,12 +77,17 @@ export const TableContent = () => {
 
   const result = useQuery<NamespaceList>({
     queryKey: ['namespaces', page, pageSize],
-    queryFn: function getNamespaces() {
+    queryFn: async function getNamespaces() {
       const proxyUrl = 'http://localhost:7007/api/proxy/api/';
-      const url = new URL('api/namespaces', proxyUrl);
+      const path = 'api/namespaces';
+      const url = new URL(path, proxyUrl);
       url.searchParams.set('start', (page * pageSize).toString());
       url.searchParams.set('limit', pageSize.toString());    
-      return fetch(url.toString()).then((response) => response.json());
+      const response = await fetch(url.toString());
+      if (!response.ok) {
+        throw new Error(`Failed to fetch namespaces, ${response.status} ${response.statusText}`);
+      }
+      return response.json();
     },
   });
 
