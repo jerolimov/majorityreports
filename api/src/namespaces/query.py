@@ -21,8 +21,6 @@ def apply_query(
     query: NamespaceQuery,
     count: bool = False,
 ) -> SelectOfScalar[T]:
-    # sql = select(Namespace)
-
     if filter := query.filter:
         if filter.label_selector:
             sql = sql.where(NamespaceEntity.labels == filter.label_selector)

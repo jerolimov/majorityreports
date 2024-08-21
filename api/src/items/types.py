@@ -42,6 +42,7 @@ class ItemFilter(LabelSelectorFilter, NamesFilter):
 class ItemQuery(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "ItemQuery"
+    namespace: Optional[str] = None
     filter: Optional[ItemFilter] = None
     exclude: Optional[ItemFilter] = None
     order: Optional[list[OrderBy]] = None

@@ -50,7 +50,9 @@ class NamesFilter(BaseModel):
 
 
 class LabelSelectorFilter(BaseModel):
-    label_selector: Optional[Dict[str, str]] = Field(default=None, validation_alias="labelSelector")
+    label_selector: Optional[Dict[str, str]] = Field(
+        default=None, validation_alias="labelSelector"
+    )
 
 
 class OrderBy(BaseModel):

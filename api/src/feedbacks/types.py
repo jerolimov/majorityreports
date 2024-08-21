@@ -45,6 +45,7 @@ class FeedbackFilter(LabelSelectorFilter, NamesFilter):
 class FeedbackQuery(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "FeedbackQuery"
+    namespace: Optional[str] = None
     filter: Optional[FeedbackFilter] = None
     exclude: Optional[FeedbackFilter] = None
     order: Optional[list[OrderBy]] = None

@@ -46,6 +46,7 @@ class EventFilter(LabelSelectorFilter, NamesFilter):
 class EventQuery(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "EventQuery"
+    namespace: Optional[str] = None
     filter: Optional[EventFilter] = None
     exclude: Optional[EventFilter] = None
     order: Optional[list[OrderBy]] = None

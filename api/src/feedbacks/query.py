@@ -22,7 +22,8 @@ def apply_query(
     query: FeedbackQuery,
     count: bool = False,
 ) -> SelectOfScalar[T]:
-    # sql = select(Feedback)
+    if query.namespace:
+        sql = sql.where(FeedbackEntity.namespace == query.namespace)
 
     if filter := query.filter:
         if filter.label_selector:
@@ -55,7 +56,10 @@ def apply_query(
 
 @router.get("", response_model_exclude_none=True)
 def read_items(
-    start: int = 0, limit: int = 10, session: Session = Depends(get_session)
+    namespace_name: str | None = None,
+    start: int = 0,
+    limit: int = 10,
+    session: Session = Depends(get_session),
 ) -> FeedbackList:
     # convert all http query parameters to a FeedbackQuery
     # filter.label_selector=...    or label_selector=...
@@ -65,6 +69,7 @@ def read_items(
     # start=
     # limit=
     query = FeedbackQuery(
+        namespace=namespace_name,
         filter=None,
         exclude=None,
         order=None,
@@ -74,13 +79,17 @@ def read_items(
         ),
     )
 
-    return query_items(query, session)
+    return query_items(query, namespace_name, session)
 
 
 @router.post("/query", response_model_exclude_none=True)
 def query_items(
-    query: FeedbackQuery, session: Session = Depends(get_session)
+    query: FeedbackQuery,
+    namespace_name: str | None = None,
+    session: Session = Depends(get_session),
 ) -> FeedbackList:
+    query.namespace = namespace_name
+
     countSelect = select(func.count("*")).select_from(FeedbackEntity)
     itemsSelect = select(FeedbackEntity)
 

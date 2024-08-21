@@ -22,7 +22,8 @@ def apply_query(
     query: ItemQuery,
     count: bool = False,
 ) -> SelectOfScalar[T]:
-    # sql = select(Item)
+    if query.namespace:
+        sql = sql.where(ItemEntity.namespace == query.namespace)
 
     if filter := query.filter:
         if filter.label_selector:
@@ -55,7 +56,10 @@ def apply_query(
 
 @router.get("", response_model_exclude_none=True)
 def read_items(
-    start: int = 0, limit: int = 10, session: Session = Depends(get_session)
+    namespace_name: str | None = None,
+    start: int = 0,
+    limit: int = 10,
+    session: Session = Depends(get_session),
 ) -> ItemList:
     # convert all http query parameters to a ItemQuery
     # filter.label_selector=...    or label_selector=...
@@ -65,6 +69,7 @@ def read_items(
     # start=
     # limit=
     query = ItemQuery(
+        namespace=namespace_name,
         filter=None,
         exclude=None,
         order=None,
@@ -74,11 +79,17 @@ def read_items(
         ),
     )
 
-    return query_items(query, session)
+    return query_items(query, namespace_name, session)
 
 
 @router.post("/query", response_model_exclude_none=True)
-def query_items(query: ItemQuery, session: Session = Depends(get_session)) -> ItemList:
+def query_items(
+    query: ItemQuery,
+    namespace_name: str | None = None,
+    session: Session = Depends(get_session),
+) -> ItemList:
+    query.namespace = namespace_name
+
     countSelect = select(func.count("*")).select_from(ItemEntity)
     itemsSelect = select(ItemEntity)
 

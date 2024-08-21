@@ -42,6 +42,7 @@ class ActorFilter(LabelSelectorFilter, NamesFilter):
 class ActorQuery(BaseModel):
     apiVersion: str = "v1alpha1"
     kind: str = "ActorQuery"
+    namespace: Optional[str] = None
     filter: Optional[ActorFilter] = None
     exclude: Optional[ActorFilter] = None
     order: Optional[list[OrderBy]] = None
