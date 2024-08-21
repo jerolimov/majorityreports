@@ -6,6 +6,9 @@ import { UserSettingsPage } from '@backstage/plugin-user-settings';
 import { apis } from './apis';
 import { Root } from './components/Root';
 
+import { createBaseThemeOptions, createUnifiedTheme, palettes, UnifiedThemeOptions, UnifiedThemeProvider } from '@backstage/theme';
+import { AppTheme } from '@backstage/core-plugin-api';
+
 import {
   AlertDisplay,
   OAuthRequestDialog,
@@ -13,6 +16,9 @@ import {
 } from '@backstage/core-components';
 import { createApp } from '@backstage/app-defaults';
 import { AppRouter, FlatRoutes } from '@backstage/core-app-api';
+
+import LightIcon from '@material-ui/icons/WbSunny';
+
 import {
   NamespacesPage,
   NamespaceDetailsPage,
@@ -26,6 +32,93 @@ import {
   FeedbackDetailsPage,
 } from '@internal/backstage-plugin-majorityreports-core';
 
+const components: UnifiedThemeOptions['components'] = {
+  BackstagePage: {
+    styleOverrides: {
+      root: {
+        height: 'unset',
+      },
+    },
+  },
+  BackstageTableHeader: {
+    styleOverrides: {
+      header: {
+        textTransform: "unset",
+      },
+    },
+  },
+  // MuiTableCell: {
+  //   styleOverrides: {
+  //     root: {
+  //       textTransform: "unset",
+  //     },
+  //   },
+  // },
+};
+
+const lightTheme = createUnifiedTheme({
+  ...createBaseThemeOptions({
+    palette: {
+      ...palettes.light,
+      navigation: {
+        ...palettes.light.navigation,
+        color: '#333333',
+        selectedColor: '#333333',
+        background: '#ffffff',
+        indicator: '#9d00ff',
+        navItem: {
+          hoverBackground: '#eeeeee',
+        },
+      }
+    },
+  }),
+  components,
+});
+
+const darkTheme = createUnifiedTheme({
+  ...createBaseThemeOptions({
+    palette: {
+      ...palettes.dark,
+      background: {
+        paper: '#111111',
+        default: '#000000',
+      },
+      navigation: {
+        ...palettes.light.navigation,
+        color: '#cccccc',
+        selectedColor: '#ffffff',
+        background: '#111111',
+        indicator: '#9d00ff',
+        navItem: {
+          hoverBackground: '#222222',
+        },
+      }
+    },
+  }),
+  components,
+});
+
+const themes: AppTheme[] = [
+  {
+    id: 'light',
+    title: 'Light Theme',
+    variant: 'light',
+    icon: <LightIcon />,
+    Provider: ({ children }) => (
+      <UnifiedThemeProvider theme={lightTheme} children={children} />
+    ),
+  },
+  {
+    id: 'dark',
+    title: 'Dark Theme',
+    variant: 'dark',
+    icon: <LightIcon />,
+    Provider: ({ children }) => (
+      <UnifiedThemeProvider theme={darkTheme} children={children} />
+    ),  
+  },
+]
+
 const app = createApp({
   apis,
   // bindRoutes({ bind }) {
@@ -33,6 +126,7 @@ const app = createApp({
   components: {
     SignInPage: props => <SignInPage {...props} auto providers={['guest']} />,
   },
+  themes,
 });
 
 const routes = (
