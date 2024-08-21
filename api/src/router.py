@@ -32,7 +32,7 @@ router.include_router(
     actors_crud, prefix="/namespaces/{namespace_name}/actors", tags=["actors"]
 )
 router.include_router(
-    actors_crud, prefix="/namespaces/{namespace_name}/actors", tags=["actors"]
+    actors_query, prefix="/namespaces/{namespace_name}/actors", tags=["actors"]
 )
 router.include_router(
     items_crud, prefix="/namespaces/{namespace_name}/items", tags=["items"]
