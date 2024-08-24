@@ -5,7 +5,6 @@ import {
   Page,
   Header,
   Content,
-  Progress,
   ResponseErrorPanel,
 } from '@backstage/core-components';
 
@@ -32,9 +31,7 @@ export const FeedbackDetailsPage = () => {
     },
   });
 
-  if (result.isLoading) {
-    return <Progress />;
-  } else if (result.error) {
+  if (result.error) {
     return <ResponseErrorPanel error={result.error} />;
   }
 

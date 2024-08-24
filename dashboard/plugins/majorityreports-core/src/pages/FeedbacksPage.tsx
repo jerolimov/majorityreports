@@ -3,7 +3,6 @@ import {
   Page,
   Header,
   Content,
-  Progress,
   ResponseErrorPanel,
   Select,
   SelectItem,
@@ -103,9 +102,7 @@ export const TableContent = () => {
     },
   });
 
-  if (result.isLoading) {
-    return <Progress />;
-  } else if (result.error) {
+  if (result.error) {
     return <ResponseErrorPanel error={result.error} />;
   }
 
