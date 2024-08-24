@@ -18,11 +18,13 @@ import { Actor, ActorList } from '@internal/backstage-plugin-majorityreports-com
 
 import { useQuery } from '@tanstack/react-query';
 
+import { useNamespace } from '../../../../packages/app/src/hooks/useNamespace';
+
 import { FilterLayout } from '../components/FilterLayout';
 import { Tags } from '../components/Tags';
 import { usePage } from '../hooks/usePage';
 import { usePageSize } from '../hooks/usePageSize';
-import { useNamespace } from '../../../../packages/app/src/hooks/useNamespace';
+import { formatCreationTimestamp } from '../utils/date';
 
 const columns: TableColumn<Actor>[] = [
   {
@@ -49,6 +51,7 @@ const columns: TableColumn<Actor>[] = [
     title: 'Created',
     field: 'meta.creationTimestamp',
     type: 'datetime',
+    render: formatCreationTimestamp,
   },
 ];
 

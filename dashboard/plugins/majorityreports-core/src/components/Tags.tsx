@@ -7,6 +7,10 @@ import { Namespace, Actor, Event, Feedback, Item } from '@internal/backstage-plu
 export const Tags = ({ object }: { object?: Namespace | Actor | Item | Event | Feedback }) => {
   const tags = object?.meta?.tags;
 
+  if (!tags) {
+    return "-";
+  }
+
   return tags?.map((tag) => (
     <Chip key={tag} label={tag} size="small" />
   ));

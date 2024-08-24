@@ -22,6 +22,7 @@ import { FilterLayout } from '../components/FilterLayout';
 import { Tags } from '../components/Tags';
 import { usePage } from '../hooks/usePage';
 import { usePageSize } from '../hooks/usePageSize';
+import { formatCreationTimestamp } from '../utils/date';
 
 const columns: TableColumn<Namespace>[] = [
   {
@@ -51,6 +52,7 @@ const columns: TableColumn<Namespace>[] = [
     title: 'Created',
     field: 'meta.creationTimestamp',
     type: 'datetime',
+    render: formatCreationTimestamp,
   },
 ];
 

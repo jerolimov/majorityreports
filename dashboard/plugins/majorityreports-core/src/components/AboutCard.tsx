@@ -33,9 +33,9 @@ export const AboutCard = ({ object }: { object?: Namespace | Actor | Item | Even
           <Tags object={object} />
         </AboutField>
 
-        <AboutField label="Created" value={object.meta?.creationTimestamp?.toString()} gridSizes={{ xs: 12, sm: 6 }} />
-        <AboutField label="Updated" value={object.meta?.updateTimestamp?.toString()} gridSizes={{ xs: 12, sm: 6 }} />
-        {object.meta?.deletedTimestamp ? <AboutField label="Deleted" value={object.meta.deletedTimestamp?.toString()} gridSizes={{ xs: 12, sm: 6 }} /> : null}
+        <AboutField label="Created" value={object.meta?.creationTimestamp} format="relativedatetime" gridSizes={{ xs: 12, sm: 6 }} />
+        <AboutField label="Updated" value={object.meta?.updateTimestamp} format="relativedatetime" gridSizes={{ xs: 12, sm: 6 }} />
+        {object.meta?.deletedTimestamp ? <AboutField label="Deleted" value={object.meta.deletedTimestamp} format="relativedatetime" gridSizes={{ xs: 12, sm: 6 }} /> : null}
 
         {isNamespace(object) ? (
           <>
