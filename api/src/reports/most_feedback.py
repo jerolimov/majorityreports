@@ -18,7 +18,7 @@ class ItemWithFeedbackCount(SQLModel):
     namespace_name: str
     name: str
     creationTimestamp: datetime
-    updateTimestamp: Optional[datetime]
+    updatedTimestamp: Optional[datetime]
     labels: Dict[str, str]
     annotations: Dict[str, str]
     count: int
@@ -38,7 +38,7 @@ def get_items_with_most_feedback(
             ItemEntity.namespace,
             ItemEntity.name,
             ItemEntity.creationTimestamp,
-            ItemEntity.updateTimestamp,
+            ItemEntity.updatedTimestamp,
             ItemEntity.labels,
             ItemEntity.annotations,
         )

@@ -18,7 +18,7 @@ class ItemWithEventDetails(SQLModel):
     namespace_name: str
     name: str
     creationTimestamp: datetime
-    updateTimestamp: Optional[datetime]
+    updatedTimestamp: Optional[datetime]
     labels: Dict[str, str]
     annotations: Dict[str, str]
 
@@ -49,14 +49,14 @@ def get_items_with_latest_events(
             ItemEntity.namespace,
             ItemEntity.name,
             ItemEntity.creationTimestamp,
-            ItemEntity.updateTimestamp,
+            ItemEntity.updatedTimestamp,
             ItemEntity.labels,
             ItemEntity.annotations,
             EventEntity.uid.label("eventUid"),  # type: ignore
             EventEntity.name.label("eventName"),  # type: ignore
             EventEntity.actor.label("eventActor"),  # type: ignore
             EventEntity.creationTimestamp.label("eventCreated"),  # type: ignore
-            EventEntity.updateTimestamp.label("eventUpdated"),  # type: ignore
+            EventEntity.updatedTimestamp.label("eventUpdated"),  # type: ignore
             EventEntity.labels.label("eventLabels"),  # type: ignore
             EventEntity.annotations.label("eventAnnotations"),  # type: ignore
             EventEntity.type.label("eventType"),  # type: ignore

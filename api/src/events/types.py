@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from ..shared.types import (
     OptionalNamespace,
@@ -50,7 +50,7 @@ class EventQuery(BaseModel):
     filter: Optional[EventFilter] = None
     exclude: Optional[EventFilter] = None
     order: Optional[list[OrderBy]] = None
-    pagination: Optional[Pagination] = None
+    pagination: Optional[Pagination] = Field(default=Pagination())
 
 
 class EventList(BaseModel):

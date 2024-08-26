@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from ..shared.types import (
     OptionalNameOrGenerateName,
@@ -41,7 +41,7 @@ class NamespaceQuery(BaseModel):
     filter: Optional[NamespaceFilter] = None
     exclude: Optional[NamespaceFilter] = None
     order: Optional[list[OrderBy]] = None
-    pagination: Optional[Pagination] = None
+    pagination: Optional[Pagination] = Field(default=Pagination())
 
 
 class NamespaceList(BaseModel):

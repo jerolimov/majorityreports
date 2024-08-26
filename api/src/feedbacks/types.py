@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from ..shared.types import (
     OptionalNamespace,
@@ -49,7 +49,7 @@ class FeedbackQuery(BaseModel):
     filter: Optional[FeedbackFilter] = None
     exclude: Optional[FeedbackFilter] = None
     order: Optional[list[OrderBy]] = None
-    pagination: Optional[Pagination] = None
+    pagination: Optional[Pagination] = Field(default=Pagination())
 
 
 class FeedbackList(BaseModel):

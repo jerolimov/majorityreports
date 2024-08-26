@@ -277,6 +277,22 @@
         "operationId": "read_items_api_actors_get",
         "parameters": [
           {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          },
+          {
             "name": "start",
             "in": "query",
             "required": false,
@@ -328,15 +344,33 @@
         ],
         "summary": "Query Items",
         "operationId": "query_items_api_actors_query_post",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ActorQuery"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -370,6 +404,22 @@
         "summary": "Read Items",
         "operationId": "read_items_api_items_get",
         "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          },
           {
             "name": "start",
             "in": "query",
@@ -422,15 +472,33 @@
         ],
         "summary": "Query Items",
         "operationId": "query_items_api_items_query_post",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ItemQuery"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -464,6 +532,22 @@
         "summary": "Read Items",
         "operationId": "read_items_api_events_get",
         "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          },
           {
             "name": "start",
             "in": "query",
@@ -516,15 +600,33 @@
         ],
         "summary": "Query Items",
         "operationId": "query_items_api_events_query_post",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/EventQuery"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -558,6 +660,22 @@
         "summary": "Read Items",
         "operationId": "read_items_api_feedbacks_get",
         "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          },
           {
             "name": "start",
             "in": "query",
@@ -610,15 +728,33 @@
         ],
         "summary": "Query Items",
         "operationId": "query_items_api_feedbacks_query_post",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/FeedbackQuery"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -728,6 +864,73 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Actor"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "actors"
+        ],
+        "summary": "Read Items",
+        "operationId": "read_items_api_namespaces__namespace_name__actors_get",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Start"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActorList"
                 }
               }
             }
@@ -902,6 +1105,65 @@
         }
       }
     },
+    "/api/namespaces/{namespace_name}/actors/query": {
+      "post": {
+        "tags": [
+          "actors"
+        ],
+        "summary": "Query Items",
+        "operationId": "query_items_api_namespaces__namespace_name__actors_query_post",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActorQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActorList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/namespaces/{namespace_name}/items": {
       "post": {
         "tags": [
@@ -960,6 +1222,22 @@
         "summary": "Read Items",
         "operationId": "read_items_api_namespaces__namespace_name__items_get",
         "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          },
           {
             "name": "start",
             "in": "query",
@@ -1169,15 +1447,33 @@
         ],
         "summary": "Query Items",
         "operationId": "query_items_api_namespaces__namespace_name__items_query_post",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ItemQuery"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -1261,6 +1557,22 @@
         "summary": "Read Items",
         "operationId": "read_items_api_namespaces__namespace_name__events_get",
         "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          },
           {
             "name": "start",
             "in": "query",
@@ -1470,15 +1782,33 @@
         ],
         "summary": "Query Items",
         "operationId": "query_items_api_namespaces__namespace_name__events_query_post",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/EventQuery"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -1562,6 +1892,22 @@
         "summary": "Read Items",
         "operationId": "read_items_api_namespaces__namespace_name__feedbacks_get",
         "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          },
           {
             "name": "start",
             "in": "query",
@@ -1771,15 +2117,33 @@
         ],
         "summary": "Query Items",
         "operationId": "query_items_api_namespaces__namespace_name__feedbacks_query_post",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/FeedbackQuery"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -2414,20 +2778,6 @@
       },
       "ActorFilter": {
         "properties": {
-          "labelSelector": {
-            "anyOf": [
-              {
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Labelselector"
-          },
           "names": {
             "anyOf": [
               {
@@ -2441,6 +2791,20 @@
               }
             ],
             "title": "Names"
+          },
+          "labelSelector": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labelselector"
           }
         },
         "type": "object",
@@ -2580,6 +2944,18 @@
             ],
             "title": "Tags"
           },
+          "importedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Importedtimestamp"
+          },
           "creationTimestamp": {
             "anyOf": [
               {
@@ -2592,7 +2968,7 @@
             ],
             "title": "Creationtimestamp"
           },
-          "updateTimestamp": {
+          "updatedTimestamp": {
             "anyOf": [
               {
                 "type": "string",
@@ -2602,7 +2978,7 @@
                 "type": "null"
               }
             ],
-            "title": "Updatetimestamp"
+            "title": "Updatedtimestamp"
           },
           "deletedTimestamp": {
             "anyOf": [
@@ -2631,6 +3007,17 @@
             "type": "string",
             "title": "Kind",
             "default": "ActorQuery"
+          },
+          "namespace": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Namespace"
           },
           "filter": {
             "anyOf": [
@@ -2674,7 +3061,10 @@
               {
                 "type": "null"
               }
-            ]
+            ],
+            "default": {
+              "limit": 10
+            }
           }
         },
         "type": "object",
@@ -2728,20 +3118,6 @@
       },
       "EventFilter": {
         "properties": {
-          "labelSelector": {
-            "anyOf": [
-              {
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Labelselector"
-          },
           "names": {
             "anyOf": [
               {
@@ -2755,6 +3131,20 @@
               }
             ],
             "title": "Names"
+          },
+          "labelSelector": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labelselector"
           }
         },
         "type": "object",
@@ -2894,6 +3284,18 @@
             ],
             "title": "Tags"
           },
+          "importedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Importedtimestamp"
+          },
           "creationTimestamp": {
             "anyOf": [
               {
@@ -2906,7 +3308,7 @@
             ],
             "title": "Creationtimestamp"
           },
-          "updateTimestamp": {
+          "updatedTimestamp": {
             "anyOf": [
               {
                 "type": "string",
@@ -2916,7 +3318,7 @@
                 "type": "null"
               }
             ],
-            "title": "Updatetimestamp"
+            "title": "Updatedtimestamp"
           },
           "deletedTimestamp": {
             "anyOf": [
@@ -2945,6 +3347,17 @@
             "type": "string",
             "title": "Kind",
             "default": "EventQuery"
+          },
+          "namespace": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Namespace"
           },
           "filter": {
             "anyOf": [
@@ -2988,7 +3401,10 @@
               {
                 "type": "null"
               }
-            ]
+            ],
+            "default": {
+              "limit": 10
+            }
           }
         },
         "type": "object",
@@ -3072,20 +3488,6 @@
       },
       "FeedbackFilter": {
         "properties": {
-          "labelSelector": {
-            "anyOf": [
-              {
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Labelselector"
-          },
           "names": {
             "anyOf": [
               {
@@ -3099,6 +3501,20 @@
               }
             ],
             "title": "Names"
+          },
+          "labelSelector": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labelselector"
           }
         },
         "type": "object",
@@ -3238,6 +3654,18 @@
             ],
             "title": "Tags"
           },
+          "importedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Importedtimestamp"
+          },
           "creationTimestamp": {
             "anyOf": [
               {
@@ -3250,7 +3678,7 @@
             ],
             "title": "Creationtimestamp"
           },
-          "updateTimestamp": {
+          "updatedTimestamp": {
             "anyOf": [
               {
                 "type": "string",
@@ -3260,7 +3688,7 @@
                 "type": "null"
               }
             ],
-            "title": "Updatetimestamp"
+            "title": "Updatedtimestamp"
           },
           "deletedTimestamp": {
             "anyOf": [
@@ -3289,6 +3717,17 @@
             "type": "string",
             "title": "Kind",
             "default": "FeedbackQuery"
+          },
+          "namespace": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Namespace"
           },
           "filter": {
             "anyOf": [
@@ -3332,7 +3771,10 @@
               {
                 "type": "null"
               }
-            ]
+            ],
+            "default": {
+              "limit": 10
+            }
           }
         },
         "type": "object",
@@ -3490,6 +3932,18 @@
             ],
             "title": "Tags"
           },
+          "importedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Importedtimestamp"
+          },
           "creationTimestamp": {
             "anyOf": [
               {
@@ -3502,7 +3956,7 @@
             ],
             "title": "Creationtimestamp"
           },
-          "updateTimestamp": {
+          "updatedTimestamp": {
             "anyOf": [
               {
                 "type": "string",
@@ -3512,7 +3966,7 @@
                 "type": "null"
               }
             ],
-            "title": "Updatetimestamp"
+            "title": "Updatedtimestamp"
           },
           "deletedTimestamp": {
             "anyOf": [
@@ -3548,8 +4002,9 @@
           "labels",
           "annotations",
           "tags",
+          "importedTimestamp",
           "creationTimestamp",
-          "updateTimestamp",
+          "updatedTimestamp",
           "deletedTimestamp",
           "features"
         ],
@@ -3557,20 +4012,6 @@
       },
       "ItemFilter": {
         "properties": {
-          "labelSelector": {
-            "anyOf": [
-              {
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Labelselector"
-          },
           "names": {
             "anyOf": [
               {
@@ -3584,6 +4025,20 @@
               }
             ],
             "title": "Names"
+          },
+          "labelSelector": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labelselector"
           }
         },
         "type": "object",
@@ -3723,6 +4178,18 @@
             ],
             "title": "Tags"
           },
+          "importedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Importedtimestamp"
+          },
           "creationTimestamp": {
             "anyOf": [
               {
@@ -3735,7 +4202,7 @@
             ],
             "title": "Creationtimestamp"
           },
-          "updateTimestamp": {
+          "updatedTimestamp": {
             "anyOf": [
               {
                 "type": "string",
@@ -3745,7 +4212,7 @@
                 "type": "null"
               }
             ],
-            "title": "Updatetimestamp"
+            "title": "Updatedtimestamp"
           },
           "deletedTimestamp": {
             "anyOf": [
@@ -3783,7 +4250,7 @@
             "format": "date-time",
             "title": "Creationtimestamp"
           },
-          "updateTimestamp": {
+          "updatedTimestamp": {
             "anyOf": [
               {
                 "type": "string",
@@ -3793,7 +4260,7 @@
                 "type": "null"
               }
             ],
-            "title": "Updatetimestamp"
+            "title": "Updatedtimestamp"
           },
           "labels": {
             "additionalProperties": {
@@ -3842,7 +4309,7 @@
           "namespace_name",
           "name",
           "creationTimestamp",
-          "updateTimestamp",
+          "updatedTimestamp",
           "labels",
           "annotations",
           "count",
@@ -3862,6 +4329,17 @@
             "type": "string",
             "title": "Kind",
             "default": "ItemQuery"
+          },
+          "namespace": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Namespace"
           },
           "filter": {
             "anyOf": [
@@ -3905,7 +4383,10 @@
               {
                 "type": "null"
               }
-            ]
+            ],
+            "default": {
+              "limit": 10
+            }
           }
         },
         "type": "object",
@@ -3951,7 +4432,7 @@
             "format": "date-time",
             "title": "Creationtimestamp"
           },
-          "updateTimestamp": {
+          "updatedTimestamp": {
             "anyOf": [
               {
                 "type": "string",
@@ -3961,7 +4442,7 @@
                 "type": "null"
               }
             ],
-            "title": "Updatetimestamp"
+            "title": "Updatedtimestamp"
           },
           "labels": {
             "additionalProperties": {
@@ -3988,7 +4469,7 @@
           "namespace_name",
           "name",
           "creationTimestamp",
-          "updateTimestamp",
+          "updatedTimestamp",
           "labels",
           "annotations",
           "count"
@@ -4015,7 +4496,7 @@
             "format": "date-time",
             "title": "Creationtimestamp"
           },
-          "updateTimestamp": {
+          "updatedTimestamp": {
             "anyOf": [
               {
                 "type": "string",
@@ -4025,7 +4506,7 @@
                 "type": "null"
               }
             ],
-            "title": "Updatetimestamp"
+            "title": "Updatedtimestamp"
           },
           "labels": {
             "additionalProperties": {
@@ -4128,7 +4609,7 @@
           "namespace_name",
           "name",
           "creationTimestamp",
-          "updateTimestamp",
+          "updatedTimestamp",
           "labels",
           "annotations",
           "eventUid",
@@ -4163,7 +4644,7 @@
             "format": "date-time",
             "title": "Creationtimestamp"
           },
-          "updateTimestamp": {
+          "updatedTimestamp": {
             "anyOf": [
               {
                 "type": "string",
@@ -4173,7 +4654,7 @@
                 "type": "null"
               }
             ],
-            "title": "Updatetimestamp"
+            "title": "Updatedtimestamp"
           },
           "labels": {
             "additionalProperties": {
@@ -4200,7 +4681,7 @@
           "namespace_name",
           "name",
           "creationTimestamp",
-          "updateTimestamp",
+          "updatedTimestamp",
           "labels",
           "annotations",
           "count"
@@ -4494,6 +4975,18 @@
             ],
             "title": "Tags"
           },
+          "importedTimestamp": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Importedtimestamp"
+          },
           "creationTimestamp": {
             "anyOf": [
               {
@@ -4506,7 +4999,7 @@
             ],
             "title": "Creationtimestamp"
           },
-          "updateTimestamp": {
+          "updatedTimestamp": {
             "anyOf": [
               {
                 "type": "string",
@@ -4516,7 +5009,7 @@
                 "type": "null"
               }
             ],
-            "title": "Updatetimestamp"
+            "title": "Updatedtimestamp"
           },
           "deletedTimestamp": {
             "anyOf": [
@@ -4588,7 +5081,10 @@
               {
                 "type": "null"
               }
-            ]
+            ],
+            "default": {
+              "limit": 10
+            }
           }
         },
         "type": "object",
@@ -4662,7 +5158,8 @@
           "start": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0.0
               },
               {
                 "type": "null"
@@ -4673,13 +5170,16 @@
           "limit": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "maximum": 100.0,
+                "minimum": 0.0
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Limit"
+            "title": "Limit",
+            "default": 10
           }
         },
         "type": "object",

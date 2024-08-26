@@ -1,5 +1,5 @@
 from typing import Optional, Dict
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from ..shared.types import (
     OptionalNamespace,
@@ -46,7 +46,7 @@ class ActorQuery(BaseModel):
     filter: Optional[ActorFilter] = None
     exclude: Optional[ActorFilter] = None
     order: Optional[list[OrderBy]] = None
-    pagination: Optional[Pagination] = None
+    pagination: Optional[Pagination] = Field(default=Pagination())
 
 
 class ActorList(BaseModel):

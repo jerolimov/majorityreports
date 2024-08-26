@@ -24,8 +24,9 @@ class OptionalCommonMeta(BaseModel):
     annotations: Optional[Dict[str, str]] = None
     tags: Optional[list[str]] = None
 
+    importedTimestamp: Optional[datetime] = None
     creationTimestamp: Optional[datetime] = None
-    updateTimestamp: Optional[datetime] = None
+    updatedTimestamp: Optional[datetime] = None
     deletedTimestamp: Optional[datetime] = None
 
 
@@ -61,5 +62,5 @@ class OrderBy(BaseModel):
 
 
 class Pagination(BaseModel):
-    start: Optional[int] = None
-    limit: Optional[int] = None
+    start: Optional[int] = Field(default=None, ge=0)
+    limit: Optional[int] = Field(default=10, ge=0, le=100)

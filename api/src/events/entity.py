@@ -32,12 +32,22 @@ class EventEntity(SQLModel, table=True):
     labels: Optional[Dict[str, str]] = Field(sa_type=JSON)
     annotations: Optional[Dict[str, str]] = Field(sa_type=JSON)
     tags: Optional[list[str]] = Field(sa_type=JSON)
+    importedTimestamp: Optional[datetime] = Field(
+        sa_column=Column(
+            DateTime(timezone=True), server_default=func.now(), nullable=True
+        ),
+    )
+    importedTimestamp: Optional[datetime] = Field(
+        sa_column=Column(
+            DateTime(timezone=True), server_default=func.now(), nullable=True
+        ),
+    )
     creationTimestamp: Optional[datetime] = Field(
         sa_column=Column(
             DateTime(timezone=True), server_default=func.now(), nullable=True
         ),
     )
-    updateTimestamp: Optional[datetime] = Field(
+    updatedTimestamp: Optional[datetime] = Field(
         sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
     )
     deletedTimestamp: Optional[datetime] = Field(
