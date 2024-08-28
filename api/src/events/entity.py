@@ -55,8 +55,8 @@ class EventEntity(SQLModel, table=True):
     )
 
     # spec
+    type: Optional[str] = Field(nullable=True)
     actor: Optional[str] = Field(foreign_key="actor.name")
     item: Optional[str] = Field(foreign_key="item.name")
-    type: Optional[str] = Field(nullable=True)
     value: Optional[str] = Field(nullable=True)
     # count: int = Field(default=0) ???

@@ -50,4 +50,5 @@ class ActorEntity(SQLModel, table=True):
     )
 
     # spec
+    type: Optional[str] = Field(nullable=True)
     features: Optional[Dict[str, str]] = Field(sa_type=JSON)

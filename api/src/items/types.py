@@ -25,6 +25,7 @@ class ItemMeta(
 
 
 class ItemSpec(BaseModel):
+    type: Optional[str] = None
     features: Optional[Dict[str, str]] = None
 
 

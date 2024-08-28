@@ -50,7 +50,7 @@ class FeedbackEntity(SQLModel, table=True):
     )
 
     # spec
+    type: Optional[str] = Field(nullable=True)
     actor: str = Field(foreign_key="actor.name")
     item: str = Field(foreign_key="item.name")
-    type: Optional[str] = Field(nullable=True)
     value: str = Field()
