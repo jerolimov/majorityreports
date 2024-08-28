@@ -1,0 +1,34 @@
+meta {
+  name: 3-update-namespace
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8000/api/namespaces/test-namespace
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "meta": {},
+    "spec": {
+      "contact": "contact info"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.apiVersion: eq v1alpha1
+  res.body.kind: eq Namespace
+  res.body.meta: isJson
+  res.body.meta.name: eq test-namespace
+  res.body.meta.namespace: isUndefined
+  res.body.meta.generateName: isNull 
+  res.body.spec: isJson 
+  res.body.spec.lifecycle: isNull 
+  res.body.spec.owner: isNull 
+  res.body.spec.contact: eq contact info 
+}

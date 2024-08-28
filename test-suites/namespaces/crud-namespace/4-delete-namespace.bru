@@ -1,0 +1,15 @@
+meta {
+  name: 4-delete-namespace
+  type: http
+  seq: 5
+}
+
+delete {
+  url: http://localhost:8000/api/namespaces/test-namespace
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 202
+}

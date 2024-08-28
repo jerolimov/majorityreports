@@ -1,0 +1,21 @@
+meta {
+  name: missing-name
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8000/api/namespaces
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "meta": {}
+  }
+}
+
+assert {
+  res.status: eq 422
+}

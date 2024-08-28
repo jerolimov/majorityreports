@@ -1,0 +1,15 @@
+meta {
+  name: 0-namespace-not-found
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8000/api/namespaces/namespace-does-not-found
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 404
+}

@@ -1,0 +1,33 @@
+meta {
+  name: 1-create-namespace
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8000/api/namespaces
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "meta": {
+      "name": "test-namespace"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.apiVersion: eq v1alpha1
+  res.body.kind: eq Namespace
+  res.body.meta: isJson
+  res.body.meta.name: eq test-namespace
+  res.body.meta.namespace: isUndefined
+  res.body.meta.generateName: isNull 
+  res.body.spec: isJson 
+  res.body.spec.lifecycle: isNull 
+  res.body.spec.owner: isNull 
+  res.body.spec.contact: isNull 
+}
