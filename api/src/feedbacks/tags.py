@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from sqlmodel import SQLModel, Session, text, select, func, null
+from sqlmodel import SQLModel, Session, text, select, func, null, col
 from sqlalchemy.engine import Row
 from typing import Dict, List, Iterable
 
@@ -51,12 +51,13 @@ def get_tags_generic2(session: Session = Depends(get_session)) -> FeedbackTagsRe
     rows = session.exec(statement).all()
     dict: Dict[str, Item] = {}
 
-    for tags in rows:
-        for tag in tags:
-            if tag in dict:
-                dict[tag].count += 1
-            else:
-                dict[tag] = Item(value=tag, count=1)
+    for row in rows:
+        if tags := row:
+            for tag in tags:
+                if tag in dict:
+                    dict[tag].count += 1
+                else:
+                    dict[tag] = Item(value=tag, count=1)
 
     items = list(dict.values())
     items.sort(key=lambda item: item.count, reverse=True)
@@ -68,7 +69,7 @@ def get_tags_generic3(session: Session = Depends(get_session)) -> FeedbackTagsRe
     statement = (
         select(FeedbackEntity.tags, func.count("*"))
         .select_from(FeedbackEntity)
-        .group_by(FeedbackEntity.tags)
+        .group_by(col(FeedbackEntity.tags))
         .where(FeedbackEntity.tags != null())
     )
 
@@ -77,11 +78,12 @@ def get_tags_generic3(session: Session = Depends(get_session)) -> FeedbackTagsRe
 
     for row in rows:
         tags, count = row
-        for tag in tags:
-            if tag in dict:
-                dict[tag].count += count
-            else:
-                dict[tag] = Item(value=tag, count=count)
+        if tags:
+            for tag in tags:
+                if tag in dict:
+                    dict[tag].count += count
+                else:
+                    dict[tag] = Item(value=tag, count=count)
 
     items = list(dict.values())
     items.sort(key=lambda item: item.count, reverse=True)
@@ -94,7 +96,7 @@ def get_tags_sqlite(session: Session = Depends(get_session)) -> FeedbackTagsResu
         "select j.value as value, count(*) as count from item, json_each(item.tags) j group by j.value order by count desc"
     )
 
-    rows: Iterable[Row] = session.exec(statement).all()
+    rows: Iterable[Row] = session.exec(statement).all()  # type: ignore
 
     items = map(lambda row: row._asdict(), rows)
 

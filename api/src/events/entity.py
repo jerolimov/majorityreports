@@ -37,11 +37,6 @@ class EventEntity(SQLModel, table=True):
             DateTime(timezone=True), server_default=func.now(), nullable=True
         ),
     )
-    importedTimestamp: Optional[datetime] = Field(
-        sa_column=Column(
-            DateTime(timezone=True), server_default=func.now(), nullable=True
-        ),
-    )
     creationTimestamp: Optional[datetime] = Field(
         sa_column=Column(
             DateTime(timezone=True), server_default=func.now(), nullable=True
