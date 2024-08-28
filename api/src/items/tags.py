@@ -41,7 +41,7 @@ def get_tags_generic(session: Session = Depends(get_session)) -> ItemTagsResult:
 
 
 @router.get("/tags/generic2")
-def get_tags_generic(session: Session = Depends(get_session)) -> ItemTagsResult:
+def get_tags_generic2(session: Session = Depends(get_session)) -> ItemTagsResult:
     statement = (
         select(ItemEntity.tags).select_from(ItemEntity).where(ItemEntity.tags != null())
     )
@@ -62,7 +62,7 @@ def get_tags_generic(session: Session = Depends(get_session)) -> ItemTagsResult:
 
 
 @router.get("/tags/generic3")
-def get_tags_generic(session: Session = Depends(get_session)) -> ItemTagsResult:
+def get_tags_generic3(session: Session = Depends(get_session)) -> ItemTagsResult:
     statement = (
         select(ItemEntity.tags, func.count("*"))
         .select_from(ItemEntity)

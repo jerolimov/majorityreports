@@ -41,7 +41,7 @@ def get_tags_generic(session: Session = Depends(get_session)) -> EventTagsResult
 
 
 @router.get("/tags/generic2")
-def get_tags_generic(session: Session = Depends(get_session)) -> EventTagsResult:
+def get_tags_generic2(session: Session = Depends(get_session)) -> EventTagsResult:
     statement = (
         select(EventEntity.tags)
         .select_from(EventEntity)
@@ -64,7 +64,7 @@ def get_tags_generic(session: Session = Depends(get_session)) -> EventTagsResult
 
 
 @router.get("/tags/generic3")
-def get_tags_generic(session: Session = Depends(get_session)) -> EventTagsResult:
+def get_tags_generic3(session: Session = Depends(get_session)) -> EventTagsResult:
     statement = (
         select(EventEntity.tags, func.count("*"))
         .select_from(EventEntity)

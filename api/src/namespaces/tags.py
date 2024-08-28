@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from sqlmodel import SQLModel, Field, Session, text, select, func, null
+from sqlmodel import SQLModel, Session, text, select, func, null
 from sqlalchemy.engine import Row
 from typing import Dict, List, Iterable
 
@@ -41,7 +41,7 @@ def get_tags_generic(session: Session = Depends(get_session)) -> NamespaceTagsRe
 
 
 @router.get("/tags/generic2")
-def get_tags_generic(session: Session = Depends(get_session)) -> NamespaceTagsResult:
+def get_tags_generic2(session: Session = Depends(get_session)) -> NamespaceTagsResult:
     statement = (
         select(NamespaceEntity.tags)
         .select_from(NamespaceEntity)
@@ -64,7 +64,7 @@ def get_tags_generic(session: Session = Depends(get_session)) -> NamespaceTagsRe
 
 
 @router.get("/tags/generic3")
-def get_tags_generic(session: Session = Depends(get_session)) -> NamespaceTagsResult:
+def get_tags_generic3(session: Session = Depends(get_session)) -> NamespaceTagsResult:
     statement = (
         select(NamespaceEntity.tags, func.count("*"))
         .select_from(NamespaceEntity)
