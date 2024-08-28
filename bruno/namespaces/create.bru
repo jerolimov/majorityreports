@@ -1,0 +1,20 @@
+meta {
+  name: create
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8000/api/namespaces
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "asd2",
+    "labels": {
+      "soft-delete": "true"
+    }
+  }
+}

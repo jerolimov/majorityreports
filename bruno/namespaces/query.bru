@@ -1,0 +1,30 @@
+meta {
+  name: query
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:8000/api/namespaces/query
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "filter": {
+      "labelSelector": {
+        "test": "testdata"
+      }
+    },
+    "exclude": {
+      "names": ["asd2"],
+      "labelSelector": {
+      }
+    },
+    "pagination": { "start": 0 },
+    "order": [
+      { "attribute": "name", "direction": "DESC" }
+    ]
+  }
+}

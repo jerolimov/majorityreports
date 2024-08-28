@@ -1,0 +1,23 @@
+meta {
+  name: query_post
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8000/api/items/query
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "filter": {
+    },
+    "exclude": {
+    },
+    "order": [
+      { "attribute": "name", "direction": "ASC" }
+    ]
+  }
+}
