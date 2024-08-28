@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import pandas as pd
 from typing import Any
 from sqlmodel import Session, select
@@ -12,7 +13,7 @@ namespace_name = "movie-test"
 test_name = "import-recommender-tutorial-movie-data"
 
 
-def convert_movie_to_item(movie: Any) -> ItemEntity:
+def convert_movie_to_item(movie: Any, index: Any) -> ItemEntity:
     movieId = str(movie.movieId)
     title = str(movie.title)
     genres = str(movie.genres).split("|")
@@ -25,13 +26,20 @@ def convert_movie_to_item(movie: Any) -> ItemEntity:
     item.labels = {
         "test": test_name,
     }
+    for genre in genres:
+        item.labels[genre.lower()] = "true"
     item.annotations = {
         "movieId": movieId,
         "genres": ", ".join(genres),
     }
+    item.tags = []
+    for genre in genres:
+        item.tags.append(genre)
+    item.importedTimestamp = datetime.now()
+    item.creationTimestamp = datetime.now() - timedelta(days=index)
     item.features = {}
     for genre in genres:
-        item.labels[genre.lower()] = "true"
+        item.features[genre.lower()] = "true"
     return item
 
 
@@ -83,8 +91,8 @@ with Session(engine) as session:
         "https://s3-us-west-2.amazonaws.com/recommender-tutorial/movies.csv"
     )
     # print(movies.head())
-    for _, movie in movies.iterrows():
-        item = convert_movie_to_item(movie)
+    for index, movie in movies.iterrows():
+        item = convert_movie_to_item(movie, index)
         session.add(item)
     session.commit()
 
