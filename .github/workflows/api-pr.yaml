@@ -1,9 +1,9 @@
-name: api-build-lint-test
+name: api-pr
 
 on:
   push:
     paths:
-      - .github/workflows/api-build-lint-test.yaml
+      - .github/workflows/api-pr.yaml
       - api/**
   pull_request:
 
