@@ -20,3 +20,10 @@ typecheck:
 
 update-openapi:
 	python gen-openapi.py > ../openapi.json
+
+tests: unit-tests bruno-tests
+
+unit-tests:
+
+bruno-tests:
+	python run-tests.py

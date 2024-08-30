@@ -23,3 +23,10 @@ jobs:
       - name: Lint and typecheck
         run: make check
         working-directory: api
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - name: Run API tests
+        run: make bruno-tests
+        working-directory: api
