@@ -1,5 +1,0 @@
-# api (python)
-__pycache__
-.mypy_cache
-.ruff_cache
-test.db

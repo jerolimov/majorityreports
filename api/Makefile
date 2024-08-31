@@ -19,7 +19,7 @@ typecheck:
 	python -m mypy .
 
 update-openapi:
-	python gen-openapi.py > ../openapi.json
+	python gen-openapi.py > openapi.json
 
 tests: unit-tests bruno-tests
 
