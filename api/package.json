@@ -1,0 +1,11 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "bru run"
+  },
+  "devDependencies": {
+    "@usebruno/cli": "^1.26.2"
+  }
+}

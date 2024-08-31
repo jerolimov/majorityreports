@@ -24,14 +24,14 @@ with Session(get_engine()) as session:
     )
 
     actor1 = ActorEntity(
-        namespace=namespace1,
+        namespace=namespace1.name,
         name="actor-1",
         labels={
             "test": "import-test-data",
         },
     )
     actor2 = ActorEntity(
-        namespace=namespace1,
+        namespace=namespace1.name,
         name="actor-2",
         labels={
             "test": "import-test-data",
@@ -39,14 +39,14 @@ with Session(get_engine()) as session:
     )
 
     item1 = ItemEntity(
-        namespace=namespace1,
+        namespace=namespace1.name,
         name="item-1",
         labels={
             "test": "import-test-data",
         },
     )
     item2 = ItemEntity(
-        namespace=namespace1,
+        namespace=namespace1.name,
         name="item-2",
         labels={
             "test": "import-test-data",
@@ -54,7 +54,7 @@ with Session(get_engine()) as session:
     )
 
     event1 = EventEntity(
-        namespace=namespace1,
+        namespace=namespace1.name,
         name="same-event-name",
         actor="actor-1",
         labels={
@@ -62,7 +62,7 @@ with Session(get_engine()) as session:
         },
     )
     event2 = EventEntity(
-        namespace=namespace1,
+        namespace=namespace1.name,
         name="same-event-name",
         # event without actor
         labels={
@@ -71,7 +71,7 @@ with Session(get_engine()) as session:
     )
 
     feedback1 = FeedbackEntity(
-        namespace=namespace1,
+        namespace=namespace1.name,
         name="same-feedback-name",
         actor="actor-1",
         item="item-1",
@@ -81,7 +81,7 @@ with Session(get_engine()) as session:
         value=3,
     )
     feedback2 = FeedbackEntity(
-        namespace=namespace1,
+        namespace=namespace1.name,
         name="same-feedback-name",
         actor="actor-1",
         item="item-2",
