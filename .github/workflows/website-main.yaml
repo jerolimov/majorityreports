@@ -1,11 +1,11 @@
-name: website-publish-main
+name: website-main
 
 on:
   push:
     branches:
       - main
     paths:
-      - .github/workflows/website-publish-main.yaml
+      - .github/workflows/website-main.yaml
       - website/**
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages

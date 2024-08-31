@@ -1,9 +1,11 @@
-name: dashboard-build-lint-test
+name: dashboard-main
 
 on:
   push:
+    branches:
+      - main
     paths:
-      - .github/workflows/dashboard-build-lint-test.yaml
+      - .github/workflows/dashboard-main.yaml
       - dashboard/**
   pull_request:
 
