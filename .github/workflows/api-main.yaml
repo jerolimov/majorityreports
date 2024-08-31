@@ -8,7 +8,7 @@ on:
       - .github/workflows/api-main.yaml
       - api/**
   schedule:
-    - cron: '0 0 * * *'  # every day at midnight
+    - cron: '0 8 * * MON'  # Monday at 8am, we might increase this when reaching beta
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow pushing a conatainer image to ghcr.io
