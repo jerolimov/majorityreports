@@ -1,5 +1,7 @@
 All source code is licensed under the Apache License, Version 2.0.
 
-* For everything in the `api` folder see `api/LICENSE`.
+* For everything in the    `api`    folder see `api/LICENSE`.
+* For everything in the `dashboard` folder see `dashboard/LICENSE`.
+* For everything in the  `website`  folder see `website/LICENSE`.
 
-Website content license is tbd.
+License for website content in `blog` and `docs` folder is tbd.
