@@ -1,14 +1,15 @@
 from sqlmodel import Session
-from src.db import engine, init_db
+from src.db import init_db, get_engine
 from src.namespaces.entity import NamespaceEntity
 from src.actors.entity import ActorEntity
 from src.items.entity import ItemEntity
 from src.events.entity import EventEntity
 from src.feedbacks.entity import FeedbackEntity
 
-with Session(engine) as session:
-    init_db()
 
+init_db()
+
+with Session(get_engine()) as session:
     namespace1 = NamespaceEntity(
         name="namespace-1",
         labels={

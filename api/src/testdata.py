@@ -1,6 +1,6 @@
 from sqlmodel import Session, select, func, and_
 
-from .db import engine
+from .db import get_engine
 from .namespaces.entity import NamespaceEntity as Namespace
 from .actors.entity import ActorEntity as Actor
 from .items.entity import ItemEntity as Item
@@ -12,7 +12,7 @@ namespace_name = "default"
 
 
 def init_testdata() -> None:
-    with Session(engine) as session:
+    with Session(get_engine()) as session:
         namespace = session.exec(
             select(Namespace).where(Namespace.name == namespace_name)
         ).one_or_none()

@@ -5,16 +5,21 @@ from fastapi_cli.cli import main
 from contextlib import asynccontextmanager
 from typing import AsyncIterator, Any
 
+from src.config import read_config
 from src.db import init_db
 from src.testdata import init_testdata
 from src.router import router as apiRouter
 from src.shared.exceptions import add_exception_handler
 
 
+config = read_config()
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     init_db()
-    init_testdata()
+    if config.db.create_testdata:
+        init_testdata()
     yield
 
 

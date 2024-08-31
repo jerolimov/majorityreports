@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 from typing import Any
 from sqlmodel import Session, select
-from src.db import engine, init_db
+from src.db import init_db, get_engine
 from src.namespaces.entity import NamespaceEntity
 from src.items.entity import ItemEntity
 from src.feedbacks.entity import FeedbackEntity
@@ -69,9 +69,9 @@ def convert_rating_to_feedback(rating: Any) -> FeedbackEntity:
     return feedback
 
 
-with Session(engine) as session:
-    init_db()
+init_db()
 
+with Session(get_engine()) as session:
     namespace = session.exec(
         select(NamespaceEntity).where(NamespaceEntity.name == namespace_name)
     ).one_or_none()

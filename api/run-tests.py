@@ -76,7 +76,9 @@ while True:
 
             # Log exit codes and elapsed time
             api_time_elapsed = datetime.timedelta(seconds=(time.time() - api_started))
-            tests_time_elapsed = datetime.timedelta(seconds=(time.time() - tests_started))
+            tests_time_elapsed = datetime.timedelta(
+                seconds=(time.time() - tests_started)
+            )
             print(f"API ended after {api_time_elapsed} with exit code:", api_exit_code)
             print(f"Tests ended {tests_time_elapsed} with exit code:", tests_exit_code)
             sys.exit(tests_exit_code)
@@ -87,5 +89,6 @@ def timeout_for_api_ready_message() -> None:
     if not api_ready:
         api_process.terminate()
         sys.exit(ErrorCodes.API_NOT_READY.value)
+
 
 threading.Thread(target=timeout_for_api_ready_message).start()
