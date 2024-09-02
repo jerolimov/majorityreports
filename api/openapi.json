@@ -268,6 +268,90 @@
         }
       }
     },
+    "/api/namespaces/tags/generic": {
+      "get": {
+        "tags": [
+          "namespaces"
+        ],
+        "summary": "Get Tags Generic",
+        "operationId": "get_tags_generic_api_namespaces_tags_generic_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NamespaceTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/tags/generic2": {
+      "get": {
+        "tags": [
+          "namespaces"
+        ],
+        "summary": "Get Tags Generic2",
+        "operationId": "get_tags_generic2_api_namespaces_tags_generic2_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NamespaceTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/tags/generic3": {
+      "get": {
+        "tags": [
+          "namespaces"
+        ],
+        "summary": "Get Tags Generic3",
+        "operationId": "get_tags_generic3_api_namespaces_tags_generic3_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NamespaceTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/tags/sqlite": {
+      "get": {
+        "tags": [
+          "namespaces"
+        ],
+        "summary": "Get Tags Sqlite",
+        "operationId": "get_tags_sqlite_api_namespaces_tags_sqlite_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NamespaceTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/actors": {
       "get": {
         "tags": [
@@ -396,68 +480,20 @@
         }
       }
     },
-    "/api/items": {
+    "/api/actors/tags/generic": {
       "get": {
         "tags": [
-          "items"
+          "actors"
         ],
-        "summary": "Read Items",
-        "operationId": "read_items_api_items_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "title": "Start"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
+        "summary": "Get Tags Generic",
+        "operationId": "get_tags_generic_api_actors_tags_generic_get",
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ItemList"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ActorTagsResult"
                 }
               }
             }
@@ -465,127 +501,20 @@
         }
       }
     },
-    "/api/items/query": {
-      "post": {
-        "tags": [
-          "items"
-        ],
-        "summary": "Query Items",
-        "operationId": "query_items_api_items_query_post",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ItemQuery"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ItemList"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/events": {
+    "/api/actors/tags/generic2": {
       "get": {
         "tags": [
-          "events"
+          "actors"
         ],
-        "summary": "Read Items",
-        "operationId": "read_items_api_events_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "title": "Start"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
+        "summary": "Get Tags Generic2",
+        "operationId": "get_tags_generic2_api_actors_tags_generic2_get",
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EventList"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ActorTagsResult"
                 }
               }
             }
@@ -593,127 +522,20 @@
         }
       }
     },
-    "/api/events/query": {
-      "post": {
-        "tags": [
-          "events"
-        ],
-        "summary": "Query Items",
-        "operationId": "query_items_api_events_query_post",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EventQuery"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EventList"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/feedbacks": {
+    "/api/actors/tags/generic3": {
       "get": {
         "tags": [
-          "feedbacks"
+          "actors"
         ],
-        "summary": "Read Items",
-        "operationId": "read_items_api_feedbacks_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "title": "Start"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "title": "Limit"
-            }
-          }
-        ],
+        "summary": "Get Tags Generic3",
+        "operationId": "get_tags_generic3_api_actors_tags_generic3_get",
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FeedbackList"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ActorTagsResult"
                 }
               }
             }
@@ -721,107 +543,20 @@
         }
       }
     },
-    "/api/feedbacks/query": {
-      "post": {
-        "tags": [
-          "feedbacks"
-        ],
-        "summary": "Query Items",
-        "operationId": "query_items_api_feedbacks_query_post",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FeedbackQuery"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FeedbackList"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/stats": {
+    "/api/actors/tags/sqlite": {
       "get": {
         "tags": [
-          "stats"
+          "actors"
         ],
-        "summary": "Get Stats",
-        "operationId": "get_stats_api_stats_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          }
-        ],
+        "summary": "Get Tags Sqlite",
+        "operationId": "get_tags_sqlite_api_actors_tags_sqlite_get",
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stats"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ActorTagsResult"
                 }
               }
             }
@@ -1164,6 +899,302 @@
         }
       }
     },
+    "/api/namespaces/{namespace_name}/actors/tags/generic": {
+      "get": {
+        "tags": [
+          "actors"
+        ],
+        "summary": "Get Tags Generic",
+        "operationId": "get_tags_generic_api_namespaces__namespace_name__actors_tags_generic_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActorTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/actors/tags/generic2": {
+      "get": {
+        "tags": [
+          "actors"
+        ],
+        "summary": "Get Tags Generic2",
+        "operationId": "get_tags_generic2_api_namespaces__namespace_name__actors_tags_generic2_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActorTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/actors/tags/generic3": {
+      "get": {
+        "tags": [
+          "actors"
+        ],
+        "summary": "Get Tags Generic3",
+        "operationId": "get_tags_generic3_api_namespaces__namespace_name__actors_tags_generic3_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActorTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/actors/tags/sqlite": {
+      "get": {
+        "tags": [
+          "actors"
+        ],
+        "summary": "Get Tags Sqlite",
+        "operationId": "get_tags_sqlite_api_namespaces__namespace_name__actors_tags_sqlite_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActorTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items": {
+      "get": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Read Items",
+        "operationId": "read_items_api_items_get",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Start"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/query": {
+      "post": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Query Items",
+        "operationId": "query_items_api_items_query_post",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/tags/generic": {
+      "get": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Get Tags Generic",
+        "operationId": "get_tags_generic_api_items_tags_generic_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/tags/generic2": {
+      "get": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Get Tags Generic2",
+        "operationId": "get_tags_generic2_api_items_tags_generic2_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/tags/generic3": {
+      "get": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Get Tags Generic3",
+        "operationId": "get_tags_generic3_api_items_tags_generic3_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/tags/sqlite": {
+      "get": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Get Tags Sqlite",
+        "operationId": "get_tags_sqlite_api_items_tags_sqlite_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/namespaces/{namespace_name}/items": {
       "post": {
         "tags": [
@@ -1187,7 +1218,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Item"
+                "$ref": "#/components/schemas/Item-Input"
               }
             }
           }
@@ -1198,7 +1229,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Item"
+                  "$ref": "#/components/schemas/src__items__types__Item"
                 }
               }
             }
@@ -1316,7 +1347,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Item"
+                  "$ref": "#/components/schemas/src__items__types__Item"
                 }
               }
             }
@@ -1364,7 +1395,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Item"
+                "$ref": "#/components/schemas/Item-Input"
               }
             }
           }
@@ -1375,7 +1406,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Item"
+                  "$ref": "#/components/schemas/src__items__types__Item"
                 }
               }
             }
@@ -1492,6 +1523,302 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/items/tags/generic": {
+      "get": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Get Tags Generic",
+        "operationId": "get_tags_generic_api_namespaces__namespace_name__items_tags_generic_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/items/tags/generic2": {
+      "get": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Get Tags Generic2",
+        "operationId": "get_tags_generic2_api_namespaces__namespace_name__items_tags_generic2_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/items/tags/generic3": {
+      "get": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Get Tags Generic3",
+        "operationId": "get_tags_generic3_api_namespaces__namespace_name__items_tags_generic3_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/items/tags/sqlite": {
+      "get": {
+        "tags": [
+          "items"
+        ],
+        "summary": "Get Tags Sqlite",
+        "operationId": "get_tags_sqlite_api_namespaces__namespace_name__items_tags_sqlite_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/events": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Read Items",
+        "operationId": "read_items_api_events_get",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Start"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/events/query": {
+      "post": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Query Items",
+        "operationId": "query_items_api_events_query_post",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/events/tags/generic": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Get Tags Generic",
+        "operationId": "get_tags_generic_api_events_tags_generic_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/events/tags/generic2": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Get Tags Generic2",
+        "operationId": "get_tags_generic2_api_events_tags_generic2_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/events/tags/generic3": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Get Tags Generic3",
+        "operationId": "get_tags_generic3_api_events_tags_generic3_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/events/tags/sqlite": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Get Tags Sqlite",
+        "operationId": "get_tags_sqlite_api_events_tags_sqlite_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventTagsResult"
                 }
               }
             }
@@ -1834,6 +2161,302 @@
         }
       }
     },
+    "/api/namespaces/{namespace_name}/events/tags/generic": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Get Tags Generic",
+        "operationId": "get_tags_generic_api_namespaces__namespace_name__events_tags_generic_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/events/tags/generic2": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Get Tags Generic2",
+        "operationId": "get_tags_generic2_api_namespaces__namespace_name__events_tags_generic2_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/events/tags/generic3": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Get Tags Generic3",
+        "operationId": "get_tags_generic3_api_namespaces__namespace_name__events_tags_generic3_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/events/tags/sqlite": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "summary": "Get Tags Sqlite",
+        "operationId": "get_tags_sqlite_api_namespaces__namespace_name__events_tags_sqlite_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/feedbacks": {
+      "get": {
+        "tags": [
+          "feedbacks"
+        ],
+        "summary": "Read Items",
+        "operationId": "read_items_api_feedbacks_get",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Start"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/feedbacks/query": {
+      "post": {
+        "tags": [
+          "feedbacks"
+        ],
+        "summary": "Query Items",
+        "operationId": "query_items_api_feedbacks_query_post",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/feedbacks/tags/generic": {
+      "get": {
+        "tags": [
+          "feedbacks"
+        ],
+        "summary": "Get Tags Generic",
+        "operationId": "get_tags_generic_api_feedbacks_tags_generic_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/feedbacks/tags/generic2": {
+      "get": {
+        "tags": [
+          "feedbacks"
+        ],
+        "summary": "Get Tags Generic2",
+        "operationId": "get_tags_generic2_api_feedbacks_tags_generic2_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/feedbacks/tags/generic3": {
+      "get": {
+        "tags": [
+          "feedbacks"
+        ],
+        "summary": "Get Tags Generic3",
+        "operationId": "get_tags_generic3_api_feedbacks_tags_generic3_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/feedbacks/tags/sqlite": {
+      "get": {
+        "tags": [
+          "feedbacks"
+        ],
+        "summary": "Get Tags Sqlite",
+        "operationId": "get_tags_sqlite_api_feedbacks_tags_sqlite_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/namespaces/{namespace_name}/feedbacks": {
       "post": {
         "tags": [
@@ -2169,48 +2792,83 @@
         }
       }
     },
-    "/api/namespaces/{namespace_name}/stats": {
+    "/api/namespaces/{namespace_name}/feedbacks/tags/generic": {
       "get": {
         "tags": [
-          "stats"
+          "feedbacks"
         ],
-        "summary": "Get Stats",
-        "operationId": "get_stats_api_namespaces__namespace_name__stats_get",
-        "parameters": [
-          {
-            "name": "namespace_name",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Namespace Name"
-            }
-          }
-        ],
+        "summary": "Get Tags Generic",
+        "operationId": "get_tags_generic_api_namespaces__namespace_name__feedbacks_tags_generic_get",
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Stats"
+                  "$ref": "#/components/schemas/FeedbackTagsResult"
                 }
               }
             }
-          },
-          "422": {
-            "description": "Validation Error",
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/feedbacks/tags/generic2": {
+      "get": {
+        "tags": [
+          "feedbacks"
+        ],
+        "summary": "Get Tags Generic2",
+        "operationId": "get_tags_generic2_api_namespaces__namespace_name__feedbacks_tags_generic2_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/FeedbackTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/feedbacks/tags/generic3": {
+      "get": {
+        "tags": [
+          "feedbacks"
+        ],
+        "summary": "Get Tags Generic3",
+        "operationId": "get_tags_generic3_api_namespaces__namespace_name__feedbacks_tags_generic3_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackTagsResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/feedbacks/tags/sqlite": {
+      "get": {
+        "tags": [
+          "feedbacks"
+        ],
+        "summary": "Get Tags Sqlite",
+        "operationId": "get_tags_sqlite_api_namespaces__namespace_name__feedbacks_tags_sqlite_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackTagsResult"
                 }
               }
             }
@@ -2746,6 +3404,104 @@
           }
         }
       }
+    },
+    "/api/stats": {
+      "get": {
+        "tags": [
+          "stats"
+        ],
+        "summary": "Get Stats",
+        "operationId": "get_stats_api_stats_get",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stats"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/namespaces/{namespace_name}/stats": {
+      "get": {
+        "tags": [
+          "stats"
+        ],
+        "summary": "Get Stats",
+        "operationId": "get_stats_api_namespaces__namespace_name__stats_get",
+        "parameters": [
+          {
+            "name": "namespace_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Namespace Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stats"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2856,7 +3612,9 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 63,
+                "pattern": "^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
               },
               {
                 "type": "null"
@@ -2867,7 +3625,9 @@
           "generateName": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 57,
+                "pattern": "^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
               },
               {
                 "type": "null"
@@ -2883,7 +3643,8 @@
           "title": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -3072,6 +3833,18 @@
       },
       "ActorSpec": {
         "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 63
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type"
+          },
           "features": {
             "anyOf": [
               {
@@ -3089,6 +3862,32 @@
         },
         "type": "object",
         "title": "ActorSpec"
+      },
+      "ActorTagsResult": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "ActorTagsResult"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/src__actors__tags__Item"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "ActorTagsResult"
       },
       "Event": {
         "properties": {
@@ -3196,7 +3995,9 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 63,
+                "pattern": "^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
               },
               {
                 "type": "null"
@@ -3207,7 +4008,9 @@
           "generateName": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 57,
+                "pattern": "^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
               },
               {
                 "type": "null"
@@ -3223,7 +4026,8 @@
           "title": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -3415,7 +4219,8 @@
           "type": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 63
               },
               {
                 "type": "null"
@@ -3459,6 +4264,32 @@
         },
         "type": "object",
         "title": "EventSpec"
+      },
+      "EventTagsResult": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "EventTagsResult"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/src__events__tags__Item"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "EventTagsResult"
       },
       "Feedback": {
         "properties": {
@@ -3566,7 +4397,9 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 63,
+                "pattern": "^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
               },
               {
                 "type": "null"
@@ -3577,7 +4410,9 @@
           "generateName": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 57,
+                "pattern": "^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
               },
               {
                 "type": "null"
@@ -3593,7 +4428,8 @@
           "title": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -3785,7 +4621,8 @@
           "type": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 63
               },
               {
                 "type": "null"
@@ -3814,6 +4651,32 @@
         ],
         "title": "FeedbackSpec"
       },
+      "FeedbackTagsResult": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "FeedbackTagsResult"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/src__feedbacks__tags__Item"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "FeedbackTagsResult"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -3827,7 +4690,7 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
-      "Item": {
+      "Item-Input": {
         "properties": {
           "apiVersion": {
             "type": "string",
@@ -3980,6 +4843,17 @@
             ],
             "title": "Deletedtimestamp"
           },
+          "type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type"
+          },
           "features": {
             "anyOf": [
               {
@@ -4006,6 +4880,7 @@
           "creationTimestamp",
           "updatedTimestamp",
           "deletedTimestamp",
+          "type",
           "features"
         ],
         "title": "ItemEntity"
@@ -4061,7 +4936,7 @@
           },
           "items": {
             "items": {
-              "$ref": "#/components/schemas/Item"
+              "$ref": "#/components/schemas/src__items__types__Item"
             },
             "type": "array",
             "title": "Items"
@@ -4090,7 +4965,9 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 63,
+                "pattern": "^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
               },
               {
                 "type": "null"
@@ -4101,7 +4978,9 @@
           "generateName": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 57,
+                "pattern": "^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
               },
               {
                 "type": "null"
@@ -4117,7 +4996,8 @@
           "title": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4394,6 +5274,18 @@
       },
       "ItemSpec": {
         "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 63
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type"
+          },
           "features": {
             "anyOf": [
               {
@@ -4411,6 +5303,32 @@
         },
         "type": "object",
         "title": "ItemSpec"
+      },
+      "ItemTagsResult": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "ItemTagsResult"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/src__items__tags__Item"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "ItemTagsResult"
       },
       "ItemWithEventCount": {
         "properties": {
@@ -4887,7 +5805,9 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 63,
+                "pattern": "^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
               },
               {
                 "type": "null"
@@ -4898,7 +5818,9 @@
           "generateName": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 57,
+                "pattern": "^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$"
               },
               {
                 "type": "null"
@@ -4914,7 +5836,8 @@
           "title": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5129,6 +6052,32 @@
         "type": "object",
         "title": "NamespaceSpec"
       },
+      "NamespaceTagsResult": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "NamespaceTagsResult"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/src__namespaces__tags__Item"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "NamespaceTagsResult"
+      },
       "OrderBy": {
         "properties": {
           "attribute": {
@@ -5278,6 +6227,122 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "src__actors__tags__Item": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "value",
+          "count"
+        ],
+        "title": "Item"
+      },
+      "src__events__tags__Item": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "value",
+          "count"
+        ],
+        "title": "Item"
+      },
+      "src__feedbacks__tags__Item": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "value",
+          "count"
+        ],
+        "title": "Item"
+      },
+      "src__items__tags__Item": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "value",
+          "count"
+        ],
+        "title": "Item"
+      },
+      "src__items__types__Item": {
+        "properties": {
+          "apiVersion": {
+            "type": "string",
+            "title": "Apiversion",
+            "default": "v1alpha1"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind",
+            "default": "Item"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ItemMeta"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/ItemSpec"
+          }
+        },
+        "type": "object",
+        "required": [
+          "meta",
+          "spec"
+        ],
+        "title": "Item"
+      },
+      "src__namespaces__tags__Item": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "value",
+          "count"
+        ],
+        "title": "Item"
       }
     }
   }

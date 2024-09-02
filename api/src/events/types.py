@@ -25,7 +25,7 @@ class EventMeta(
 
 
 class EventSpec(BaseModel):
-    type: Optional[str] = None
+    type: Optional[str] = Field(default=None, max_length=63)
     actor: Optional[str] = None
     item: Optional[str] = None
     value: Optional[str] = None

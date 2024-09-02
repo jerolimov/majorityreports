@@ -25,7 +25,7 @@ class FeedbackMeta(
 
 
 class FeedbackSpec(BaseModel):
-    type: Optional[str] = None
+    type: Optional[str] = Field(default=None, max_length=63)
     actor: str
     item: str
     value: str

@@ -25,7 +25,7 @@ class ActorMeta(
 
 
 class ActorSpec(BaseModel):
-    type: Optional[str] = None
+    type: Optional[str] = Field(default=None, max_length=63)
     features: Optional[Dict[str, str]] = None
 
 
