@@ -55,9 +55,14 @@ const columns: TableColumn<Event>[] = [
     field: 'spec.item',
   },
   {
+    title: 'Value',
+    field: 'spec.value',
+  },
+  {
     title: 'Tags',
     field: 'meta.tags',
     render: (data) => <Tags object={data} />,
+    sorting: false,
   },
   {
     title: 'Created',

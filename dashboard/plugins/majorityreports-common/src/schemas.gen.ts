@@ -26,20 +26,6 @@ export const $Actor = {
 
 export const $ActorFilter = {
     properties: {
-        labelSelector: {
-            anyOf: [
-                {
-                    additionalProperties: {
-                        type: 'string'
-                    },
-                    type: 'object'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Labelselector'
-        },
         names: {
             anyOf: [
                 {
@@ -53,6 +39,20 @@ export const $ActorFilter = {
                 }
             ],
             title: 'Names'
+        },
+        labelSelector: {
+            anyOf: [
+                {
+                    additionalProperties: {
+                        type: 'string'
+                    },
+                    type: 'object'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Labelselector'
         }
     },
     type: 'object',
@@ -103,7 +103,9 @@ export const $ActorMeta = {
         name: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 63,
+                    pattern: '^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$'
                 },
                 {
                     type: 'null'
@@ -114,7 +116,9 @@ export const $ActorMeta = {
         generateName: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 57,
+                    pattern: '^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$'
                 },
                 {
                     type: 'null'
@@ -130,7 +134,8 @@ export const $ActorMeta = {
         title: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 100
                 },
                 {
                     type: 'null'
@@ -191,6 +196,18 @@ export const $ActorMeta = {
             ],
             title: 'Tags'
         },
+        importedTimestamp: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Importedtimestamp'
+        },
         creationTimestamp: {
             anyOf: [
                 {
@@ -203,7 +220,7 @@ export const $ActorMeta = {
             ],
             title: 'Creationtimestamp'
         },
-        updateTimestamp: {
+        updatedTimestamp: {
             anyOf: [
                 {
                     type: 'string',
@@ -213,7 +230,7 @@ export const $ActorMeta = {
                     type: 'null'
                 }
             ],
-            title: 'Updatetimestamp'
+            title: 'Updatedtimestamp'
         },
         deletedTimestamp: {
             anyOf: [
@@ -243,6 +260,17 @@ export const $ActorQuery = {
             type: 'string',
             title: 'Kind',
             default: 'ActorQuery'
+        },
+        namespace: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Namespace'
         },
         filter: {
             anyOf: [
@@ -286,7 +314,10 @@ export const $ActorQuery = {
                 {
                     type: 'null'
                 }
-            ]
+            ],
+            default: {
+                limit: 10
+            }
         }
     },
     type: 'object',
@@ -295,6 +326,18 @@ export const $ActorQuery = {
 
 export const $ActorSpec = {
     properties: {
+        type: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 63
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Type'
+        },
         features: {
             anyOf: [
                 {
@@ -312,6 +355,31 @@ export const $ActorSpec = {
     },
     type: 'object',
     title: 'ActorSpec'
+} as const;
+
+export const $ActorTagsResult = {
+    properties: {
+        apiVersion: {
+            type: 'string',
+            title: 'Apiversion',
+            default: 'v1alpha1'
+        },
+        kind: {
+            type: 'string',
+            title: 'Kind',
+            default: 'ActorTagsResult'
+        },
+        items: {
+            items: {
+                '$ref': '#/components/schemas/src__actors__tags__Item'
+            },
+            type: 'array',
+            title: 'Items'
+        }
+    },
+    type: 'object',
+    required: ['items'],
+    title: 'ActorTagsResult'
 } as const;
 
 export const $Event = {
@@ -340,20 +408,6 @@ export const $Event = {
 
 export const $EventFilter = {
     properties: {
-        labelSelector: {
-            anyOf: [
-                {
-                    additionalProperties: {
-                        type: 'string'
-                    },
-                    type: 'object'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Labelselector'
-        },
         names: {
             anyOf: [
                 {
@@ -367,6 +421,20 @@ export const $EventFilter = {
                 }
             ],
             title: 'Names'
+        },
+        labelSelector: {
+            anyOf: [
+                {
+                    additionalProperties: {
+                        type: 'string'
+                    },
+                    type: 'object'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Labelselector'
         }
     },
     type: 'object',
@@ -417,7 +485,9 @@ export const $EventMeta = {
         name: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 63,
+                    pattern: '^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$'
                 },
                 {
                     type: 'null'
@@ -428,7 +498,9 @@ export const $EventMeta = {
         generateName: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 57,
+                    pattern: '^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$'
                 },
                 {
                     type: 'null'
@@ -444,7 +516,8 @@ export const $EventMeta = {
         title: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 100
                 },
                 {
                     type: 'null'
@@ -505,6 +578,18 @@ export const $EventMeta = {
             ],
             title: 'Tags'
         },
+        importedTimestamp: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Importedtimestamp'
+        },
         creationTimestamp: {
             anyOf: [
                 {
@@ -517,7 +602,7 @@ export const $EventMeta = {
             ],
             title: 'Creationtimestamp'
         },
-        updateTimestamp: {
+        updatedTimestamp: {
             anyOf: [
                 {
                     type: 'string',
@@ -527,7 +612,7 @@ export const $EventMeta = {
                     type: 'null'
                 }
             ],
-            title: 'Updatetimestamp'
+            title: 'Updatedtimestamp'
         },
         deletedTimestamp: {
             anyOf: [
@@ -557,6 +642,17 @@ export const $EventQuery = {
             type: 'string',
             title: 'Kind',
             default: 'EventQuery'
+        },
+        namespace: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Namespace'
         },
         filter: {
             anyOf: [
@@ -600,7 +696,10 @@ export const $EventQuery = {
                 {
                     type: 'null'
                 }
-            ]
+            ],
+            default: {
+                limit: 10
+            }
         }
     },
     type: 'object',
@@ -612,7 +711,8 @@ export const $EventSpec = {
         type: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 63
                 },
                 {
                     type: 'null'
@@ -658,6 +758,31 @@ export const $EventSpec = {
     title: 'EventSpec'
 } as const;
 
+export const $EventTagsResult = {
+    properties: {
+        apiVersion: {
+            type: 'string',
+            title: 'Apiversion',
+            default: 'v1alpha1'
+        },
+        kind: {
+            type: 'string',
+            title: 'Kind',
+            default: 'EventTagsResult'
+        },
+        items: {
+            items: {
+                '$ref': '#/components/schemas/src__events__tags__Item'
+            },
+            type: 'array',
+            title: 'Items'
+        }
+    },
+    type: 'object',
+    required: ['items'],
+    title: 'EventTagsResult'
+} as const;
+
 export const $Feedback = {
     properties: {
         apiVersion: {
@@ -684,20 +809,6 @@ export const $Feedback = {
 
 export const $FeedbackFilter = {
     properties: {
-        labelSelector: {
-            anyOf: [
-                {
-                    additionalProperties: {
-                        type: 'string'
-                    },
-                    type: 'object'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Labelselector'
-        },
         names: {
             anyOf: [
                 {
@@ -711,6 +822,20 @@ export const $FeedbackFilter = {
                 }
             ],
             title: 'Names'
+        },
+        labelSelector: {
+            anyOf: [
+                {
+                    additionalProperties: {
+                        type: 'string'
+                    },
+                    type: 'object'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Labelselector'
         }
     },
     type: 'object',
@@ -761,7 +886,9 @@ export const $FeedbackMeta = {
         name: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 63,
+                    pattern: '^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$'
                 },
                 {
                     type: 'null'
@@ -772,7 +899,9 @@ export const $FeedbackMeta = {
         generateName: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 57,
+                    pattern: '^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$'
                 },
                 {
                     type: 'null'
@@ -788,7 +917,8 @@ export const $FeedbackMeta = {
         title: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 100
                 },
                 {
                     type: 'null'
@@ -849,6 +979,18 @@ export const $FeedbackMeta = {
             ],
             title: 'Tags'
         },
+        importedTimestamp: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Importedtimestamp'
+        },
         creationTimestamp: {
             anyOf: [
                 {
@@ -861,7 +1003,7 @@ export const $FeedbackMeta = {
             ],
             title: 'Creationtimestamp'
         },
-        updateTimestamp: {
+        updatedTimestamp: {
             anyOf: [
                 {
                     type: 'string',
@@ -871,7 +1013,7 @@ export const $FeedbackMeta = {
                     type: 'null'
                 }
             ],
-            title: 'Updatetimestamp'
+            title: 'Updatedtimestamp'
         },
         deletedTimestamp: {
             anyOf: [
@@ -901,6 +1043,17 @@ export const $FeedbackQuery = {
             type: 'string',
             title: 'Kind',
             default: 'FeedbackQuery'
+        },
+        namespace: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Namespace'
         },
         filter: {
             anyOf: [
@@ -944,7 +1097,10 @@ export const $FeedbackQuery = {
                 {
                     type: 'null'
                 }
-            ]
+            ],
+            default: {
+                limit: 10
+            }
         }
     },
     type: 'object',
@@ -956,7 +1112,8 @@ export const $FeedbackSpec = {
         type: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 63
                 },
                 {
                     type: 'null'
@@ -982,6 +1139,31 @@ export const $FeedbackSpec = {
     title: 'FeedbackSpec'
 } as const;
 
+export const $FeedbackTagsResult = {
+    properties: {
+        apiVersion: {
+            type: 'string',
+            title: 'Apiversion',
+            default: 'v1alpha1'
+        },
+        kind: {
+            type: 'string',
+            title: 'Kind',
+            default: 'FeedbackTagsResult'
+        },
+        items: {
+            items: {
+                '$ref': '#/components/schemas/src__feedbacks__tags__Item'
+            },
+            type: 'array',
+            title: 'Items'
+        }
+    },
+    type: 'object',
+    required: ['items'],
+    title: 'FeedbackTagsResult'
+} as const;
+
 export const $HTTPValidationError = {
     properties: {
         detail: {
@@ -996,7 +1178,7 @@ export const $HTTPValidationError = {
     title: 'HTTPValidationError'
 } as const;
 
-export const $Item = {
+export const $Item_Input = {
     properties: {
         apiVersion: {
             type: 'string',
@@ -1099,6 +1281,18 @@ export const $ItemEntity = {
             ],
             title: 'Tags'
         },
+        importedTimestamp: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Importedtimestamp'
+        },
         creationTimestamp: {
             anyOf: [
                 {
@@ -1111,7 +1305,7 @@ export const $ItemEntity = {
             ],
             title: 'Creationtimestamp'
         },
-        updateTimestamp: {
+        updatedTimestamp: {
             anyOf: [
                 {
                     type: 'string',
@@ -1121,7 +1315,7 @@ export const $ItemEntity = {
                     type: 'null'
                 }
             ],
-            title: 'Updatetimestamp'
+            title: 'Updatedtimestamp'
         },
         deletedTimestamp: {
             anyOf: [
@@ -1134,6 +1328,17 @@ export const $ItemEntity = {
                 }
             ],
             title: 'Deletedtimestamp'
+        },
+        type: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Type'
         },
         features: {
             anyOf: [
@@ -1151,26 +1356,12 @@ export const $ItemEntity = {
         }
     },
     type: 'object',
-    required: ['namespace', 'name', 'labels', 'annotations', 'tags', 'creationTimestamp', 'updateTimestamp', 'deletedTimestamp', 'features'],
+    required: ['namespace', 'name', 'labels', 'annotations', 'tags', 'importedTimestamp', 'creationTimestamp', 'updatedTimestamp', 'deletedTimestamp', 'type', 'features'],
     title: 'ItemEntity'
 } as const;
 
 export const $ItemFilter = {
     properties: {
-        labelSelector: {
-            anyOf: [
-                {
-                    additionalProperties: {
-                        type: 'string'
-                    },
-                    type: 'object'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Labelselector'
-        },
         names: {
             anyOf: [
                 {
@@ -1184,6 +1375,20 @@ export const $ItemFilter = {
                 }
             ],
             title: 'Names'
+        },
+        labelSelector: {
+            anyOf: [
+                {
+                    additionalProperties: {
+                        type: 'string'
+                    },
+                    type: 'object'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Labelselector'
         }
     },
     type: 'object',
@@ -1207,7 +1412,7 @@ export const $ItemList = {
         },
         items: {
             items: {
-                '$ref': '#/components/schemas/Item'
+                '$ref': '#/components/schemas/src__items__types__Item'
             },
             type: 'array',
             title: 'Items'
@@ -1234,7 +1439,9 @@ export const $ItemMeta = {
         name: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 63,
+                    pattern: '^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$'
                 },
                 {
                     type: 'null'
@@ -1245,7 +1452,9 @@ export const $ItemMeta = {
         generateName: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 57,
+                    pattern: '^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$'
                 },
                 {
                     type: 'null'
@@ -1261,7 +1470,8 @@ export const $ItemMeta = {
         title: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 100
                 },
                 {
                     type: 'null'
@@ -1322,6 +1532,18 @@ export const $ItemMeta = {
             ],
             title: 'Tags'
         },
+        importedTimestamp: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Importedtimestamp'
+        },
         creationTimestamp: {
             anyOf: [
                 {
@@ -1334,7 +1556,7 @@ export const $ItemMeta = {
             ],
             title: 'Creationtimestamp'
         },
-        updateTimestamp: {
+        updatedTimestamp: {
             anyOf: [
                 {
                     type: 'string',
@@ -1344,7 +1566,7 @@ export const $ItemMeta = {
                     type: 'null'
                 }
             ],
-            title: 'Updatetimestamp'
+            title: 'Updatedtimestamp'
         },
         deletedTimestamp: {
             anyOf: [
@@ -1383,7 +1605,7 @@ export const $ItemMinMax = {
             format: 'date-time',
             title: 'Creationtimestamp'
         },
-        updateTimestamp: {
+        updatedTimestamp: {
             anyOf: [
                 {
                     type: 'string',
@@ -1393,7 +1615,7 @@ export const $ItemMinMax = {
                     type: 'null'
                 }
             ],
-            title: 'Updatetimestamp'
+            title: 'Updatedtimestamp'
         },
         labels: {
             additionalProperties: {
@@ -1437,7 +1659,7 @@ export const $ItemMinMax = {
         }
     },
     type: 'object',
-    required: ['uid', 'namespace_name', 'name', 'creationTimestamp', 'updateTimestamp', 'labels', 'annotations', 'count', 'min', 'max'],
+    required: ['uid', 'namespace_name', 'name', 'creationTimestamp', 'updatedTimestamp', 'labels', 'annotations', 'count', 'min', 'max'],
     title: 'ItemMinMax'
 } as const;
 
@@ -1452,6 +1674,17 @@ export const $ItemQuery = {
             type: 'string',
             title: 'Kind',
             default: 'ItemQuery'
+        },
+        namespace: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Namespace'
         },
         filter: {
             anyOf: [
@@ -1495,7 +1728,10 @@ export const $ItemQuery = {
                 {
                     type: 'null'
                 }
-            ]
+            ],
+            default: {
+                limit: 10
+            }
         }
     },
     type: 'object',
@@ -1504,6 +1740,18 @@ export const $ItemQuery = {
 
 export const $ItemSpec = {
     properties: {
+        type: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 63
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Type'
+        },
         features: {
             anyOf: [
                 {
@@ -1521,6 +1769,31 @@ export const $ItemSpec = {
     },
     type: 'object',
     title: 'ItemSpec'
+} as const;
+
+export const $ItemTagsResult = {
+    properties: {
+        apiVersion: {
+            type: 'string',
+            title: 'Apiversion',
+            default: 'v1alpha1'
+        },
+        kind: {
+            type: 'string',
+            title: 'Kind',
+            default: 'ItemTagsResult'
+        },
+        items: {
+            items: {
+                '$ref': '#/components/schemas/src__items__tags__Item'
+            },
+            type: 'array',
+            title: 'Items'
+        }
+    },
+    type: 'object',
+    required: ['items'],
+    title: 'ItemTagsResult'
 } as const;
 
 export const $ItemWithEventCount = {
@@ -1543,7 +1816,7 @@ export const $ItemWithEventCount = {
             format: 'date-time',
             title: 'Creationtimestamp'
         },
-        updateTimestamp: {
+        updatedTimestamp: {
             anyOf: [
                 {
                     type: 'string',
@@ -1553,7 +1826,7 @@ export const $ItemWithEventCount = {
                     type: 'null'
                 }
             ],
-            title: 'Updatetimestamp'
+            title: 'Updatedtimestamp'
         },
         labels: {
             additionalProperties: {
@@ -1575,7 +1848,7 @@ export const $ItemWithEventCount = {
         }
     },
     type: 'object',
-    required: ['uid', 'namespace_name', 'name', 'creationTimestamp', 'updateTimestamp', 'labels', 'annotations', 'count'],
+    required: ['uid', 'namespace_name', 'name', 'creationTimestamp', 'updatedTimestamp', 'labels', 'annotations', 'count'],
     title: 'ItemWithEventCount'
 } as const;
 
@@ -1599,7 +1872,7 @@ export const $ItemWithEventDetails = {
             format: 'date-time',
             title: 'Creationtimestamp'
         },
-        updateTimestamp: {
+        updatedTimestamp: {
             anyOf: [
                 {
                     type: 'string',
@@ -1609,7 +1882,7 @@ export const $ItemWithEventDetails = {
                     type: 'null'
                 }
             ],
-            title: 'Updatetimestamp'
+            title: 'Updatedtimestamp'
         },
         labels: {
             additionalProperties: {
@@ -1707,7 +1980,7 @@ export const $ItemWithEventDetails = {
         }
     },
     type: 'object',
-    required: ['uid', 'namespace_name', 'name', 'creationTimestamp', 'updateTimestamp', 'labels', 'annotations', 'eventUid', 'eventName', 'eventActor', 'eventCreated', 'eventUpdated', 'eventLabels', 'eventAnnotations', 'eventType', 'eventValue'],
+    required: ['uid', 'namespace_name', 'name', 'creationTimestamp', 'updatedTimestamp', 'labels', 'annotations', 'eventUid', 'eventName', 'eventActor', 'eventCreated', 'eventUpdated', 'eventLabels', 'eventAnnotations', 'eventType', 'eventValue'],
     title: 'ItemWithEventDetails'
 } as const;
 
@@ -1731,7 +2004,7 @@ export const $ItemWithFeedbackCount = {
             format: 'date-time',
             title: 'Creationtimestamp'
         },
-        updateTimestamp: {
+        updatedTimestamp: {
             anyOf: [
                 {
                     type: 'string',
@@ -1741,7 +2014,7 @@ export const $ItemWithFeedbackCount = {
                     type: 'null'
                 }
             ],
-            title: 'Updatetimestamp'
+            title: 'Updatedtimestamp'
         },
         labels: {
             additionalProperties: {
@@ -1763,7 +2036,7 @@ export const $ItemWithFeedbackCount = {
         }
     },
     type: 'object',
-    required: ['uid', 'namespace_name', 'name', 'creationTimestamp', 'updateTimestamp', 'labels', 'annotations', 'count'],
+    required: ['uid', 'namespace_name', 'name', 'creationTimestamp', 'updatedTimestamp', 'labels', 'annotations', 'count'],
     title: 'ItemWithFeedbackCount'
 } as const;
 
@@ -1962,7 +2235,9 @@ export const $NamespaceMeta = {
         name: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 63,
+                    pattern: '^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$'
                 },
                 {
                     type: 'null'
@@ -1973,7 +2248,9 @@ export const $NamespaceMeta = {
         generateName: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 57,
+                    pattern: '^[a-z0-9]$|^[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$'
                 },
                 {
                     type: 'null'
@@ -1989,7 +2266,8 @@ export const $NamespaceMeta = {
         title: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 100
                 },
                 {
                     type: 'null'
@@ -2050,6 +2328,18 @@ export const $NamespaceMeta = {
             ],
             title: 'Tags'
         },
+        importedTimestamp: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Importedtimestamp'
+        },
         creationTimestamp: {
             anyOf: [
                 {
@@ -2062,7 +2352,7 @@ export const $NamespaceMeta = {
             ],
             title: 'Creationtimestamp'
         },
-        updateTimestamp: {
+        updatedTimestamp: {
             anyOf: [
                 {
                     type: 'string',
@@ -2072,7 +2362,7 @@ export const $NamespaceMeta = {
                     type: 'null'
                 }
             ],
-            title: 'Updatetimestamp'
+            title: 'Updatedtimestamp'
         },
         deletedTimestamp: {
             anyOf: [
@@ -2145,7 +2435,10 @@ export const $NamespaceQuery = {
                 {
                     type: 'null'
                 }
-            ]
+            ],
+            default: {
+                limit: 10
+            }
         }
     },
     type: 'object',
@@ -2192,6 +2485,31 @@ export const $NamespaceSpec = {
     title: 'NamespaceSpec'
 } as const;
 
+export const $NamespaceTagsResult = {
+    properties: {
+        apiVersion: {
+            type: 'string',
+            title: 'Apiversion',
+            default: 'v1alpha1'
+        },
+        kind: {
+            type: 'string',
+            title: 'Kind',
+            default: 'NamespaceTagsResult'
+        },
+        items: {
+            items: {
+                '$ref': '#/components/schemas/src__namespaces__tags__Item'
+            },
+            type: 'array',
+            title: 'Items'
+        }
+    },
+    type: 'object',
+    required: ['items'],
+    title: 'NamespaceTagsResult'
+} as const;
+
 export const $OrderBy = {
     properties: {
         attribute: {
@@ -2220,7 +2538,8 @@ export const $Pagination = {
         start: {
             anyOf: [
                 {
-                    type: 'integer'
+                    type: 'integer',
+                    minimum: 0
                 },
                 {
                     type: 'null'
@@ -2231,13 +2550,16 @@ export const $Pagination = {
         limit: {
             anyOf: [
                 {
-                    type: 'integer'
+                    type: 'integer',
+                    maximum: 100,
+                    minimum: 0
                 },
                 {
                     type: 'null'
                 }
             ],
-            title: 'Limit'
+            title: 'Limit',
+            default: 10
         }
     },
     type: 'object',
@@ -2334,4 +2656,108 @@ export const $ValidationError = {
     type: 'object',
     required: ['loc', 'msg', 'type'],
     title: 'ValidationError'
+} as const;
+
+export const $src__actors__tags__Item = {
+    properties: {
+        value: {
+            type: 'string',
+            title: 'Value'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['value', 'count'],
+    title: 'Item'
+} as const;
+
+export const $src__events__tags__Item = {
+    properties: {
+        value: {
+            type: 'string',
+            title: 'Value'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['value', 'count'],
+    title: 'Item'
+} as const;
+
+export const $src__feedbacks__tags__Item = {
+    properties: {
+        value: {
+            type: 'string',
+            title: 'Value'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['value', 'count'],
+    title: 'Item'
+} as const;
+
+export const $src__items__tags__Item = {
+    properties: {
+        value: {
+            type: 'string',
+            title: 'Value'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['value', 'count'],
+    title: 'Item'
+} as const;
+
+export const $src__items__types__Item = {
+    properties: {
+        apiVersion: {
+            type: 'string',
+            title: 'Apiversion',
+            default: 'v1alpha1'
+        },
+        kind: {
+            type: 'string',
+            title: 'Kind',
+            default: 'Item'
+        },
+        meta: {
+            '$ref': '#/components/schemas/ItemMeta'
+        },
+        spec: {
+            '$ref': '#/components/schemas/ItemSpec'
+        }
+    },
+    type: 'object',
+    required: ['meta', 'spec'],
+    title: 'Item'
+} as const;
+
+export const $src__namespaces__tags__Item = {
+    properties: {
+        value: {
+            type: 'string',
+            title: 'Value'
+        },
+        count: {
+            type: 'integer',
+            title: 'Count'
+        }
+    },
+    type: 'object',
+    required: ['value', 'count'],
+    title: 'Item'
 } as const;

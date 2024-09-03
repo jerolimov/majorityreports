@@ -49,7 +49,7 @@ export const ActorDetailsPage = () => {
             </Grid>
             <Grid item sm={12}>
               <LabelsCard object={actor} />
-              </Grid>
+            </Grid>
             <Grid item sm={12}>
               <AnnotationsCard object={actor} />
             </Grid>

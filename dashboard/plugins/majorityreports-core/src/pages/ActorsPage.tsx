@@ -43,9 +43,14 @@ const columns: TableColumn<Actor>[] = [
     field: 'meta.title',
   },
   {
+    title: 'Type',
+    field: 'spec.type',
+  },
+  {
     title: 'Tags',
     field: 'meta.tags',
     render: (data) => <Tags object={data} />,
+    sorting: false,
   },
   {
     title: 'Created',

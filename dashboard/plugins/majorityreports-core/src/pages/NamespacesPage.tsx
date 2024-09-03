@@ -47,6 +47,7 @@ const columns: TableColumn<Namespace>[] = [
     title: 'Tags',
     field: 'meta.tags',
     render: (data) => <Tags object={data} />,
+    sorting: false,
   },
   {
     title: 'Created',

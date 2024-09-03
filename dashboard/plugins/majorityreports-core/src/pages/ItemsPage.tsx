@@ -14,7 +14,7 @@ import {
 
 import Box from '@material-ui/core/Box';
 
-import { Item, ItemList } from '@internal/backstage-plugin-majorityreports-common';
+import { src__items__types__Item as Item, ItemList } from '@internal/backstage-plugin-majorityreports-common';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -43,9 +43,14 @@ const columns: TableColumn<Item>[] = [
     field: 'meta.title',
   },
   {
+    title: 'Type',
+    field: 'spec.type',
+  },
+  {
     title: 'Tags',
     field: 'meta.tags',
     render: (data) => <Tags object={data} />,
+    sorting: false,
   },
   {
     title: 'Created',

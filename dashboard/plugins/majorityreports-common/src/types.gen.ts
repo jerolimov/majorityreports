@@ -8,10 +8,10 @@ export type Actor = {
 };
 
 export type ActorFilter = {
+    names?: Array<(string)> | null;
     labelSelector?: {
     [key: string]: (string);
 } | null;
-    names?: Array<(string)> | null;
 };
 
 export type ActorList = {
@@ -35,14 +35,16 @@ export type ActorMeta = {
     [key: string]: (string);
 } | null;
     tags?: Array<(string)> | null;
+    importedTimestamp?: string | null;
     creationTimestamp?: string | null;
-    updateTimestamp?: string | null;
+    updatedTimestamp?: string | null;
     deletedTimestamp?: string | null;
 };
 
 export type ActorQuery = {
     apiVersion?: string;
     kind?: string;
+    namespace?: string | null;
     filter?: ActorFilter | null;
     exclude?: ActorFilter | null;
     order?: Array<OrderBy> | null;
@@ -50,9 +52,16 @@ export type ActorQuery = {
 };
 
 export type ActorSpec = {
+    type?: string | null;
     features?: {
     [key: string]: (string);
 } | null;
+};
+
+export type ActorTagsResult = {
+    apiVersion?: string;
+    kind?: string;
+    items: Array<src__actors__tags__Item>;
 };
 
 export type Event = {
@@ -63,10 +72,10 @@ export type Event = {
 };
 
 export type EventFilter = {
+    names?: Array<(string)> | null;
     labelSelector?: {
     [key: string]: (string);
 } | null;
-    names?: Array<(string)> | null;
 };
 
 export type EventList = {
@@ -90,14 +99,16 @@ export type EventMeta = {
     [key: string]: (string);
 } | null;
     tags?: Array<(string)> | null;
+    importedTimestamp?: string | null;
     creationTimestamp?: string | null;
-    updateTimestamp?: string | null;
+    updatedTimestamp?: string | null;
     deletedTimestamp?: string | null;
 };
 
 export type EventQuery = {
     apiVersion?: string;
     kind?: string;
+    namespace?: string | null;
     filter?: EventFilter | null;
     exclude?: EventFilter | null;
     order?: Array<OrderBy> | null;
@@ -111,6 +122,12 @@ export type EventSpec = {
     value?: string | null;
 };
 
+export type EventTagsResult = {
+    apiVersion?: string;
+    kind?: string;
+    items: Array<src__events__tags__Item>;
+};
+
 export type Feedback = {
     apiVersion?: string;
     kind?: string;
@@ -119,10 +136,10 @@ export type Feedback = {
 };
 
 export type FeedbackFilter = {
+    names?: Array<(string)> | null;
     labelSelector?: {
     [key: string]: (string);
 } | null;
-    names?: Array<(string)> | null;
 };
 
 export type FeedbackList = {
@@ -146,14 +163,16 @@ export type FeedbackMeta = {
     [key: string]: (string);
 } | null;
     tags?: Array<(string)> | null;
+    importedTimestamp?: string | null;
     creationTimestamp?: string | null;
-    updateTimestamp?: string | null;
+    updatedTimestamp?: string | null;
     deletedTimestamp?: string | null;
 };
 
 export type FeedbackQuery = {
     apiVersion?: string;
     kind?: string;
+    namespace?: string | null;
     filter?: FeedbackFilter | null;
     exclude?: FeedbackFilter | null;
     order?: Array<OrderBy> | null;
@@ -167,11 +186,17 @@ export type FeedbackSpec = {
     value: string;
 };
 
+export type FeedbackTagsResult = {
+    apiVersion?: string;
+    kind?: string;
+    items: Array<src__feedbacks__tags__Item>;
+};
+
 export type HTTPValidationError = {
     detail?: Array<ValidationError>;
 };
 
-export type Item = {
+export type Item_Input = {
     apiVersion?: string;
     kind?: string;
     meta: ItemMeta;
@@ -191,26 +216,28 @@ export type ItemEntity = {
     [key: string]: (string);
 } | null;
     tags: Array<(string)> | null;
+    importedTimestamp: string | null;
     creationTimestamp: string | null;
-    updateTimestamp: string | null;
+    updatedTimestamp: string | null;
     deletedTimestamp: string | null;
+    type: string | null;
     features: {
     [key: string]: (string);
 } | null;
 };
 
 export type ItemFilter = {
+    names?: Array<(string)> | null;
     labelSelector?: {
     [key: string]: (string);
 } | null;
-    names?: Array<(string)> | null;
 };
 
 export type ItemList = {
     apiVersion?: string;
     kind?: string;
     meta: ListMeta;
-    items: Array<Item>;
+    items: Array<src__items__types__Item>;
 };
 
 export type ItemMeta = {
@@ -227,8 +254,9 @@ export type ItemMeta = {
     [key: string]: (string);
 } | null;
     tags?: Array<(string)> | null;
+    importedTimestamp?: string | null;
     creationTimestamp?: string | null;
-    updateTimestamp?: string | null;
+    updatedTimestamp?: string | null;
     deletedTimestamp?: string | null;
 };
 
@@ -237,7 +265,7 @@ export type ItemMinMax = {
     namespace_name: string;
     name: string;
     creationTimestamp: string;
-    updateTimestamp: string | null;
+    updatedTimestamp: string | null;
     labels: {
         [key: string]: (string);
     };
@@ -252,6 +280,7 @@ export type ItemMinMax = {
 export type ItemQuery = {
     apiVersion?: string;
     kind?: string;
+    namespace?: string | null;
     filter?: ItemFilter | null;
     exclude?: ItemFilter | null;
     order?: Array<OrderBy> | null;
@@ -259,9 +288,16 @@ export type ItemQuery = {
 };
 
 export type ItemSpec = {
+    type?: string | null;
     features?: {
     [key: string]: (string);
 } | null;
+};
+
+export type ItemTagsResult = {
+    apiVersion?: string;
+    kind?: string;
+    items: Array<src__items__tags__Item>;
 };
 
 export type ItemWithEventCount = {
@@ -269,7 +305,7 @@ export type ItemWithEventCount = {
     namespace_name: string;
     name: string;
     creationTimestamp: string;
-    updateTimestamp: string | null;
+    updatedTimestamp: string | null;
     labels: {
         [key: string]: (string);
     };
@@ -284,7 +320,7 @@ export type ItemWithEventDetails = {
     namespace_name: string;
     name: string;
     creationTimestamp: string;
-    updateTimestamp: string | null;
+    updatedTimestamp: string | null;
     labels: {
         [key: string]: (string);
     };
@@ -311,7 +347,7 @@ export type ItemWithFeedbackCount = {
     namespace_name: string;
     name: string;
     creationTimestamp: string;
-    updateTimestamp: string | null;
+    updatedTimestamp: string | null;
     labels: {
         [key: string]: (string);
     };
@@ -369,8 +405,9 @@ export type NamespaceMeta = {
     [key: string]: (string);
 } | null;
     tags?: Array<(string)> | null;
+    importedTimestamp?: string | null;
     creationTimestamp?: string | null;
-    updateTimestamp?: string | null;
+    updatedTimestamp?: string | null;
     deletedTimestamp?: string | null;
 };
 
@@ -387,6 +424,12 @@ export type NamespaceSpec = {
     lifecycle?: string | null;
     owner?: string | null;
     contact?: string | null;
+};
+
+export type NamespaceTagsResult = {
+    apiVersion?: string;
+    kind?: string;
+    items: Array<src__namespaces__tags__Item>;
 };
 
 export type OrderBy = {
@@ -411,6 +454,38 @@ export type ValidationError = {
     loc: Array<(string | number)>;
     msg: string;
     type: string;
+};
+
+export type src__actors__tags__Item = {
+    value: string;
+    count: number;
+};
+
+export type src__events__tags__Item = {
+    value: string;
+    count: number;
+};
+
+export type src__feedbacks__tags__Item = {
+    value: string;
+    count: number;
+};
+
+export type src__items__tags__Item = {
+    value: string;
+    count: number;
+};
+
+export type src__items__types__Item = {
+    apiVersion?: string;
+    kind?: string;
+    meta: ItemMeta;
+    spec: ItemSpec;
+};
+
+export type src__namespaces__tags__Item = {
+    value: string;
+    count: number;
 };
 
 export type CreateNamespaceApiNamespacesPostData = {
@@ -471,9 +546,26 @@ export type QueryNamespacesApiNamespacesQueryPostResponse = NamespaceList;
 
 export type QueryNamespacesApiNamespacesQueryPostError = HTTPValidationError;
 
+export type GetTagsGenericApiNamespacesTagsGenericGetResponse = NamespaceTagsResult;
+
+export type GetTagsGenericApiNamespacesTagsGenericGetError = unknown;
+
+export type GetTagsGeneric2ApiNamespacesTagsGeneric2GetResponse = NamespaceTagsResult;
+
+export type GetTagsGeneric2ApiNamespacesTagsGeneric2GetError = unknown;
+
+export type GetTagsGeneric3ApiNamespacesTagsGeneric3GetResponse = NamespaceTagsResult;
+
+export type GetTagsGeneric3ApiNamespacesTagsGeneric3GetError = unknown;
+
+export type GetTagsSqliteApiNamespacesTagsSqliteGetResponse = NamespaceTagsResult;
+
+export type GetTagsSqliteApiNamespacesTagsSqliteGetError = unknown;
+
 export type ReadItemsApiActorsGetData = {
     query?: {
         limit?: number;
+        namespace_name?: string | null;
         start?: number;
     };
 };
@@ -484,78 +576,30 @@ export type ReadItemsApiActorsGetError = HTTPValidationError;
 
 export type QueryItemsApiActorsQueryPostData = {
     body: ActorQuery;
+    query?: {
+        namespace_name?: string | null;
+    };
 };
 
 export type QueryItemsApiActorsQueryPostResponse = ActorList;
 
 export type QueryItemsApiActorsQueryPostError = HTTPValidationError;
 
-export type ReadItemsApiItemsGetData = {
-    query?: {
-        limit?: number;
-        start?: number;
-    };
-};
+export type GetTagsGenericApiActorsTagsGenericGetResponse = ActorTagsResult;
 
-export type ReadItemsApiItemsGetResponse = ItemList;
+export type GetTagsGenericApiActorsTagsGenericGetError = unknown;
 
-export type ReadItemsApiItemsGetError = HTTPValidationError;
+export type GetTagsGeneric2ApiActorsTagsGeneric2GetResponse = ActorTagsResult;
 
-export type QueryItemsApiItemsQueryPostData = {
-    body: ItemQuery;
-};
+export type GetTagsGeneric2ApiActorsTagsGeneric2GetError = unknown;
 
-export type QueryItemsApiItemsQueryPostResponse = ItemList;
+export type GetTagsGeneric3ApiActorsTagsGeneric3GetResponse = ActorTagsResult;
 
-export type QueryItemsApiItemsQueryPostError = HTTPValidationError;
+export type GetTagsGeneric3ApiActorsTagsGeneric3GetError = unknown;
 
-export type ReadItemsApiEventsGetData = {
-    query?: {
-        limit?: number;
-        start?: number;
-    };
-};
+export type GetTagsSqliteApiActorsTagsSqliteGetResponse = ActorTagsResult;
 
-export type ReadItemsApiEventsGetResponse = EventList;
-
-export type ReadItemsApiEventsGetError = HTTPValidationError;
-
-export type QueryItemsApiEventsQueryPostData = {
-    body: EventQuery;
-};
-
-export type QueryItemsApiEventsQueryPostResponse = EventList;
-
-export type QueryItemsApiEventsQueryPostError = HTTPValidationError;
-
-export type ReadItemsApiFeedbacksGetData = {
-    query?: {
-        limit?: number;
-        start?: number;
-    };
-};
-
-export type ReadItemsApiFeedbacksGetResponse = FeedbackList;
-
-export type ReadItemsApiFeedbacksGetError = HTTPValidationError;
-
-export type QueryItemsApiFeedbacksQueryPostData = {
-    body: FeedbackQuery;
-};
-
-export type QueryItemsApiFeedbacksQueryPostResponse = FeedbackList;
-
-export type QueryItemsApiFeedbacksQueryPostError = HTTPValidationError;
-
-export type GetStatsApiStatsGetData = {
-    query?: {
-        namespace_name?: string | null;
-    };
-};
-
-export type GetStatsApiStatsGetResponse = Stats;
-
-export type GetStatsApiStatsGetError = HTTPValidationError;
+export type GetTagsSqliteApiActorsTagsSqliteGetError = unknown;
 
 export type CreateActorApiNamespacesNamespaceNameActorsPostData = {
     body: Actor;
@@ -567,6 +611,20 @@ export type CreateActorApiNamespacesNamespaceNameActorsPostData = {
 export type CreateActorApiNamespacesNamespaceNameActorsPostResponse = Actor;
 
 export type CreateActorApiNamespacesNamespaceNameActorsPostError = HTTPValidationError;
+
+export type ReadItemsApiNamespacesNamespaceNameActorsGetData = {
+    path: {
+        namespace_name: string | null;
+    };
+    query?: {
+        limit?: number;
+        start?: number;
+    };
+};
+
+export type ReadItemsApiNamespacesNamespaceNameActorsGetResponse = ActorList;
+
+export type ReadItemsApiNamespacesNamespaceNameActorsGetError = HTTPValidationError;
 
 export type ReadActorApiNamespacesNamespaceNameActorsActorNameGetData = {
     path: {
@@ -602,18 +660,87 @@ export type DeleteActorApiNamespacesNamespaceNameActorsActorNameDeleteResponse =
 
 export type DeleteActorApiNamespacesNamespaceNameActorsActorNameDeleteError = HTTPValidationError;
 
+export type QueryItemsApiNamespacesNamespaceNameActorsQueryPostData = {
+    body: ActorQuery;
+    path: {
+        namespace_name: string | null;
+    };
+};
+
+export type QueryItemsApiNamespacesNamespaceNameActorsQueryPostResponse = ActorList;
+
+export type QueryItemsApiNamespacesNamespaceNameActorsQueryPostError = HTTPValidationError;
+
+export type GetTagsGenericApiNamespacesNamespaceNameActorsTagsGenericGetResponse = ActorTagsResult;
+
+export type GetTagsGenericApiNamespacesNamespaceNameActorsTagsGenericGetError = unknown;
+
+export type GetTagsGeneric2ApiNamespacesNamespaceNameActorsTagsGeneric2GetResponse = ActorTagsResult;
+
+export type GetTagsGeneric2ApiNamespacesNamespaceNameActorsTagsGeneric2GetError = unknown;
+
+export type GetTagsGeneric3ApiNamespacesNamespaceNameActorsTagsGeneric3GetResponse = ActorTagsResult;
+
+export type GetTagsGeneric3ApiNamespacesNamespaceNameActorsTagsGeneric3GetError = unknown;
+
+export type GetTagsSqliteApiNamespacesNamespaceNameActorsTagsSqliteGetResponse = ActorTagsResult;
+
+export type GetTagsSqliteApiNamespacesNamespaceNameActorsTagsSqliteGetError = unknown;
+
+export type ReadItemsApiItemsGetData = {
+    query?: {
+        limit?: number;
+        namespace_name?: string | null;
+        start?: number;
+    };
+};
+
+export type ReadItemsApiItemsGetResponse = ItemList;
+
+export type ReadItemsApiItemsGetError = HTTPValidationError;
+
+export type QueryItemsApiItemsQueryPostData = {
+    body: ItemQuery;
+    query?: {
+        namespace_name?: string | null;
+    };
+};
+
+export type QueryItemsApiItemsQueryPostResponse = ItemList;
+
+export type QueryItemsApiItemsQueryPostError = HTTPValidationError;
+
+export type GetTagsGenericApiItemsTagsGenericGetResponse = ItemTagsResult;
+
+export type GetTagsGenericApiItemsTagsGenericGetError = unknown;
+
+export type GetTagsGeneric2ApiItemsTagsGeneric2GetResponse = ItemTagsResult;
+
+export type GetTagsGeneric2ApiItemsTagsGeneric2GetError = unknown;
+
+export type GetTagsGeneric3ApiItemsTagsGeneric3GetResponse = ItemTagsResult;
+
+export type GetTagsGeneric3ApiItemsTagsGeneric3GetError = unknown;
+
+export type GetTagsSqliteApiItemsTagsSqliteGetResponse = ItemTagsResult;
+
+export type GetTagsSqliteApiItemsTagsSqliteGetError = unknown;
+
 export type CreateItemApiNamespacesNamespaceNameItemsPostData = {
-    body: Item;
+    body: Item_Input;
     path: {
         namespace_name: string;
     };
 };
 
-export type CreateItemApiNamespacesNamespaceNameItemsPostResponse = Item;
+export type CreateItemApiNamespacesNamespaceNameItemsPostResponse = src__items__types__Item;
 
 export type CreateItemApiNamespacesNamespaceNameItemsPostError = HTTPValidationError;
 
 export type ReadItemsApiNamespacesNamespaceNameItemsGetData = {
+    path: {
+        namespace_name: string | null;
+    };
     query?: {
         limit?: number;
         start?: number;
@@ -631,19 +758,19 @@ export type ReadItemApiNamespacesNamespaceNameItemsItemNameGetData = {
     };
 };
 
-export type ReadItemApiNamespacesNamespaceNameItemsItemNameGetResponse = Item;
+export type ReadItemApiNamespacesNamespaceNameItemsItemNameGetResponse = src__items__types__Item;
 
 export type ReadItemApiNamespacesNamespaceNameItemsItemNameGetError = HTTPValidationError;
 
 export type UpdateItemApiNamespacesNamespaceNameItemsItemNamePutData = {
-    body: Item;
+    body: Item_Input;
     path: {
         item_name: string;
         namespace_name: string;
     };
 };
 
-export type UpdateItemApiNamespacesNamespaceNameItemsItemNamePutResponse = Item;
+export type UpdateItemApiNamespacesNamespaceNameItemsItemNamePutResponse = src__items__types__Item;
 
 export type UpdateItemApiNamespacesNamespaceNameItemsItemNamePutError = HTTPValidationError;
 
@@ -660,11 +787,69 @@ export type DeleteItemApiNamespacesNamespaceNameItemsItemNameDeleteError = HTTPV
 
 export type QueryItemsApiNamespacesNamespaceNameItemsQueryPostData = {
     body: ItemQuery;
+    path: {
+        namespace_name: string | null;
+    };
 };
 
 export type QueryItemsApiNamespacesNamespaceNameItemsQueryPostResponse = ItemList;
 
 export type QueryItemsApiNamespacesNamespaceNameItemsQueryPostError = HTTPValidationError;
+
+export type GetTagsGenericApiNamespacesNamespaceNameItemsTagsGenericGetResponse = ItemTagsResult;
+
+export type GetTagsGenericApiNamespacesNamespaceNameItemsTagsGenericGetError = unknown;
+
+export type GetTagsGeneric2ApiNamespacesNamespaceNameItemsTagsGeneric2GetResponse = ItemTagsResult;
+
+export type GetTagsGeneric2ApiNamespacesNamespaceNameItemsTagsGeneric2GetError = unknown;
+
+export type GetTagsGeneric3ApiNamespacesNamespaceNameItemsTagsGeneric3GetResponse = ItemTagsResult;
+
+export type GetTagsGeneric3ApiNamespacesNamespaceNameItemsTagsGeneric3GetError = unknown;
+
+export type GetTagsSqliteApiNamespacesNamespaceNameItemsTagsSqliteGetResponse = ItemTagsResult;
+
+export type GetTagsSqliteApiNamespacesNamespaceNameItemsTagsSqliteGetError = unknown;
+
+export type ReadItemsApiEventsGetData = {
+    query?: {
+        limit?: number;
+        namespace_name?: string | null;
+        start?: number;
+    };
+};
+
+export type ReadItemsApiEventsGetResponse = EventList;
+
+export type ReadItemsApiEventsGetError = HTTPValidationError;
+
+export type QueryItemsApiEventsQueryPostData = {
+    body: EventQuery;
+    query?: {
+        namespace_name?: string | null;
+    };
+};
+
+export type QueryItemsApiEventsQueryPostResponse = EventList;
+
+export type QueryItemsApiEventsQueryPostError = HTTPValidationError;
+
+export type GetTagsGenericApiEventsTagsGenericGetResponse = EventTagsResult;
+
+export type GetTagsGenericApiEventsTagsGenericGetError = unknown;
+
+export type GetTagsGeneric2ApiEventsTagsGeneric2GetResponse = EventTagsResult;
+
+export type GetTagsGeneric2ApiEventsTagsGeneric2GetError = unknown;
+
+export type GetTagsGeneric3ApiEventsTagsGeneric3GetResponse = EventTagsResult;
+
+export type GetTagsGeneric3ApiEventsTagsGeneric3GetError = unknown;
+
+export type GetTagsSqliteApiEventsTagsSqliteGetResponse = EventTagsResult;
+
+export type GetTagsSqliteApiEventsTagsSqliteGetError = unknown;
 
 export type CreateEventApiNamespacesNamespaceNameEventsPostData = {
     body: Event;
@@ -678,6 +863,9 @@ export type CreateEventApiNamespacesNamespaceNameEventsPostResponse = Event;
 export type CreateEventApiNamespacesNamespaceNameEventsPostError = HTTPValidationError;
 
 export type ReadItemsApiNamespacesNamespaceNameEventsGetData = {
+    path: {
+        namespace_name: string | null;
+    };
     query?: {
         limit?: number;
         start?: number;
@@ -724,11 +912,69 @@ export type DeleteEventApiNamespacesNamespaceNameEventsEventNameDeleteError = HT
 
 export type QueryItemsApiNamespacesNamespaceNameEventsQueryPostData = {
     body: EventQuery;
+    path: {
+        namespace_name: string | null;
+    };
 };
 
 export type QueryItemsApiNamespacesNamespaceNameEventsQueryPostResponse = EventList;
 
 export type QueryItemsApiNamespacesNamespaceNameEventsQueryPostError = HTTPValidationError;
+
+export type GetTagsGenericApiNamespacesNamespaceNameEventsTagsGenericGetResponse = EventTagsResult;
+
+export type GetTagsGenericApiNamespacesNamespaceNameEventsTagsGenericGetError = unknown;
+
+export type GetTagsGeneric2ApiNamespacesNamespaceNameEventsTagsGeneric2GetResponse = EventTagsResult;
+
+export type GetTagsGeneric2ApiNamespacesNamespaceNameEventsTagsGeneric2GetError = unknown;
+
+export type GetTagsGeneric3ApiNamespacesNamespaceNameEventsTagsGeneric3GetResponse = EventTagsResult;
+
+export type GetTagsGeneric3ApiNamespacesNamespaceNameEventsTagsGeneric3GetError = unknown;
+
+export type GetTagsSqliteApiNamespacesNamespaceNameEventsTagsSqliteGetResponse = EventTagsResult;
+
+export type GetTagsSqliteApiNamespacesNamespaceNameEventsTagsSqliteGetError = unknown;
+
+export type ReadItemsApiFeedbacksGetData = {
+    query?: {
+        limit?: number;
+        namespace_name?: string | null;
+        start?: number;
+    };
+};
+
+export type ReadItemsApiFeedbacksGetResponse = FeedbackList;
+
+export type ReadItemsApiFeedbacksGetError = HTTPValidationError;
+
+export type QueryItemsApiFeedbacksQueryPostData = {
+    body: FeedbackQuery;
+    query?: {
+        namespace_name?: string | null;
+    };
+};
+
+export type QueryItemsApiFeedbacksQueryPostResponse = FeedbackList;
+
+export type QueryItemsApiFeedbacksQueryPostError = HTTPValidationError;
+
+export type GetTagsGenericApiFeedbacksTagsGenericGetResponse = FeedbackTagsResult;
+
+export type GetTagsGenericApiFeedbacksTagsGenericGetError = unknown;
+
+export type GetTagsGeneric2ApiFeedbacksTagsGeneric2GetResponse = FeedbackTagsResult;
+
+export type GetTagsGeneric2ApiFeedbacksTagsGeneric2GetError = unknown;
+
+export type GetTagsGeneric3ApiFeedbacksTagsGeneric3GetResponse = FeedbackTagsResult;
+
+export type GetTagsGeneric3ApiFeedbacksTagsGeneric3GetError = unknown;
+
+export type GetTagsSqliteApiFeedbacksTagsSqliteGetResponse = FeedbackTagsResult;
+
+export type GetTagsSqliteApiFeedbacksTagsSqliteGetError = unknown;
 
 export type CreateFeedbackApiNamespacesNamespaceNameFeedbacksPostData = {
     body: Feedback;
@@ -742,6 +988,9 @@ export type CreateFeedbackApiNamespacesNamespaceNameFeedbacksPostResponse = Feed
 export type CreateFeedbackApiNamespacesNamespaceNameFeedbacksPostError = HTTPValidationError;
 
 export type ReadItemsApiNamespacesNamespaceNameFeedbacksGetData = {
+    path: {
+        namespace_name: string | null;
+    };
     query?: {
         limit?: number;
         start?: number;
@@ -788,21 +1037,30 @@ export type DeleteFeedbackApiNamespacesNamespaceNameFeedbacksFeedbackNameDeleteE
 
 export type QueryItemsApiNamespacesNamespaceNameFeedbacksQueryPostData = {
     body: FeedbackQuery;
+    path: {
+        namespace_name: string | null;
+    };
 };
 
 export type QueryItemsApiNamespacesNamespaceNameFeedbacksQueryPostResponse = FeedbackList;
 
 export type QueryItemsApiNamespacesNamespaceNameFeedbacksQueryPostError = HTTPValidationError;
 
-export type GetStatsApiNamespacesNamespaceNameStatsGetData = {
-    path: {
-        namespace_name: string | null;
-    };
-};
+export type GetTagsGenericApiNamespacesNamespaceNameFeedbacksTagsGenericGetResponse = FeedbackTagsResult;
 
-export type GetStatsApiNamespacesNamespaceNameStatsGetResponse = Stats;
+export type GetTagsGenericApiNamespacesNamespaceNameFeedbacksTagsGenericGetError = unknown;
 
-export type GetStatsApiNamespacesNamespaceNameStatsGetError = HTTPValidationError;
+export type GetTagsGeneric2ApiNamespacesNamespaceNameFeedbacksTagsGeneric2GetResponse = FeedbackTagsResult;
+
+export type GetTagsGeneric2ApiNamespacesNamespaceNameFeedbacksTagsGeneric2GetError = unknown;
+
+export type GetTagsGeneric3ApiNamespacesNamespaceNameFeedbacksTagsGeneric3GetResponse = FeedbackTagsResult;
+
+export type GetTagsGeneric3ApiNamespacesNamespaceNameFeedbacksTagsGeneric3GetError = unknown;
+
+export type GetTagsSqliteApiNamespacesNamespaceNameFeedbacksTagsSqliteGetResponse = FeedbackTagsResult;
+
+export type GetTagsSqliteApiNamespacesNamespaceNameFeedbacksTagsSqliteGetError = unknown;
 
 export type GetMinmaxApiNamespacesNamespaceNameReportsAverageMinmaxGetData = {
     path: {
@@ -902,6 +1160,26 @@ export type GetItemsWithLatestEventsApiNamespacesNamespaceNameReportsLatestEvent
 
 export type GetItemsWithLatestEventsApiNamespacesNamespaceNameReportsLatestEventsItemsGetError = HTTPValidationError;
 
+export type GetStatsApiStatsGetData = {
+    query?: {
+        namespace_name?: string | null;
+    };
+};
+
+export type GetStatsApiStatsGetResponse = Stats;
+
+export type GetStatsApiStatsGetError = HTTPValidationError;
+
+export type GetStatsApiNamespacesNamespaceNameStatsGetData = {
+    path: {
+        namespace_name: string | null;
+    };
+};
+
+export type GetStatsApiNamespacesNamespaceNameStatsGetResponse = Stats;
+
+export type GetStatsApiNamespacesNamespaceNameStatsGetError = HTTPValidationError;
+
 export type $OpenApiTs = {
     '/api/namespaces': {
         post: {
@@ -987,6 +1265,46 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/api/namespaces/tags/generic': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': NamespaceTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/tags/generic2': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': NamespaceTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/tags/generic3': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': NamespaceTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/tags/sqlite': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': NamespaceTagsResult;
+            };
+        };
+    };
     '/api/actors': {
         get: {
             req: ReadItemsApiActorsGetData;
@@ -1017,108 +1335,43 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/items': {
+    '/api/actors/tags/generic': {
         get: {
-            req: ReadItemsApiItemsGetData;
             res: {
                 /**
                  * Successful Response
                  */
-                '200': ItemList;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
+                '200': ActorTagsResult;
             };
         };
     };
-    '/api/items/query': {
-        post: {
-            req: QueryItemsApiItemsQueryPostData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': ItemList;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/events': {
+    '/api/actors/tags/generic2': {
         get: {
-            req: ReadItemsApiEventsGetData;
             res: {
                 /**
                  * Successful Response
                  */
-                '200': EventList;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
+                '200': ActorTagsResult;
             };
         };
     };
-    '/api/events/query': {
-        post: {
-            req: QueryItemsApiEventsQueryPostData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': EventList;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/feedbacks': {
+    '/api/actors/tags/generic3': {
         get: {
-            req: ReadItemsApiFeedbacksGetData;
             res: {
                 /**
                  * Successful Response
                  */
-                '200': FeedbackList;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
+                '200': ActorTagsResult;
             };
         };
     };
-    '/api/feedbacks/query': {
-        post: {
-            req: QueryItemsApiFeedbacksQueryPostData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': FeedbackList;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/stats': {
+    '/api/actors/tags/sqlite': {
         get: {
-            req: GetStatsApiStatsGetData;
             res: {
                 /**
                  * Successful Response
                  */
-                '200': Stats;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
+                '200': ActorTagsResult;
             };
         };
     };
@@ -1130,6 +1383,19 @@ export type $OpenApiTs = {
                  * Successful Response
                  */
                 '200': Actor;
+                /**
+                 * Validation Error
+                 */
+                '422': HTTPValidationError;
+            };
+        };
+        get: {
+            req: ReadItemsApiNamespacesNamespaceNameActorsGetData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ActorList;
                 /**
                  * Validation Error
                  */
@@ -1178,6 +1444,131 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/api/namespaces/{namespace_name}/actors/query': {
+        post: {
+            req: QueryItemsApiNamespacesNamespaceNameActorsQueryPostData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ActorList;
+                /**
+                 * Validation Error
+                 */
+                '422': HTTPValidationError;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/actors/tags/generic': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ActorTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/actors/tags/generic2': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ActorTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/actors/tags/generic3': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ActorTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/actors/tags/sqlite': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ActorTagsResult;
+            };
+        };
+    };
+    '/api/items': {
+        get: {
+            req: ReadItemsApiItemsGetData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ItemList;
+                /**
+                 * Validation Error
+                 */
+                '422': HTTPValidationError;
+            };
+        };
+    };
+    '/api/items/query': {
+        post: {
+            req: QueryItemsApiItemsQueryPostData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ItemList;
+                /**
+                 * Validation Error
+                 */
+                '422': HTTPValidationError;
+            };
+        };
+    };
+    '/api/items/tags/generic': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ItemTagsResult;
+            };
+        };
+    };
+    '/api/items/tags/generic2': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ItemTagsResult;
+            };
+        };
+    };
+    '/api/items/tags/generic3': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ItemTagsResult;
+            };
+        };
+    };
+    '/api/items/tags/sqlite': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ItemTagsResult;
+            };
+        };
+    };
     '/api/namespaces/{namespace_name}/items': {
         post: {
             req: CreateItemApiNamespacesNamespaceNameItemsPostData;
@@ -1185,7 +1576,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                '200': Item;
+                '200': src__items__types__Item;
                 /**
                  * Validation Error
                  */
@@ -1213,7 +1604,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                '200': Item;
+                '200': src__items__types__Item;
                 /**
                  * Validation Error
                  */
@@ -1226,7 +1617,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                '200': Item;
+                '200': src__items__types__Item;
                 /**
                  * Validation Error
                  */
@@ -1259,6 +1650,116 @@ export type $OpenApiTs = {
                  * Validation Error
                  */
                 '422': HTTPValidationError;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/items/tags/generic': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ItemTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/items/tags/generic2': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ItemTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/items/tags/generic3': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ItemTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/items/tags/sqlite': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': ItemTagsResult;
+            };
+        };
+    };
+    '/api/events': {
+        get: {
+            req: ReadItemsApiEventsGetData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': EventList;
+                /**
+                 * Validation Error
+                 */
+                '422': HTTPValidationError;
+            };
+        };
+    };
+    '/api/events/query': {
+        post: {
+            req: QueryItemsApiEventsQueryPostData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': EventList;
+                /**
+                 * Validation Error
+                 */
+                '422': HTTPValidationError;
+            };
+        };
+    };
+    '/api/events/tags/generic': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': EventTagsResult;
+            };
+        };
+    };
+    '/api/events/tags/generic2': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': EventTagsResult;
+            };
+        };
+    };
+    '/api/events/tags/generic3': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': EventTagsResult;
+            };
+        };
+    };
+    '/api/events/tags/sqlite': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': EventTagsResult;
             };
         };
     };
@@ -1346,6 +1847,116 @@ export type $OpenApiTs = {
             };
         };
     };
+    '/api/namespaces/{namespace_name}/events/tags/generic': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': EventTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/events/tags/generic2': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': EventTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/events/tags/generic3': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': EventTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/events/tags/sqlite': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': EventTagsResult;
+            };
+        };
+    };
+    '/api/feedbacks': {
+        get: {
+            req: ReadItemsApiFeedbacksGetData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': FeedbackList;
+                /**
+                 * Validation Error
+                 */
+                '422': HTTPValidationError;
+            };
+        };
+    };
+    '/api/feedbacks/query': {
+        post: {
+            req: QueryItemsApiFeedbacksQueryPostData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': FeedbackList;
+                /**
+                 * Validation Error
+                 */
+                '422': HTTPValidationError;
+            };
+        };
+    };
+    '/api/feedbacks/tags/generic': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': FeedbackTagsResult;
+            };
+        };
+    };
+    '/api/feedbacks/tags/generic2': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': FeedbackTagsResult;
+            };
+        };
+    };
+    '/api/feedbacks/tags/generic3': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': FeedbackTagsResult;
+            };
+        };
+    };
+    '/api/feedbacks/tags/sqlite': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': FeedbackTagsResult;
+            };
+        };
+    };
     '/api/namespaces/{namespace_name}/feedbacks': {
         post: {
             req: CreateFeedbackApiNamespacesNamespaceNameFeedbacksPostData;
@@ -1430,18 +2041,43 @@ export type $OpenApiTs = {
             };
         };
     };
-    '/api/namespaces/{namespace_name}/stats': {
+    '/api/namespaces/{namespace_name}/feedbacks/tags/generic': {
         get: {
-            req: GetStatsApiNamespacesNamespaceNameStatsGetData;
             res: {
                 /**
                  * Successful Response
                  */
-                '200': Stats;
+                '200': FeedbackTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/feedbacks/tags/generic2': {
+        get: {
+            res: {
                 /**
-                 * Validation Error
+                 * Successful Response
                  */
-                '422': HTTPValidationError;
+                '200': FeedbackTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/feedbacks/tags/generic3': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': FeedbackTagsResult;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/feedbacks/tags/sqlite': {
+        get: {
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': FeedbackTagsResult;
             };
         };
     };
@@ -1558,6 +2194,36 @@ export type $OpenApiTs = {
                  * Successful Response
                  */
                 '200': Array<ItemWithEventDetails>;
+                /**
+                 * Validation Error
+                 */
+                '422': HTTPValidationError;
+            };
+        };
+    };
+    '/api/stats': {
+        get: {
+            req: GetStatsApiStatsGetData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': Stats;
+                /**
+                 * Validation Error
+                 */
+                '422': HTTPValidationError;
+            };
+        };
+    };
+    '/api/namespaces/{namespace_name}/stats': {
+        get: {
+            req: GetStatsApiNamespacesNamespaceNameStatsGetData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                '200': Stats;
                 /**
                  * Validation Error
                  */

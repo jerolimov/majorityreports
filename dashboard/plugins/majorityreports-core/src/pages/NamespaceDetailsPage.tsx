@@ -61,7 +61,7 @@ export const NamespaceDetailsPage = () => {
             </Grid>
             <Grid item sm={12}>
               <LabelsCard object={namespace} />
-              </Grid>
+            </Grid>
             <Grid item sm={12}>
               <AnnotationsCard object={namespace} />
             </Grid>

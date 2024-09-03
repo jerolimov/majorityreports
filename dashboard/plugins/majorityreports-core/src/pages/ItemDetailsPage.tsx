@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { Item } from '@internal/backstage-plugin-majorityreports-common';
+import { src__items__types__Item as Item } from '@internal/backstage-plugin-majorityreports-common';
 
 import { AboutCard } from '../components/AboutCard';
 import { DescriptionCard } from '../components/DescriptionCard';
@@ -49,8 +49,8 @@ export const ItemDetailsPage = () => {
             </Grid>
             <Grid item sm={12}>
               <LabelsCard object={item} />
-              </Grid>
-              <Grid item sm={12}>
+            </Grid>
+            <Grid item sm={12}>
               <AnnotationsCard object={item} />
             </Grid>
             <Grid item sm={12}>
