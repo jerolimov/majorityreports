@@ -16,11 +16,11 @@ export const NamespaceDropdown = () => {
   const [namespace, setNamespace] = useNamespace();
 
   const result = useQuery<NamespaceList>({
-    queryKey: ['namespaces', 0, 1000],
+    queryKey: ['namespaces', 0, 100],
     queryFn: function getNamespaces() {
       const proxyUrl = 'http://localhost:7007/api/proxy/api/';
       const url = new URL('api/namespaces', proxyUrl);
-      url.searchParams.set('limit', '1000');    
+      url.searchParams.set('limit', '100');    
       return fetch(url.toString()).then((response) => response.json());
     },
   });
