@@ -36,6 +36,7 @@ const components: UnifiedThemeOptions['components'] = {
   BackstagePage: {
     styleOverrides: {
       root: {
+        // fix double scrollbar issue
         height: 'unset',
       },
     },
@@ -43,6 +44,7 @@ const components: UnifiedThemeOptions['components'] = {
   BackstageTableHeader: {
     styleOverrides: {
       header: {
+        // don't transform table headers to uppercase
         textTransform: "unset",
       },
     },
@@ -72,6 +74,15 @@ const lightTheme = createUnifiedTheme({
       }
     },
   }),
+  // remove page header
+  pageTheme: {
+    home: {
+      fontColor: '#000000',
+      backgroundImage: 'none',
+      colors: ['#ffffff'],
+      shape: 'none',
+    },
+  },
   components,
 });
 
@@ -80,14 +91,14 @@ const darkTheme = createUnifiedTheme({
     palette: {
       ...palettes.dark,
       background: {
-        paper: '#111111',
+        paper: '#222222',
         default: '#000000',
       },
       navigation: {
         ...palettes.light.navigation,
         color: '#cccccc',
         selectedColor: '#ffffff',
-        background: '#111111',
+        background: '#222222',
         indicator: '#9d00ff',
         navItem: {
           hoverBackground: '#222222',
@@ -95,6 +106,15 @@ const darkTheme = createUnifiedTheme({
       }
     },
   }),
+  // remove page header
+  pageTheme: {
+    home: {
+      fontColor: '#ffffff',
+      backgroundImage: 'none',
+      colors: ['#000000'],
+      shape: 'none',
+    },
+  },
   components,
 });
 
